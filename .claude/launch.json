@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "monsuke-admin",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "3456", "C:/Users/tsuba/OneDrive/デスクトップ/1_業務プロジェクト/もん助/02_資料/02_11_使用図/法人管理ページ"],
+      "port": 3456
+    }
+  ]
+}

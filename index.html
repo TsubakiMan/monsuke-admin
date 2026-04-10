@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>もん助 - 法人管理画面</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* もん助 brand — warm orange for 介護・福祉 */
+  --primary:#E97316;--primary-hover:#C2410C;--primary-light:#FFF7ED;--primary-ring:rgba(233,115,22,.12);
+  --accent:#0D9488;--accent-light:#F0FDFA;
+  /* Dark sidebar */
+  --sidebar-bg:#1E293B;--sidebar-border:#334155;--sidebar-text:#94A3B8;--sidebar-hover:rgba(255,255,255,.06);
+  --bg:#F1F5F9;--white:#fff;
+  --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-700:#334155;--gray-900:#0f172a;
+  --green:#059669;--green-bg:#ecfdf5;--orange:#d97706;--orange-bg:#fffbeb;--red:#dc2626;--red-bg:#fef2f2;
+  --radius:10px;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+}
+html{font-size:14px}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--gray-900);display:flex;min-height:100vh}
+
+/* ===== SIDEBAR (dark theme) ===== */
+.sidebar{width:240px;background:var(--sidebar-bg);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;transition:transform .2s}
+.sidebar-head{padding:22px 20px 18px;border-bottom:1px solid var(--sidebar-border)}
+.sidebar-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#F97316,#FB923C);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0;box-shadow:0 2px 8px rgba(249,115,22,.3)}
+.logo-name{font-size:22px;font-weight:700;letter-spacing:-.5px;color:#F8FAFC}
+.sidebar-corp{margin-top:10px;font-size:11px;color:var(--sidebar-text);line-height:1.6}
+.sidebar-corp b{font-weight:600;font-size:12px;color:#CBD5E1;display:block}
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-label{padding:20px 20px 6px;font-size:10px;font-weight:600;color:#475569;letter-spacing:1px;text-transform:uppercase}
+.nav-a{display:flex;align-items:center;gap:10px;padding:10px 16px;margin:2px 10px;border-radius:8px;font-size:13px;font-weight:500;color:var(--sidebar-text);cursor:pointer;text-decoration:none;transition:all .15s}
+.nav-a:hover{background:var(--sidebar-hover);color:#E2E8F0}
+.nav-a.on{background:linear-gradient(135deg,#F97316,#FB923C);color:#fff;font-weight:600;box-shadow:0 2px 10px rgba(249,115,22,.3)}
+.nav-a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--accent);color:#78350F;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.sidebar-foot{padding:14px 20px;border-top:1px solid var(--sidebar-border);font-size:10px;color:#475569;text-align:center}
+
+/* ===== MAIN ===== */
+.main{flex:1;margin-left:240px;min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:56px;background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 28px;display:flex;align-items:center;justify-content:flex-end;gap:8px;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.topbar-btn{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:8px;font-size:12px;color:var(--gray-500);cursor:pointer;transition:all .15s}
+.topbar-btn:hover{background:var(--primary-light);color:var(--primary)}
+.topbar-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.topbar-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--primary-light),#FFEDD5);color:var(--primary);display:grid;place-items:center;font-weight:700;font-size:12px;cursor:pointer;margin-left:4px;border:1.5px solid rgba(233,115,22,.2)}
+
+/* ===== CONTENT ===== */
+.page{display:none;padding:28px 32px 44px;max-width:1120px}
+.page.on{display:block}
+
+/* Page header */
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.ph h1{font-size:21px;font-weight:700;letter-spacing:-.3px;color:var(--gray-900)}
+.ph-sub{font-size:12.5px;color:var(--gray-500);margin-bottom:22px}
+
+/* Buttons — rounded pill style */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:inherit;border:1px solid transparent;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap}
+.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-blue{background:var(--primary);color:#fff}.btn-blue:hover{background:var(--primary-hover);box-shadow:0 3px 12px rgba(233,115,22,.25);transform:translateY(-1px)}
+.btn-out{background:var(--white);border-color:var(--gray-300);color:var(--gray-700)}.btn-out:hover{background:var(--gray-50);border-color:var(--gray-400)}
+.btn-sm{padding:6px 13px;font-size:12px;font-weight:500;border-radius:6px}
+.btn-red{background:var(--white);border-color:var(--red);color:var(--red)}.btn-red:hover{background:var(--red-bg)}
+
+/* ===== SEARCH AREA ===== */
+.search-area{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius) var(--radius) 0 0;padding:16px 20px;border-bottom:none}
+.search-row{display:flex;align-items:center;gap:10px}
+.search-wrap{flex:1;display:flex;align-items:center;border:1px solid var(--gray-200);border-radius:8px;transition:border-color .15s,box-shadow .15s;background:var(--gray-50)}
+.search-wrap:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring);background:var(--white)}
+.search-wrap input{flex:1;border:none;padding:10px 12px;font-size:13px;font-family:inherit;outline:none;background:transparent;min-width:0}
+.search-wrap input::placeholder{color:var(--gray-400)}
+.search-wrap .s-icon{padding:0 12px;color:var(--gray-400);display:flex}
+.search-wrap .s-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.search-hint{font-size:11px;color:var(--gray-400);margin-top:8px}
+.search-filters{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.sel{padding:7px 12px;border:1px solid var(--gray-200);border-radius:8px;font-size:12px;font-family:inherit;color:var(--gray-700);background:var(--white);cursor:pointer;outline:none}
+.sel:focus{border-color:var(--primary)}
+
+/* ===== TABLE ===== */
+.tcard{background:var(--white);border:1px solid var(--gray-200);border-radius:0 0 var(--radius) var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.tcard.standalone{border-radius:var(--radius)}
+.tbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--gray-100);font-size:12px;color:var(--gray-500)}
+.pag{display:flex;align-items:center;gap:3px}
+.pag button{padding:5px 10px;border:1px solid var(--gray-200);background:var(--white);border-radius:6px;font-size:11.5px;font-family:inherit;cursor:pointer;color:var(--gray-500);transition:all .12s}
+.pag button:hover:not(:disabled){border-color:var(--primary);color:var(--primary)}
+.pag button:disabled{opacity:.35;cursor:default}
+.pag .pn{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;font-weight:600;font-size:12px}
+.pag .pn.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:11px 20px;text-align:left;font-size:11px;font-weight:600;color:var(--gray-500);background:var(--gray-50);border-bottom:2px solid var(--gray-200);white-space:nowrap;text-transform:uppercase;letter-spacing:.3px}
+tbody tr{border-bottom:1px solid var(--gray-100);transition:background .1s}
+tbody tr:nth-child(even){background:var(--gray-50)}
+tbody tr:hover{background:#E0F2FE}
+tbody tr:last-child{border-bottom:none}
+td{padding:12px 20px;font-size:13px;white-space:nowrap}
+.c-id{font-weight:600;font-variant-numeric:tabular-nums;color:var(--gray-700)}
+.c-link{color:var(--primary);text-decoration:none;font-weight:500;white-space:normal}
+.c-link:hover{text-decoration:underline;color:var(--primary-hover)}
+
+/* ===== STATUS — outlined style ===== */
+.st{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;white-space:nowrap;border:1px solid transparent}
+.st-g{background:var(--green-bg);color:var(--green);border-color:rgba(5,150,105,.2)}
+.st-o{background:var(--orange-bg);color:var(--orange);border-color:rgba(217,119,6,.2)}
+.st-r{background:var(--red-bg);color:var(--red);border-color:rgba(220,38,38,.2)}
+.st-x{background:var(--gray-100);color:var(--gray-400);border-color:var(--gray-200)}
+
+/* ===== STAT CARDS — top accent border ===== */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:22px}
+.stat{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-top:3px solid var(--primary);position:relative}
+.stat-label{font-size:11px;color:var(--gray-500);font-weight:500;margin-bottom:6px}
+.stat-val{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1.2;color:var(--gray-900)}
+.stat-sub{font-size:11px;color:var(--gray-400);margin-top:3px}
+
+/* ===== FORM ===== */
+.fcard{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.fcard+.fcard{margin-top:16px}
+.fcard h3{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--gray-900)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:11.5px;font-weight:600;color:var(--gray-500)}
+.fi{padding:9px 12px;border:1px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:inherit;color:var(--gray-900);outline:none;transition:border-color .15s,box-shadow .15s;background:var(--white)}
+.fi:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-ring)}
+.fi[readonly]{background:var(--gray-50);color:var(--gray-500)}
+.factions{margin-top:20px;display:flex;gap:8px;justify-content:flex-end}
+
+/* Stars */
+.stars{color:var(--accent);font-size:12px;letter-spacing:.5px}
+.stars span{color:var(--gray-500);font-size:12px;margin-left:2px}
+
+/* Date range */
+.drange{display:flex;align-items:center;gap:6px}
+.drange input[type=date]{padding:7px 10px;border:1px solid var(--gray-200);border-radius:8px;font-size:12px;font-family:inherit;outline:none}
+.drange input[type=date]:focus{border-color:var(--primary)}
+
+/* ===== MODAL ===== */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:500;place-items:center;padding:20px;backdrop-filter:blur(2px)}
+.modal-bg.on{display:grid}
+.modal{background:var(--white);border-radius:12px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-size:16px;font-weight:700}
+.modal-x{background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray-400);line-height:1;padding:2px 4px;border-radius:6px;transition:all .12s}
+.modal-x:hover{background:var(--gray-100);color:var(--gray-700)}
+.modal-body{padding:20px 24px}
+.modal-body .fg+.fg{margin-top:14px}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--gray-200);display:flex;gap:8px;justify-content:flex-end}
+
+/* ===== DROPDOWN ===== */
+.dl-wrap{position:relative;display:inline-block}
+.dl-btn{display:inline-flex;align-items:center;gap:4px;padding:7px 14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+.dl-btn:hover{background:var(--primary-hover);transform:translateY(-1px)}
+.dl-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.dl-menu{display:none;position:absolute;right:0;top:calc(100% + 4px);background:var(--white);border:1px solid var(--gray-200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);min-width:210px;z-index:20;padding:6px 0}
+.dl-menu.open{display:block}
+.dl-menu a{display:block;padding:9px 16px;font-size:13px;color:var(--gray-700);text-decoration:none;cursor:pointer;transition:all .1s}
+.dl-menu a:hover{background:var(--primary-light);color:var(--primary)}
+.dl-del{display:inline-flex;align-items:center;gap:4px;padding:7px 14px;background:var(--white);border:1px solid var(--gray-200);border-radius:8px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;color:var(--gray-500);transition:all .15s}
+.dl-del:hover{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+.dl-del svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ===== TOAST ===== */
+.toast-box{position:fixed;top:16px;right:16px;z-index:600;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px 20px;box-shadow:0 6px 16px rgba(0,0,0,.1);font-size:13px;display:flex;align-items:center;gap:8px;animation:tIn .3s ease}
+.toast.ok{border-left:4px solid var(--green)}
+@keyframes tIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ===== MOBILE ===== */
+.menu-btn{display:none;position:fixed;top:10px;left:10px;z-index:200;width:40px;height:40px;background:var(--white);border:1px solid var(--gray-200);border-radius:10px;cursor:pointer;place-items:center;box-shadow:var(--shadow)}
+.menu-btn svg{width:18px;height:18px;stroke:var(--gray-700);fill:none;stroke-width:2}
+.overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.3);z-index:90}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:grid}
+  .overlay.open{display:block}
+  .main{margin-left:0}
+  .page{padding:18px 14px 32px}
+  .topbar{padding:0 14px 0 52px}
+  .fgrid{grid-template-columns:1fr}
+  .ph{flex-direction:column;align-items:flex-start;gap:10px}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<button class="menu-btn" onclick="toggleSB()"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+<div class="overlay" id="overlay" onclick="toggleSB()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sb">
+  <div class="sidebar-head">
+    <a href="#" class="sidebar-logo" onclick="return false">
+      <div class="logo-icon">も</div>
+      <span class="logo-name">もん助</span>
+    </a>
+    <div class="sidebar-corp">
+      <b>社会福祉法人渓仁会</b>
+      法人ID 100234
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">メイン</div>
+    <a class="nav-a on" data-p="facilities" onclick="go('facilities')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>事業所一覧</a>
+    <a class="nav-a" data-p="company" onclick="go('company')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>法人情報</a>
+    <a class="nav-a" data-p="workers" onclick="go('workers')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>ワーカー管理</a>
+    <div class="nav-label">運用</div>
+    <a class="nav-a" data-p="jobs" onclick="go('jobs')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><path d="M9 21V9"/></svg>求人管理</a>
+    <a class="nav-a" data-p="attendance" onclick="go('attendance')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>勤怠管理</a>
+    <a class="nav-a" data-p="messages" onclick="go('messages')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>メッセージ<span class="nav-badge">3</span></a>
+    <div class="nav-label">管理</div>
+    <a class="nav-a" data-p="billing" onclick="go('billing')"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>請求・支払い</a>
+    <a class="nav-a" data-p="usage" onclick="go('usage')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>利用明細</a>
+    <a class="nav-a" data-p="registry" onclick="go('registry')"><svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>労働者名簿</a>
+    <a class="nav-a" data-p="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>設定</a>
+  </nav>
+  <div class="sidebar-foot">もん助 管理画面 v1.0</div>
+</aside>
+
+<div class="main">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-btn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>通知</div>
+    <div class="topbar-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>ヘルプ</div>
+    <div class="topbar-avatar">管</div>
+  </header>
+
+  <!-- ===== 事業所一覧 ===== -->
+  <div class="page on" id="p-facilities">
+    <div class="ph">
+      <h1>事業所一覧</h1>
+      <button class="btn btn-blue" onclick="openM('m-facility')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>事業所を追加</button>
+    </div>
+    <p class="ph-sub">事業所用管理画面に移動できます。</p>
+
+    <div class="search-area">
+      <div class="search-row">
+        <div class="search-wrap">
+          <input type="text" id="f-search" placeholder="事業所名で検索" oninput="rFac()">
+          <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        </div>
+      </div>
+      <p class="search-hint">複数の単語で検索できます。入力されたいずれかの単語を含む事業所を一覧表示します。</p>
+    </div>
+
+    <div class="tcard">
+      <div class="tbar"><div class="pag" id="f-pag"></div><span id="f-cnt"></span></div>
+      <table><thead><tr>
+        <th style="width:100px">事業所ID</th>
+        <th>事業所名</th>
+        <th style="width:120px">エリア</th>
+        <th style="width:90px">ステータス</th>
+        <th style="width:90px"></th>
+      </tr></thead><tbody id="f-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 法人情報 ===== -->
+  <div class="page" id="p-company">
+    <div class="ph">
+      <h1>法人情報</h1>
+      <button class="btn btn-blue" id="edit-btn" onclick="toggleEdit()"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span id="edit-txt">編集する</span></button>
+    </div>
+    <p class="ph-sub">法人の基本情報を確認・編集できます。</p>
+    <div class="fcard">
+      <div class="fgrid" id="c-form">
+        <div class="fg"><label>法人ID</label><input class="fi" value="100234" readonly></div>
+        <div class="fg"><label>法人名</label><input class="fi" value="社会福祉法人渓仁会" readonly></div>
+        <div class="fg"><label>代表者名</label><input class="fi" value="山田 太郎" readonly></div>
+        <div class="fg"><label>設立日</label><input class="fi" value="1974年4月1日" readonly></div>
+        <div class="fg full"><label>住所</label><input class="fi" value="〒063-0828 北海道札幌市西区発寒8条10丁目2-1" readonly></div>
+        <div class="fg"><label>電話番号</label><input class="fi" value="011-XXX-XXXX" readonly></div>
+        <div class="fg"><label>メールアドレス</label><input class="fi" value="info@keijinkai.or.jp" readonly></div>
+        <div class="fg"><label>契約プラン</label><input class="fi" value="スタンダードプラン" readonly></div>
+        <div class="fg"><label>契約開始日</label><input class="fi" value="2025年4月1日" readonly></div>
+      </div>
+      <div class="factions" id="c-actions" style="display:none">
+        <button class="btn btn-out" onclick="toggleEdit()">キャンセル</button>
+        <button class="btn btn-blue" onclick="toggleEdit();toast('法人情報を保存しました')">保存する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ワーカー管理 ===== -->
+  <div class="page" id="p-workers">
+    <div class="ph"><h1>ワーカー管理</h1></div>
+    <p class="ph-sub">登録済みワーカーの情報を確認できます。</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">登録ワーカー数</div><div class="stat-val">48</div><div class="stat-sub">先月比 +5</div></div>
+      <div class="stat"><div class="stat-label">稼働中</div><div class="stat-val">32</div></div>
+      <div class="stat"><div class="stat-label">待機中</div><div class="stat-val">12</div></div>
+      <div class="stat"><div class="stat-label">平均評価</div><div class="stat-val">4.6</div><div class="stat-sub">★★★★★</div></div>
+    </div>
+
+    <div class="search-area">
+      <div class="search-row">
+        <div class="search-wrap">
+          <input type="text" id="w-search" placeholder="ワーカー名で検索" oninput="rWork()">
+          <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        </div>
+      </div>
+      <div class="search-filters">
+        <select class="sel" id="w-qual" onchange="rWork()"><option value="">全ての資格</option><option>介護福祉士</option><option>初任者研修</option><option>実務者研修</option><option>看護師</option><option>無資格</option></select>
+        <select class="sel" id="w-stat" onchange="rWork()"><option value="">全てのステータス</option><option>稼働中</option><option>待機中</option><option>休止中</option></select>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tbar"><div class="pag" id="w-pag"></div><span id="w-cnt"></span></div>
+      <table><thead><tr>
+        <th style="width:100px">ワーカーID</th>
+        <th>名前</th>
+        <th style="width:100px">資格</th>
+        <th style="width:90px">稼働状況</th>
+        <th style="width:100px">評価</th>
+        <th style="width:60px"></th>
+      </tr></thead><tbody id="w-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 求人管理 ===== -->
+  <div class="page" id="p-jobs">
+    <div class="ph">
+      <h1>求人管理</h1>
+      <button class="btn btn-blue" onclick="openM('m-job')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>求人を作成</button>
+    </div>
+    <p class="ph-sub">求人の作成・管理ができます。</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">公開中の求人</div><div class="stat-val">8</div></div>
+      <div class="stat"><div class="stat-label">応募総数（今月）</div><div class="stat-val">23</div></div>
+      <div class="stat"><div class="stat-label">マッチング率</div><div class="stat-val">78%</div></div>
+    </div>
+
+    <div class="tcard standalone">
+      <div class="tbar"><div class="pag" id="j-pag"></div><span id="j-cnt"></span></div>
+      <table><thead><tr>
+        <th style="width:80px">求人ID</th>
+        <th>事業所名</th>
+        <th style="width:100px">職種</th>
+        <th>日時</th>
+        <th style="width:70px">時給</th>
+        <th style="width:60px">応募</th>
+        <th style="width:90px">ステータス</th>
+      </tr></thead><tbody id="j-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 勤怠管理 ===== -->
+  <div class="page" id="p-attendance">
+    <div class="ph">
+      <h1>勤怠管理</h1>
+      <button class="btn btn-out" onclick="toast('CSVをダウンロードしました')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSVエクスポート</button>
+    </div>
+    <p class="ph-sub">ワーカーの勤怠記録を確認できます。</p>
+
+    <div class="search-area">
+      <div class="search-filters" style="margin-top:0">
+        <div class="drange">
+          <input type="date" value="2026-04-01">
+          <span style="color:var(--gray-400);font-size:12px">〜</span>
+          <input type="date" value="2026-04-10">
+        </div>
+        <select class="sel" id="a-fac" onchange="rAtt()"><option value="">全ての事業所</option><option value="月寒">月寒あさがおの郷</option><option value="西円山">西円山敬樹園</option><option value="菊水">菊水こまちの郷</option></select>
+        <button class="btn btn-blue btn-sm" onclick="rAtt()">検索</button>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tbar"><div class="pag" id="a-pag"></div><span id="a-cnt"></span></div>
+      <table><thead><tr>
+        <th style="width:100px">日付</th>
+        <th>ワーカー名</th>
+        <th>事業所名</th>
+        <th style="width:70px">出勤</th>
+        <th style="width:70px">退勤</th>
+        <th style="width:70px">実働</th>
+        <th style="width:90px">ステータス</th>
+      </tr></thead><tbody id="a-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== メッセージ ===== -->
+  <div class="page" id="p-messages">
+    <div class="ph"><h1>メッセージ</h1></div>
+    <p class="ph-sub">ワーカーや事業所からのメッセージを確認できます。</p>
+    <div class="tcard standalone">
+      <table><thead><tr><th>送信者</th><th>件名</th><th style="width:140px">日時</th><th style="width:80px">ステータス</th></tr></thead>
+      <tbody>
+        <tr><td><strong>佐藤 花子</strong></td><td><a href="#" class="c-link">4/12のシフトについて確認</a></td><td>2026/04/10 09:15</td><td><span class="st st-o">未読</span></td></tr>
+        <tr><td><strong>田中 一郎</strong></td><td><a href="#" class="c-link">資格証明書の更新について</a></td><td>2026/04/09 16:42</td><td><span class="st st-o">未読</span></td></tr>
+        <tr><td><strong>月寒あさがおの郷</strong></td><td><a href="#" class="c-link">来週のシフト追加依頼</a></td><td>2026/04/09 14:20</td><td><span class="st st-o">未読</span></td></tr>
+        <tr><td><strong>鈴木 美咲</strong></td><td><a href="#" class="c-link">勤務報告の修正依頼</a></td><td>2026/04/08 11:30</td><td><span class="st st-g">既読</span></td></tr>
+        <tr><td><strong>西円山敬樹園</strong></td><td><a href="#" class="c-link">ワーカー評価のご連絡</a></td><td>2026/04/07 17:05</td><td><span class="st st-g">既読</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 請求・支払い ===== -->
+  <div class="page" id="p-billing">
+    <div class="ph"><h1>請求・支払い</h1></div>
+    <p class="ph-sub">月次の利用料金と支払い状況を確認できます。</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">今月の利用額（税込）</div><div class="stat-val">¥387,200</div><div class="stat-sub">2026年4月分</div></div>
+      <div class="stat"><div class="stat-label">未払い請求</div><div class="stat-val" style="color:var(--red)">1件</div></div>
+      <div class="stat"><div class="stat-label">年間累計</div><div class="stat-val">¥4,218,600</div><div class="stat-sub">2026年度</div></div>
+    </div>
+
+    <div class="tcard standalone">
+      <table><thead><tr><th>月</th><th style="width:80px">利用件数</th><th>合計金額（税込）</th><th style="width:110px">支払い期限</th><th style="width:90px">ステータス</th><th style="width:60px"></th></tr></thead>
+      <tbody>
+        <tr><td class="c-id">2026年4月</td><td>34件</td><td>¥387,200</td><td>2026/05/31</td><td><span class="st st-r">未払い</span></td><td><button class="btn btn-out btn-sm">明細</button></td></tr>
+        <tr><td class="c-id">2026年3月</td><td>42件</td><td>¥456,800</td><td>2026/04/30</td><td><span class="st st-g">支払済</span></td><td><button class="btn btn-out btn-sm">明細</button></td></tr>
+        <tr><td class="c-id">2026年2月</td><td>38件</td><td>¥412,500</td><td>2026/03/31</td><td><span class="st st-g">支払済</span></td><td><button class="btn btn-out btn-sm">明細</button></td></tr>
+        <tr><td class="c-id">2026年1月</td><td>35件</td><td>¥389,400</td><td>2026/02/28</td><td><span class="st st-g">支払済</span></td><td><button class="btn btn-out btn-sm">明細</button></td></tr>
+        <tr><td class="c-id">2025年12月</td><td>30件</td><td>¥342,100</td><td>2026/01/31</td><td><span class="st st-g">支払済</span></td><td><button class="btn btn-out btn-sm">明細</button></td></tr>
+        <tr><td class="c-id">2025年11月</td><td>41件</td><td>¥448,200</td><td>2025/12/31</td><td><span class="st st-g">支払済</span></td><td><button class="btn btn-out btn-sm">明細</button></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 利用明細 ===== -->
+  <div class="page" id="p-usage">
+    <div class="ph"><h1>利用明細</h1></div>
+    <p class="ph-sub">いままでの利用明細の確認やCSVファイルのダウンロードができます。</p>
+
+    <div class="tcard standalone">
+      <div class="tbar"><div class="pag" id="u-pag"></div><span id="u-cnt"></span></div>
+      <table><thead><tr>
+        <th>期間</th>
+        <th style="width:70px">対象事業所数</th>
+        <th style="width:60px">対象人数</th>
+        <th style="width:70px">対象求人数</th>
+        <th style="width:90px">振込関連手数料</th>
+        <th style="width:80px">請求額調整</th>
+        <th style="text-align:right">請求額の目安<br><span style="font-weight:400;font-size:10px;color:var(--gray-400)">正確な金額は請求書のPDFをご確認ください</span></th>
+        <th style="width:120px"></th>
+      </tr></thead><tbody id="u-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 労働者名簿 ===== -->
+  <div class="page" id="p-registry">
+    <div class="ph"><h1>労働者名簿</h1></div>
+    <p class="ph-sub">労働者（ワーカー）の名簿・支払い情報を期間を指定してダウンロードできます。</p>
+
+    <div class="tcard standalone">
+      <div style="padding:16px 20px;text-align:right;border-bottom:1px solid var(--gray-100)">
+        <button class="btn btn-blue" onclick="openM('m-registry-dl')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>新規追加</button>
+      </div>
+      <table><thead><tr>
+        <th>期間</th>
+        <th style="width:80px">合計人数</th>
+        <th style="width:100px">合計金額</th>
+        <th style="width:100px">合計源泉徴収額</th>
+        <th style="width:200px"></th>
+      </tr></thead><tbody id="r-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== 設定 ===== -->
+  <div class="page" id="p-settings">
+    <div class="ph"><h1>設定</h1></div>
+    <p class="ph-sub">アカウントや通知の設定を変更できます。</p>
+
+    <div class="fcard">
+      <h3>通知設定</h3>
+      <div class="fgrid">
+        <div class="fg"><label>メール通知</label><select class="fi"><option>有効</option><option>無効</option></select></div>
+        <div class="fg"><label>通知頻度</label><select class="fi"><option>即時</option><option>1日1回</option><option>週1回</option></select></div>
+      </div>
+    </div>
+    <div class="fcard">
+      <h3>管理者アカウント</h3>
+      <div class="fgrid">
+        <div class="fg"><label>管理者名</label><input class="fi" value="管理者"></div>
+        <div class="fg"><label>メールアドレス</label><input class="fi" value="admin@keijinkai.or.jp"></div>
+      </div>
+      <div class="factions"><button class="btn btn-blue">保存する</button></div>
+    </div>
+    <div class="fcard">
+      <h3 style="color:var(--red)">危険な操作</h3>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:14px">法人アカウントを削除すると、全てのデータが失われます。この操作は取り消せません。</p>
+      <button class="btn btn-red">アカウントを削除</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-bg" id="m-facility">
+  <div class="modal">
+    <div class="modal-head"><h3>事業所を追加</h3><button class="modal-x" onclick="closeM('m-facility')">&times;</button></div>
+    <div class="modal-body">
+      <div class="fg"><label>事業所名 *</label><input class="fi" placeholder="例: 介護老人福祉施設 ○○の郷"></div>
+      <div class="fg"><label>エリア *</label><select class="fi"><option value="">選択してください</option><option>札幌市中央区</option><option>札幌市北区</option><option>札幌市東区</option><option>札幌市白石区</option><option>札幌市豊平区</option><option>札幌市南区</option><option>札幌市西区</option><option>札幌市厚別区</option><option>札幌市手稲区</option><option>札幌市清田区</option><option>小樽市</option><option>その他</option></select></div>
+      <div class="fg"><label>住所</label><input class="fi" placeholder="〒000-0000 北海道..."></div>
+      <div class="fg"><label>電話番号</label><input class="fi" placeholder="011-XXX-XXXX"></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-facility')">キャンセル</button><button class="btn btn-blue" onclick="closeM('m-facility');toast('事業所を追加しました')">追加する</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="m-job">
+  <div class="modal">
+    <div class="modal-head"><h3>求人を作成</h3><button class="modal-x" onclick="closeM('m-job')">&times;</button></div>
+    <div class="modal-body">
+      <div class="fg"><label>事業所 *</label><select class="fi"><option value="">選択してください</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select></div>
+      <div class="fg"><label>職種 *</label><select class="fi"><option value="">選択してください</option><option>介護職</option><option>看護職</option><option>生活支援員</option><option>調理補助</option><option>送迎ドライバー</option></select></div>
+      <div class="fg"><label>勤務日時 *</label><input class="fi" type="datetime-local"></div>
+      <div class="fg"><label>時給（円） *</label><input class="fi" type="number" placeholder="1200" min="900" step="50"></div>
+      <div class="fg"><label>募集人数</label><input class="fi" type="number" value="1" min="1"></div>
+      <div class="fg"><label>備考</label><textarea class="fi" rows="3" placeholder="必要な資格や注意事項など"></textarea></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-job')">キャンセル</button><button class="btn btn-blue" onclick="closeM('m-job');toast('求人を作成しました')">作成する</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="m-registry-dl">
+  <div class="modal">
+    <div class="modal-head"><h3>労働者名簿を新規追加</h3><button class="modal-x" onclick="closeM('m-registry-dl')">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">期間を指定してください。確定済みシフトを対象に集計します。</p>
+      <div class="fg"><label>開始日</label><input class="fi" type="date" id="reg-start" value="2025-01-01"></div>
+      <div class="fg" style="margin-top:14px"><label>終了日（基準日）</label><input class="fi" type="date" id="reg-end" value="2026-04-10"></div>
+      <div style="margin-top:14px;padding:12px;background:var(--blue-light);border-radius:6px;font-size:12px;color:var(--blue)">
+        <strong>出力形式:</strong> Excel (.xlsx) — 全19列<br>
+        <strong>ファイル名:</strong> 更新_{法人名}様_{基準日}までの労働者名簿.xlsx
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-registry-dl')">キャンセル</button><button class="btn btn-blue" onclick="addRegEntry()">追加する</button></div>
+  </div>
+</div>
+
+<div class="toast-box" id="toasts"></div>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+/* ── Data ── */
+const FAC=[
+  {id:329236,name:'介護老人福祉施設　月寒あさがおの郷',area:'札幌市豊平区',st:'稼働中'},
+  {id:337155,name:'特別養護老人ホーム 西円山敬樹園',area:'札幌市中央区',st:'稼働中'},
+  {id:349624,name:'地域密着型介護老人福祉施設　菊水こまちの郷',area:'札幌市白石区',st:'稼働中'},
+  {id:350696,name:'介護老人福祉施設 きもべつ喜らめきの郷',area:'喜茂別町',st:'稼働中'},
+  {id:352231,name:'小規模多機能型居宅介護　菊水こまちの郷',area:'札幌市白石区',st:'稼働中'},
+  {id:352941,name:'地域密着型 介護老人福祉施設 るすつ銀河の杜',area:'留寿都村',st:'稼働中'},
+  {id:355102,name:'介護老人福祉施設 まこまないの郷',area:'札幌市南区',st:'稼働中'},
+  {id:358744,name:'特別養護老人ホーム あいの里',area:'札幌市北区',st:'稼働中'},
+  {id:361203,name:'介護老人保健施設 コミュニティホーム白石',area:'札幌市白石区',st:'待機中'},
+  {id:365480,name:'グループホーム 手稲の丘',area:'札幌市手稲区',st:'稼働中'},
+  {id:368912,name:'デイサービスセンター 清田',area:'札幌市清田区',st:'稼働中'},
+  {id:371045,name:'訪問介護ステーション 東札幌',area:'札幌市白石区',st:'休止中'},
+  {id:374289,name:'小規模多機能型居宅介護 厚別の杜',area:'札幌市厚別区',st:'稼働中'},
+  {id:377601,name:'介護老人福祉施設 新琴似の郷',area:'札幌市北区',st:'稼働中'},
+  {id:380155,name:'サービス付き高齢者向け住宅 円山',area:'札幌市中央区',st:'待機中'},
+];
+const WRK=[
+  {id:'W-10021',name:'佐藤 花子',q:'介護福祉士',st:'稼働中',r:4.8},
+  {id:'W-10034',name:'田中 一郎',q:'初任者研修',st:'稼働中',r:4.5},
+  {id:'W-10045',name:'鈴木 美咲',q:'介護福祉士',st:'待機中',r:4.9},
+  {id:'W-10052',name:'高橋 誠',q:'実務者研修',st:'稼働中',r:4.3},
+  {id:'W-10063',name:'山本 健太',q:'看護師',st:'稼働中',r:4.7},
+  {id:'W-10078',name:'伊藤 さくら',q:'介護福祉士',st:'稼働中',r:4.6},
+  {id:'W-10089',name:'渡辺 大輔',q:'無資格',st:'待機中',r:4.1},
+  {id:'W-10091',name:'中村 幸子',q:'介護福祉士',st:'稼働中',r:4.9},
+  {id:'W-10102',name:'小林 翔',q:'初任者研修',st:'休止中',r:4.0},
+  {id:'W-10115',name:'加藤 真理',q:'実務者研修',st:'稼働中',r:4.4},
+  {id:'W-10128',name:'吉田 圭介',q:'介護福祉士',st:'稼働中',r:4.7},
+  {id:'W-10139',name:'松本 愛',q:'看護師',st:'稼働中',r:4.8},
+  {id:'W-10142',name:'木村 拓也',q:'初任者研修',st:'待機中',r:4.2},
+  {id:'W-10156',name:'清水 由美',q:'介護福祉士',st:'稼働中',r:4.5},
+  {id:'W-10167',name:'森田 隆',q:'無資格',st:'稼働中',r:4.0},
+];
+const JOBS=[
+  {id:'J-2401',fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/15 09:00〜17:00',wage:1200,apps:3,st:'公開中'},
+  {id:'J-2402',fac:'西円山敬樹園',type:'看護職',dt:'2026/04/16 08:30〜16:30',wage:1500,apps:1,st:'公開中'},
+  {id:'J-2403',fac:'菊水こまちの郷',type:'介護職',dt:'2026/04/15 17:00〜22:00',wage:1300,apps:2,st:'公開中'},
+  {id:'J-2404',fac:'きもべつ喜らめきの郷',type:'生活支援員',dt:'2026/04/17 09:00〜15:00',wage:1100,apps:0,st:'公開中'},
+  {id:'J-2405',fac:'月寒あさがおの郷',type:'調理補助',dt:'2026/04/18 06:00〜10:00',wage:1050,apps:4,st:'公開中'},
+  {id:'J-2406',fac:'西円山敬樹園',type:'介護職',dt:'2026/04/12 09:00〜17:00',wage:1200,apps:2,st:'締切'},
+  {id:'J-2407',fac:'菊水こまちの郷',type:'送迎ドライバー',dt:'2026/04/14 07:00〜09:00',wage:1100,apps:1,st:'公開中'},
+  {id:'J-2408',fac:'まこまないの郷',type:'介護職',dt:'2026/04/20 09:00〜17:00',wage:1250,apps:5,st:'公開中'},
+  {id:'J-2409',fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/10 09:00〜17:00',wage:1200,apps:3,st:'マッチ済'},
+  {id:'J-2410',fac:'手稲の丘',type:'生活支援員',dt:'2026/04/19 10:00〜16:00',wage:1150,apps:2,st:'公開中'},
+];
+const ATT=[
+  {dt:'2026/04/10',w:'佐藤 花子',fac:'介護老人福祉施設　月寒あさがおの郷',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
+  {dt:'2026/04/10',w:'高橋 誠',fac:'特別養護老人ホーム 西円山敬樹園',in:'08:30',out:'16:00',h:'7.5h',st:'確定'},
+  {dt:'2026/04/10',w:'山本 健太',fac:'特別養護老人ホーム 西円山敬樹園',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
+  {dt:'2026/04/09',w:'田中 一郎',fac:'地域密着型介護老人福祉施設　菊水こまちの郷',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
+  {dt:'2026/04/09',w:'鈴木 美咲',fac:'介護老人福祉施設　月寒あさがおの郷',in:'10:00',out:'16:00',h:'6.0h',st:'確定'},
+  {dt:'2026/04/09',w:'伊藤 さくら',fac:'介護老人福祉施設　月寒あさがおの郷',in:'17:00',out:'22:00',h:'5.0h',st:'承認待ち'},
+  {dt:'2026/04/08',w:'中村 幸子',fac:'特別養護老人ホーム 西円山敬樹園',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
+  {dt:'2026/04/08',w:'渡辺 大輔',fac:'地域密着型介護老人福祉施設　菊水こまちの郷',in:'09:00',out:'15:00',h:'6.0h',st:'確定'},
+  {dt:'2026/04/07',w:'佐藤 花子',fac:'介護老人福祉施設　月寒あさがおの郷',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
+  {dt:'2026/04/07',w:'加藤 真理',fac:'介護老人福祉施設 きもべつ喜らめきの郷',in:'08:30',out:'16:30',h:'8.0h',st:'確定'},
+  {dt:'2026/04/06',w:'吉田 圭介',fac:'介護老人福祉施設　月寒あさがおの郷',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
+  {dt:'2026/04/06',w:'松本 愛',fac:'特別養護老人ホーム 西円山敬樹園',in:'08:00',out:'16:00',h:'8.0h',st:'確定'},
+];
+
+const PS=10;
+let pg={f:1,w:1,j:1,a:1};
+
+function stCls(s){return{稼働中:'g',待機中:'o',休止中:'x',公開中:'g',締切:'x',マッチ済:'g',確定:'g',承認待ち:'o'}[s]||'g'}
+function slice(arr,p){const s=(p-1)*PS;return{rows:arr.slice(s,s+PS),total:arr.length,pages:Math.ceil(arr.length/PS),s:s+1,e:Math.min(s+PS,arr.length)}}
+function pagH(id,tp,cur,key){
+  const c=document.getElementById(id);if(tp<=1){c.innerHTML='';return}
+  let h=`<button onclick="chg('${key}',${cur-1})" ${cur===1?'disabled':''}>前へ</button>`;
+  for(let i=1;i<=tp;i++) h+=`<button class="pn${i===cur?' on':''}" onclick="chg('${key}',${i})">${i}</button>`;
+  h+=`<button onclick="chg('${key}',${cur+1})" ${cur===tp?'disabled':''}>次へ</button>`;
+  c.innerHTML=h;
+}
+function chg(k,p){pg[k]=p;({f:rFac,w:rWork,j:rJob,a:rAtt,u:rUsage,r:rReg})[k]()}
+
+/* Facilities */
+function fFac(){
+  const q=(document.getElementById('f-search').value||'').toLowerCase().trim();
+  if(!q) return FAC;
+  const t=q.split(/\s+/);
+  return FAC.filter(f=>t.some(w=>f.name.toLowerCase().includes(w)||f.area.toLowerCase().includes(w)));
+}
+function rFac(){
+  pg.f=1; const fl=fFac(),p=slice(fl,pg.f);
+  document.getElementById('f-tb').innerHTML=p.rows.map(f=>`<tr>
+    <td class="c-id">${f.id}</td>
+    <td><a href="#" class="c-link">${f.name}</a></td>
+    <td>${f.area}</td>
+    <td><span class="st st-${stCls(f.st)}">${f.st}</span></td>
+    <td><button class="btn btn-blue btn-sm">管理画面</button></td>
+  </tr>`).join('');
+  document.getElementById('f-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${p.total}件中 / 全${FAC.length}件中`;
+  pagH('f-pag',p.pages,pg.f,'f');
+}
+
+/* Workers */
+function fWork(){
+  const q=(document.getElementById('w-search').value||'').toLowerCase().trim();
+  const ql=document.getElementById('w-qual').value;
+  const st=document.getElementById('w-stat').value;
+  return WRK.filter(w=>{
+    if(q&&!w.name.toLowerCase().includes(q)&&!w.id.toLowerCase().includes(q)) return false;
+    if(ql&&w.q!==ql) return false;
+    if(st&&w.st!==st) return false;
+    return true;
+  });
+}
+function rWork(){
+  pg.w=1; const fl=fWork(),p=slice(fl,pg.w);
+  document.getElementById('w-tb').innerHTML=p.rows.map(w=>`<tr>
+    <td class="c-id">${w.id}</td>
+    <td><strong>${w.name}</strong></td>
+    <td>${w.q}</td>
+    <td><span class="st st-${stCls(w.st)}">${w.st}</span></td>
+    <td><span class="stars">${'★'.repeat(Math.floor(w.r))}${'☆'.repeat(5-Math.floor(w.r))}<span>${w.r.toFixed(1)}</span></span></td>
+    <td><button class="btn btn-out btn-sm">詳細</button></td>
+  </tr>`).join('');
+  document.getElementById('w-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${fl.length}件中`;
+  pagH('w-pag',p.pages,pg.w,'w');
+}
+
+/* Jobs */
+function rJob(){
+  const p=slice(JOBS,pg.j);
+  document.getElementById('j-tb').innerHTML=p.rows.map(j=>`<tr>
+    <td class="c-id">${j.id}</td>
+    <td>${j.fac}</td>
+    <td>${j.type}</td>
+    <td>${j.dt}</td>
+    <td>¥${j.wage.toLocaleString()}</td>
+    <td><strong>${j.apps}名</strong></td>
+    <td><span class="st st-${stCls(j.st)}">${j.st}</span></td>
+  </tr>`).join('');
+  document.getElementById('j-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${JOBS.length}件中`;
+  pagH('j-pag',p.pages,pg.j,'j');
+}
+
+/* Attendance */
+function fAtt(){
+  const v=document.getElementById('a-fac').value;
+  return v?ATT.filter(a=>a.fac.includes(v)):ATT;
+}
+function rAtt(){
+  pg.a=1; const fl=fAtt(),p=slice(fl,pg.a);
+  document.getElementById('a-tb').innerHTML=p.rows.map(a=>`<tr>
+    <td>${a.dt}</td>
+    <td><strong>${a.w}</strong></td>
+    <td>${a.fac}</td>
+    <td>${a.in}</td>
+    <td>${a.out}</td>
+    <td>${a.h}</td>
+    <td><span class="st st-${stCls(a.st)}">${a.st}</span></td>
+  </tr>`).join('');
+  document.getElementById('a-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${fl.length}件中`;
+  pagH('a-pag',p.pages,pg.a,'a');
+}
+
+/* Nav */
+function go(p){
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('on'));
+  document.querySelectorAll('.nav-a').forEach(e=>e.classList.remove('on'));
+  document.getElementById('p-'+p).classList.add('on');
+  document.querySelector(`.nav-a[data-p="${p}"]`).classList.add('on');
+  document.getElementById('sb').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+function toggleSB(){document.getElementById('sb').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+
+/* Modal */
+function openM(id){document.getElementById(id).classList.add('on')}
+function closeM(id){document.getElementById(id).classList.remove('on')}
+
+/* Edit */
+let editing=false;
+function toggleEdit(){
+  editing=!editing;
+  document.querySelectorAll('#c-form .fi').forEach((el,i)=>{
+    if(i===0)return;
+    editing?el.removeAttribute('readonly'):el.setAttribute('readonly','');
+  });
+  document.getElementById('c-actions').style.display=editing?'flex':'none';
+  document.getElementById('edit-txt').textContent=editing?'キャンセル':'編集する';
+}
+
+/* Toast */
+function toast(msg){
+  const c=document.getElementById('toasts'),t=document.createElement('div');
+  t.className='toast ok';t.innerHTML='&#10003; '+msg;c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300)},3000);
+}
+
+/* ── Usage Data (monthly summary like Timee) ── */
+const USAGE_MONTHS=[
+  {period:'未確定(月末確定予定)',periodKey:'pending',facs:7,people:62,jobs:80,transFee:'13,640',adj:0,est:603254,link:true},
+  {period:'2026年3月1日〜2026年3月31日',periodKey:'2026-03',facs:9,people:48,jobs:65,transFee:'11,220',adj:0,est:456800,link:true},
+  {period:'2026年2月1日〜2026年2月28日',periodKey:'2026-02',facs:8,people:45,jobs:58,transFee:'10,440',adj:0,est:412500,link:true},
+  {period:'2026年1月1日〜2026年1月31日',periodKey:'2026-01',facs:8,people:42,jobs:52,transFee:'9,680',adj:0,est:389400,link:true},
+  {period:'2025年12月1日〜2025年12月31日',periodKey:'2025-12',facs:7,people:38,jobs:45,transFee:'8,360',adj:0,est:342100,link:true},
+  {period:'2025年11月1日〜2025年11月30日',periodKey:'2025-11',facs:9,people:52,jobs:72,transFee:'12,100',adj:0,est:448200,link:true},
+  {period:'2025年10月1日〜2025年10月31日',periodKey:'2025-10',facs:8,people:46,jobs:61,transFee:'10,780',adj:0,est:398500,link:true},
+  {period:'2025年9月1日〜2025年9月30日',periodKey:'2025-09',facs:9,people:41,jobs:55,transFee:'9,240',adj:0,est:376100,link:true},
+  {period:'2025年8月1日〜2025年8月31日',periodKey:'2025-08',facs:7,people:35,jobs:42,transFee:'7,920',adj:0,est:312400,link:true},
+];
+
+pg.u=1;pg.r=1;
+
+function rUsage(){
+  const p=slice(USAGE_MONTHS,pg.u);
+  document.getElementById('u-tb').innerHTML=p.rows.map(u=>`<tr>
+    <td>${u.link?'<a href="#" class="c-link">'+u.period+'</a>':u.period}</td>
+    <td style="text-align:center">${u.facs}事業所</td>
+    <td style="text-align:center">${u.people}人</td>
+    <td style="text-align:center">${u.jobs}件</td>
+    <td style="text-align:right">${u.transFee}円</td>
+    <td style="text-align:right">${u.adj.toLocaleString()}円</td>
+    <td style="text-align:right">${u.est.toLocaleString()}円</td>
+    <td style="text-align:right">
+      <div class="dl-wrap">
+        <button class="dl-btn" onclick="toggleDlMenu(this)">ダウンロード <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="dl-menu">
+          <a onclick="dlUsageCSV('就業別','${u.periodKey}');closeDlMenus()">利用明細（就業別）</a>
+          <a onclick="dlUsageCSV('事業所別','${u.periodKey}');closeDlMenus()">利用明細（事業所別）</a>
+          <a onclick="dlUsageCSV('振込関連手数料','${u.periodKey}');closeDlMenus()">振込関連手数料明細</a>
+          <a onclick="dlUsageCSV('請求額調整','${u.periodKey}');closeDlMenus()">請求額調整明細</a>
+        </div>
+      </div>
+    </td>
+  </tr>`).join('');
+  document.getElementById('u-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${USAGE_MONTHS.length}件中`;
+  pagH('u-pag',p.pages,pg.u,'u');
+}
+function toggleDlMenu(btn){closeDlMenus();btn.nextElementSibling.classList.toggle('open')}
+function closeDlMenus(){document.querySelectorAll('.dl-menu').forEach(m=>m.classList.remove('open'))}
+document.addEventListener('click',e=>{if(!e.target.closest('.dl-wrap'))closeDlMenus()})
+
+/* ── Registry Data (period-based like Timee) ── */
+const REG_ENTRIES=[
+  {id:1,start:'2025年1月1日',end:'2025年12月31日',people:201,amount:4760494,tax:0},
+  {id:2,start:'2025年1月1日',end:'2025年1月31日',people:19,amount:304060,tax:0},
+];
+let regNextId=3;
+
+function rReg(){
+  document.getElementById('r-tb').innerHTML=REG_ENTRIES.map(r=>`<tr>
+    <td><a href="#" class="c-link">${r.start}〜${r.end}</a></td>
+    <td style="text-align:center">${r.people}人</td>
+    <td style="text-align:right">${r.amount.toLocaleString()}円</td>
+    <td style="text-align:right">${r.tax.toLocaleString()}円</td>
+    <td style="text-align:right;white-space:nowrap">
+      <button class="dl-btn" onclick="dlRegistryXlsx('${r.start}','${r.end}')">ダウンロード</button>
+      <button class="dl-del" onclick="delRegEntry(${r.id})" style="margin-left:6px"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> 削除</button>
+    </td>
+  </tr>`).join('');
+}
+
+function addRegEntry(){
+  const s=document.getElementById('reg-start').value;
+  const e=document.getElementById('reg-end').value;
+  if(!s||!e){toast('期間を指定してください');return;}
+  const fmt=d=>d.replace(/-/g,'/').replace(/(\d{4})\/0?(\d+)\/0?(\d+)/,'$1年$2月$3日');
+  REG_ENTRIES.unshift({id:regNextId++,start:fmt(s),end:fmt(e),people:Math.floor(Math.random()*50)+10,amount:Math.floor(Math.random()*3000000)+200000,tax:0});
+  closeM('m-registry-dl');
+  rReg();
+  toast('労働者名簿を追加しました');
+}
+
+function delRegEntry(id){
+  const idx=REG_ENTRIES.findIndex(r=>r.id===id);
+  if(idx>=0){REG_ENTRIES.splice(idx,1);rReg();toast('労働者名簿を削除しました');}
+}
+
+/* ── CSV Download ── */
+function dlCSV(filename, header, rows){
+  const bom='\uFEFF';
+  const csv=bom+header.join(',')+'\n'+rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=filename;a.click();
+  URL.revokeObjectURL(a.href);
+  toast(filename+' をダウンロードしました');
+}
+
+function dlUsageCSV(type,periodKey){
+  const bom='\uFEFF';
+  const h=['事業所名','人数','件数','手数料','請求額'];
+  const rows=[['月寒あさがおの郷','24','60','4,620','368,775'],['西円山敬樹園','18','42','3,960','285,400'],['菊水こまちの郷','12','30','2,640','198,500']];
+  const csv=bom+h.join(',')+'\n'+rows.map(r=>r.join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=`利用明細_${type}_${periodKey}.csv`;a.click();
+  URL.revokeObjectURL(a.href);
+  toast(`利用明細（${type}）をダウンロードしました`);
+}
+
+function dlRegistryXlsx(startLabel,endLabel){
+  if(typeof XLSX==='undefined'){toast('Excelライブラリを読み込み中です。少し待ってから再度お試しください。');return;}
+  const fileName=`更新_社会福祉法人渓仁会様_${endLabel}までの労働者名簿.xlsx`;
+
+  // Sample data matching the 19-column spec
+  const REG_DATA=[
+    ['W-10021','介護老人福祉施設　月寒あさがおの郷','佐藤','花子','北海道札幌市豊平区月寒東1条5丁目','1990/05/12','女性','080-1234-5678','2025/04/01','2026/04/10',120,0,4,124,16,520,156000,8000,164000],
+    ['W-10034','地域密着型介護老人福祉施設　菊水こまちの郷','田中','一郎','北海道札幌市白石区菊水3条2丁目','1985/11/03','男性','090-2345-6789','2025/05/15','2026/04/09',96,0,0,96,12,0,105600,4800,110400],
+    ['W-10045','介護老人福祉施設　月寒あさがおの郷','鈴木','美咲','北海道札幌市中央区南3条西8丁目','1992/08/20','女性','080-3456-7890','2025/04/01','2026/04/09',144,0,8,152,19,780,182400,9500,191900],
+    ['W-10052','特別養護老人ホーム 西円山敬樹園','高橋','誠','北海道札幌市中央区北1条西20丁目','1988/02/14','男性','070-4567-8901','2025/06/01','2026/04/10',112,3,2,114,15,260,153900,12000,165900],
+    ['W-10063','特別養護老人ホーム 西円山敬樹園','山本','健太','北海道札幌市西区発寒5条3丁目','1983/12/25','男性','090-5678-9012','2025/04/15','2026/04/10',160,7,12,172,22,1040,240800,13200,254000],
+    ['W-10078','介護老人福祉施設　月寒あさがおの郷','伊藤','さくら','北海道札幌市豊平区美園6条4丁目','1995/03/08','女性','080-6789-0123','2025/07/01','2026/04/09',80,5,0,80,10,0,96000,5000,101000],
+    ['W-10091','特別養護老人ホーム 西円山敬樹園','中村','幸子','北海道札幌市中央区宮の森1条6丁目','1980/06/30','女性','090-8901-2345','2025/04/01','2026/04/08',168,0,16,184,23,1300,239200,16100,255300],
+    ['W-10115','介護老人福祉施設 きもべつ喜らめきの郷','加藤','真理','北海道喜茂別町字喜茂別120','1987/07/11','女性','090-0123-4567','2025/06/15','2026/04/07',104,0,0,104,13,0,119600,15600,135200],
+    ['W-10128','介護老人福祉施設　月寒あさがおの郷','吉田','圭介','北海道札幌市豊平区平岸4条8丁目','1991/04/05','男性','070-1234-5678','2025/04/01','2026/04/06',136,0,8,144,18,520,172800,9000,181800],
+    ['W-10139','特別養護老人ホーム 西円山敬樹園','松本','愛','北海道札幌市中央区円山西町3丁目','1986/10/28','女性','080-2345-6789','2025/04/15','2026/04/06',152,0,8,160,20,780,240000,12000,252000],
+    ['W-10156','介護老人福祉施設 まこまないの郷','清水','由美','北海道札幌市南区真駒内緑町2丁目','1989/03/15','女性','070-4567-8901','2025/07/01','2026/04/05',84,0,0,84,12,0,100800,4800,105600],
+    ['W-10167','地域密着型介護老人福祉施設　菊水こまちの郷','森田','隆','北海道札幌市白石区栄通18丁目','2000/08/02','男性','080-5678-9012','2025/10/01','2026/04/05',42,0,0,42,7,0,44100,2100,46200],
+  ];
+
+  const header=['ユニークID','事業所名','姓','名','住所','生年月日','性別','電話番号',
+    '初回稼働日','最終稼働日','累計通常勤務時間','累計深夜労働時間','累計法定外割増時間',
+    '累計実働時間','累計稼働回数','累計源泉徴収額','累計支払額','累計交通費支払額','累計総支給額'];
+
+  const ws=XLSX.utils.aoa_to_sheet([header,...REG_DATA]);
+  ws['!cols']=header.map((_,i)=>{
+    if(i===1||i===4) return{wch:36};
+    if(i>=10) return{wch:14};
+    return{wch:16};
+  });
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'労働者名簿');
+  XLSX.writeFile(wb,fileName);
+  toast(fileName+' をダウンロードしました');
+}
+
+/* Init */
+rFac();rWork();rJob();rAtt();rUsage();rReg();
+</script>
+</body>
+</html>
