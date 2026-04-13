@@ -244,7 +244,16 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 
     <!-- 月別利用額推移 (CSS bar chart) -->
     <div class="fcard" style="margin-bottom:16px">
-      <h3>月別利用額推移</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <h3 style="margin:0">月別利用額推移</h3>
+        <select class="sel" id="dash-fac-sel" onchange="rDashChart()" style="width:auto;min-width:180px">
+          <option value="">法人全体</option>
+          <option>月寒あさがおの郷</option>
+          <option>西円山敬樹園</option>
+          <option>菊水こまちの郷</option>
+          <option>きもべつ喜らめきの郷</option>
+        </select>
+      </div>
       <div id="dash-chart" style="display:flex;align-items:flex-end;gap:8px;height:180px;padding-top:10px"></div>
     </div>
 
@@ -1149,12 +1158,31 @@ table.items .amt-sub{font-size:11px;color:#777}
 }
 
 /* ===== ダッシュボード ===== */
-function rDashboard(){
-  // 月別利用額推移 (直近6ヶ月)
-  const dMonths=[
+const DASH_FAC_DATA={
+  '':[
     {m:'11月',v:410000},{m:'12月',v:385000},{m:'1月',v:456200},
     {m:'2月',v:423800},{m:'3月',v:456400},{m:'4月',v:387200}
-  ];
+  ],
+  '月寒あさがおの郷':[
+    {m:'11月',v:152000},{m:'12月',v:138000},{m:'1月',v:168000},
+    {m:'2月',v:155000},{m:'3月',v:162800},{m:'4月',v:142800}
+  ],
+  '西円山敬樹園':[
+    {m:'11月',v:124000},{m:'12月',v:118000},{m:'1月',v:138200},
+    {m:'2月',v:132000},{m:'3月',v:142000},{m:'4月',v:108000}
+  ],
+  '菊水こまちの郷':[
+    {m:'11月',v:82000},{m:'12月',v:78000},{m:'1月',v:92000},
+    {m:'2月',v:85000},{m:'3月',v:94600},{m:'4月',v:78400}
+  ],
+  'きもべつ喜らめきの郷':[
+    {m:'11月',v:52000},{m:'12月',v:51000},{m:'1月',v:58000},
+    {m:'2月',v:51800},{m:'3月',v:57000},{m:'4月',v:58000}
+  ]
+};
+function rDashChart(){
+  const sel=document.getElementById('dash-fac-sel').value;
+  const dMonths=DASH_FAC_DATA[sel]||DASH_FAC_DATA[''];
   const dMax=Math.max(...dMonths.map(d=>d.v));
   document.getElementById('dash-chart').innerHTML=dMonths.map(d=>{
     const h=Math.round(d.v/dMax*160);
@@ -1165,6 +1193,9 @@ function rDashboard(){
       <span style="font-size:11px;color:var(--gray-400)">${d.m}</span>
     </div>`;
   }).join('');
+}
+function rDashboard(){
+  rDashChart();
 
   // アクティビティフィード
   const acts=[
