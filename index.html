@@ -203,17 +203,20 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">メイン</div>
-    <a class="nav-a on" data-p="facilities" onclick="go('facilities')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>事業所一覧</a>
+    <a class="nav-a on" data-p="dashboard" onclick="go('dashboard')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>ダッシュボード</a>
+    <a class="nav-a" data-p="facilities" onclick="go('facilities')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>事業所一覧</a>
     <a class="nav-a" data-p="company" onclick="go('company')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>法人情報</a>
     <a class="nav-a" data-p="workers" onclick="go('workers')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>ワーカー管理</a>
     <div class="nav-label">運用</div>
     <a class="nav-a" data-p="jobs" onclick="go('jobs')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><path d="M9 21V9"/></svg>求人管理</a>
     <a class="nav-a" data-p="attendance" onclick="go('attendance')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>勤怠管理</a>
     <a class="nav-a" data-p="messages" onclick="go('messages')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>メッセージ<span class="nav-badge">3</span></a>
+    <a class="nav-a" data-p="reviews" onclick="go('reviews')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>レビュー</a>
     <div class="nav-label">管理</div>
     <a class="nav-a" data-p="billing" onclick="go('billing')"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>請求・支払い</a>
     <a class="nav-a" data-p="usage" onclick="go('usage')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>利用明細</a>
     <a class="nav-a" data-p="registry" onclick="go('registry')"><svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>労働者名簿</a>
+    <a class="nav-a" data-p="report" onclick="go('report')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>レポート・分析</a>
     <a class="nav-a" data-p="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>設定</a>
   </nav>
   <div class="sidebar-foot">もん助 管理画面 v1.0</div>
@@ -227,8 +230,49 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="topbar-avatar">管</div>
   </header>
 
+  <!-- ===== ダッシュボード ===== -->
+  <div class="page on" id="p-dashboard">
+    <div class="ph"><h1>ダッシュボード</h1></div>
+    <p class="ph-sub">法人全体の利用状況を一目で確認できます。</p>
+
+    <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stat"><div class="stat-label">今月の利用額</div><div class="stat-val">¥387,200</div><div class="stat-sub">前月比 <span style="color:var(--red)">-15.2%</span></div></div>
+      <div class="stat"><div class="stat-label">稼働中ワーカー</div><div class="stat-val">32<span style="font-size:14px;color:var(--gray-400)"> / 48名</span></div><div class="stat-sub">待機中 12 / 休止中 4</div></div>
+      <div class="stat"><div class="stat-label">今月の稼働件数</div><div class="stat-val">34<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub">前月比 <span style="color:var(--red)">-19.0%</span></div></div>
+      <div class="stat"><div class="stat-label">未読メッセージ</div><div class="stat-val" style="color:var(--primary)">3<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub"><a href="#" class="c-link" onclick="go('messages');return false">確認する →</a></div></div>
+    </div>
+
+    <!-- 月別利用額推移 (CSS bar chart) -->
+    <div class="fcard" style="margin-bottom:16px">
+      <h3>月別利用額推移</h3>
+      <div id="dash-chart" style="display:flex;align-items:flex-end;gap:8px;height:180px;padding-top:10px"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <!-- 事業所別利用状況 -->
+      <div class="fcard">
+        <h3>事業所別 今月の利用状況</h3>
+        <table style="width:100%;border-collapse:collapse">
+          <thead><tr><th style="text-align:left;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)">事業所</th><th style="text-align:right;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)">件数</th><th style="text-align:right;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)">金額</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:8px 10px;font-size:13px">月寒あさがおの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">12件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥142,800</td></tr>
+            <tr style="background:var(--gray-50)"><td style="padding:8px 10px;font-size:13px">西円山敬樹園</td><td style="text-align:right;padding:8px 10px;font-size:13px">9件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥108,000</td></tr>
+            <tr><td style="padding:8px 10px;font-size:13px">菊水こまちの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">7件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥78,400</td></tr>
+            <tr style="background:var(--gray-50)"><td style="padding:8px 10px;font-size:13px">きもべつ喜らめきの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">6件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥58,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 直近のアクティビティ -->
+      <div class="fcard">
+        <h3>直近のアクティビティ</h3>
+        <div id="dash-activity" style="font-size:13px"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== 事業所一覧 ===== -->
-  <div class="page on" id="p-facilities">
+  <div class="page" id="p-facilities">
     <div class="ph">
       <h1>事業所一覧</h1>
     </div>
@@ -443,6 +487,93 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         <th style="width:100px">合計源泉徴収額</th>
         <th style="width:200px"></th>
       </tr></thead><tbody id="r-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== レビュー ===== -->
+  <div class="page" id="p-reviews">
+    <div class="ph"><h1>レビュー</h1></div>
+    <p class="ph-sub">ワーカーから事業所に寄せられた評価・レビューを確認できます。</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">全体平均スコア</div><div class="stat-val">4.3<span style="font-size:14px;color:var(--accent)"> / 5.0</span></div><div class="stat-sub">★★★★☆ (全128件)</div></div>
+      <div class="stat"><div class="stat-label">今月の新着レビュー</div><div class="stat-val">8<span style="font-size:14px;color:var(--gray-400)">件</span></div></div>
+      <div class="stat"><div class="stat-label">最も高評価の事業所</div><div class="stat-val" style="font-size:16px">西円山敬樹園</div><div class="stat-sub">★4.7 (32件)</div></div>
+    </div>
+
+    <!-- 事業所別スコア -->
+    <div class="fcard" style="margin-bottom:16px">
+      <h3>事業所別 平均スコア</h3>
+      <div id="review-bars" style="display:flex;flex-direction:column;gap:12px;margin-top:12px"></div>
+    </div>
+
+    <!-- レビュー一覧 -->
+    <div class="search-area">
+      <div class="search-filters" style="margin-top:0">
+        <select class="sel" id="rv-fac" onchange="rReviews()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
+        <select class="sel" id="rv-score" onchange="rReviews()"><option value="">全てのスコア</option><option value="5">★5</option><option value="4">★4</option><option value="3">★3</option><option value="2">★2以下</option></select>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tbar"><span id="rv-cnt"></span></div>
+      <table><thead><tr>
+        <th style="width:60px">スコア</th>
+        <th>事業所名</th>
+        <th>ワーカー</th>
+        <th>コメント</th>
+        <th style="width:100px">日付</th>
+      </tr></thead><tbody id="rv-tb"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== レポート・分析 ===== -->
+  <div class="page" id="p-report">
+    <div class="ph"><h1>レポート・分析</h1></div>
+    <p class="ph-sub">利用状況の推移や事業所別比較を確認できます。</p>
+
+    <!-- KPI -->
+    <div class="stats" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stat"><div class="stat-label">年間利用総額</div><div class="stat-val">¥4,218,600</div><div class="stat-sub">2026年度</div></div>
+      <div class="stat"><div class="stat-label">月平均利用額</div><div class="stat-val">¥421,860</div><div class="stat-sub">直近10ヶ月</div></div>
+      <div class="stat"><div class="stat-label">累計稼働ワーカー</div><div class="stat-val">48<span style="font-size:14px;color:var(--gray-400)">名</span></div></div>
+      <div class="stat"><div class="stat-label">累計稼働回数</div><div class="stat-val">362<span style="font-size:14px;color:var(--gray-400)">回</span></div></div>
+    </div>
+
+    <!-- 月別推移グラフ -->
+    <div class="fcard" style="margin-bottom:16px">
+      <h3>月別利用額推移（直近12ヶ月）</h3>
+      <div id="rpt-chart" style="display:flex;align-items:flex-end;gap:6px;height:200px;padding-top:16px;border-bottom:2px solid var(--gray-200)"></div>
+      <div id="rpt-labels" style="display:flex;gap:6px;padding-top:6px"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <!-- 事業所別利用比較 -->
+      <div class="fcard">
+        <h3>事業所別 利用比較（今年度）</h3>
+        <div id="rpt-fac-bars" style="display:flex;flex-direction:column;gap:10px;margin-top:12px"></div>
+      </div>
+
+      <!-- 職種別稼働 -->
+      <div class="fcard">
+        <h3>職種別 稼働件数</h3>
+        <div id="rpt-job-bars" style="display:flex;flex-direction:column;gap:10px;margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- ワーカー稼働ランキング -->
+    <div class="fcard">
+      <h3>ワーカー稼働ランキング（Top 10）</h3>
+      <table style="width:100%;border-collapse:collapse;margin-top:8px">
+        <thead><tr>
+          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200);width:40px">#</th>
+          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">ワーカー名</th>
+          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">資格</th>
+          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">稼働回数</th>
+          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">累計時間</th>
+          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">評価</th>
+        </tr></thead>
+        <tbody id="rpt-rank"></tbody>
+      </table>
     </div>
   </div>
 
@@ -1017,8 +1148,196 @@ table.items .amt-sub{font-size:11px;color:#777}
   toast('請求書を新しいタブで開きました。「PDFとして保存」を押してください。');
 }
 
+/* ===== ダッシュボード ===== */
+function rDashboard(){
+  // 月別利用額推移 (直近6ヶ月)
+  const dMonths=[
+    {m:'11月',v:410000},{m:'12月',v:385000},{m:'1月',v:456200},
+    {m:'2月',v:423800},{m:'3月',v:456400},{m:'4月',v:387200}
+  ];
+  const dMax=Math.max(...dMonths.map(d=>d.v));
+  document.getElementById('dash-chart').innerHTML=dMonths.map(d=>{
+    const h=Math.round(d.v/dMax*160);
+    const cur=d.m==='4月';
+    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+      <span style="font-size:11px;font-weight:600;color:${cur?'var(--primary)':'var(--gray-500)'}">¥${(d.v/10000).toFixed(1)}万</span>
+      <div style="width:100%;height:${h}px;background:${cur?'var(--primary)':'var(--gray-200)'};border-radius:4px 4px 0 0"></div>
+      <span style="font-size:11px;color:var(--gray-400)">${d.m}</span>
+    </div>`;
+  }).join('');
+
+  // アクティビティフィード
+  const acts=[
+    {icon:'📋',text:'月寒あさがおの郷 — 求人「夜勤介護スタッフ」に 佐藤美咲 がマッチ',time:'30分前'},
+    {icon:'✅',text:'西円山敬樹園 — 稼働完了: 鈴木一郎（日勤介護）',time:'2時間前'},
+    {icon:'⭐',text:'菊水こまちの郷 — 新着レビュー ★5「とても丁寧でした」',time:'3時間前'},
+    {icon:'💰',text:'2026年3月分 請求書が確定しました',time:'昨日'},
+    {icon:'👤',text:'新規ワーカー登録: 高橋健太（介護福祉士）',time:'2日前'},
+    {icon:'📋',text:'きもべつ喜らめきの郷 — 求人「日勤生活支援」に 田中花子 がマッチ',time:'3日前'}
+  ];
+  document.getElementById('dash-activity').innerHTML=acts.map(a=>
+    `<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100)">
+      <span style="font-size:16px;flex-shrink:0">${a.icon}</span>
+      <div style="flex:1"><div style="line-height:1.5">${a.text}</div>
+      <div style="font-size:11px;color:var(--gray-400);margin-top:2px">${a.time}</div></div>
+    </div>`
+  ).join('');
+}
+
+/* ===== レビュー ===== */
+const REVIEWS=[
+  {fac:'月寒あさがおの郷',worker:'佐藤 美咲',score:5,comment:'スタッフの方がとても親切で、安心して働けました。設備も整っていて快適です。',date:'2026-04-10'},
+  {fac:'西円山敬樹園',worker:'鈴木 一郎',score:5,comment:'利用者さんとの関わり方を丁寧に教えていただきました。また働きたいです。',date:'2026-04-08'},
+  {fac:'菊水こまちの郷',worker:'田中 花子',score:5,comment:'とても丁寧に指導していただきました。雰囲気が良い職場です。',date:'2026-04-07'},
+  {fac:'西円山敬樹園',worker:'高橋 健太',score:4,comment:'業務内容が明確で動きやすかったです。休憩室がもう少し広いと嬉しいです。',date:'2026-04-05'},
+  {fac:'月寒あさがおの郷',worker:'渡辺 裕子',score:4,comment:'チームワークが良く、フォロー体制がしっかりしています。',date:'2026-04-03'},
+  {fac:'きもべつ喜らめきの郷',worker:'伊藤 大輔',score:4,comment:'自然豊かな環境で利用者さんもゆったりしていました。通勤が少し大変です。',date:'2026-04-01'},
+  {fac:'菊水こまちの郷',worker:'山本 真理',score:5,comment:'ベテランスタッフが多く安心感があります。学びの多い現場でした。',date:'2026-03-28'},
+  {fac:'月寒あさがおの郷',worker:'中村 翔太',score:3,comment:'業務量が多めでしたが、サポートはありました。事前説明がもう少し欲しいです。',date:'2026-03-25'},
+  {fac:'西円山敬樹園',worker:'小林 さくら',score:5,comment:'利用者さんが穏やかで働きやすい環境です。スタッフ間の連携も素晴らしい。',date:'2026-03-22'},
+  {fac:'きもべつ喜らめきの郷',worker:'加藤 由美',score:4,comment:'のんびりした雰囲気が良いです。送迎があると助かります。',date:'2026-03-20'},
+  {fac:'菊水こまちの郷',worker:'吉田 和也',score:4,comment:'清潔感があり、利用者さんへの対応が丁寧な施設です。',date:'2026-03-18'},
+  {fac:'月寒あさがおの郷',worker:'松本 恵理',score:5,comment:'夜勤でしたが、引き継ぎがスムーズで問題なく対応できました。',date:'2026-03-15'},
+  {fac:'西円山敬樹園',worker:'井上 光',score:4,comment:'設備が新しく快適です。もう少し休憩が取れると嬉しいです。',date:'2026-03-12'},
+  {fac:'きもべつ喜らめきの郷',worker:'木村 純',score:3,comment:'利用者さんは良い方ばかりですが、マニュアルが古い部分があります。',date:'2026-03-08'},
+  {fac:'月寒あさがおの郷',worker:'林 美香',score:4,comment:'教育体制が整っていて初めてでも安心して働けます。',date:'2026-03-05'},
+  {fac:'菊水こまちの郷',worker:'清水 太一',score:5,comment:'スタッフ全員が温かく迎えてくれました。やりがいを感じられる職場です。',date:'2026-03-01'}
+];
+const FAC_SCORES={
+  '西円山敬樹園':{avg:4.7,cnt:32},
+  '月寒あさがおの郷':{avg:4.3,cnt:38},
+  '菊水こまちの郷':{avg:4.4,cnt:34},
+  'きもべつ喜らめきの郷':{avg:3.8,cnt:24}
+};
+function stars(n){return '★'.repeat(Math.floor(n))+(n%1>=0.5?'☆':'')+'☆'.repeat(5-Math.ceil(n))}
+function rReviews(){
+  // 事業所別スコアバー
+  const maxCnt=Math.max(...Object.values(FAC_SCORES).map(v=>v.cnt));
+  document.getElementById('review-bars').innerHTML=Object.entries(FAC_SCORES)
+    .sort((a,b)=>b[1].avg-a[1].avg)
+    .map(([name,d])=>{
+      const w=Math.round(d.avg/5*100);
+      return `<div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+          <span>${name}</span><span style="font-weight:600;color:var(--primary)">★ ${d.avg.toFixed(1)} <span style="color:var(--gray-400);font-weight:400">(${d.cnt}件)</span></span>
+        </div>
+        <div style="background:var(--gray-100);border-radius:4px;height:20px;overflow:hidden">
+          <div style="height:100%;width:${w}%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:4px"></div>
+        </div>
+      </div>`;
+    }).join('');
+
+  // フィルタ
+  const fFac=document.getElementById('rv-fac').value;
+  const fScore=document.getElementById('rv-score').value;
+  let list=REVIEWS;
+  if(fFac) list=list.filter(r=>r.fac===fFac);
+  if(fScore){
+    const s=parseInt(fScore);
+    if(s<=2) list=list.filter(r=>r.score<=2);
+    else list=list.filter(r=>r.score===s);
+  }
+  document.getElementById('rv-cnt').textContent=list.length+'件のレビュー';
+  document.getElementById('rv-tb').innerHTML=list.map((r,i)=>
+    `<tr${i%2?` style="background:var(--gray-50)"`:''}>
+      <td style="padding:10px 12px;font-size:14px;font-weight:600;color:var(--primary)">★ ${r.score}</td>
+      <td style="padding:10px 12px;font-size:13px">${r.fac}</td>
+      <td style="padding:10px 12px;font-size:13px">${r.worker}</td>
+      <td style="padding:10px 12px;font-size:13px;color:var(--gray-500);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.comment}</td>
+      <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${r.date}</td>
+    </tr>`
+  ).join('');
+}
+
+/* ===== レポート・分析 ===== */
+function rReport(){
+  // 月別利用額推移（12ヶ月）
+  const rptMonths=[
+    {m:'5月',v:320000},{m:'6月',v:345000},{m:'7月',v:378000},{m:'8月',v:402000},
+    {m:'9月',v:389000},{m:'10月',v:425000},{m:'11月',v:410000},{m:'12月',v:385000},
+    {m:'1月',v:456200},{m:'2月',v:423800},{m:'3月',v:456400},{m:'4月',v:387200}
+  ];
+  const rMax=Math.max(...rptMonths.map(d=>d.v));
+  document.getElementById('rpt-chart').innerHTML=rptMonths.map(d=>{
+    const h=Math.round(d.v/rMax*180);
+    const cur=d.m==='4月';
+    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+      <span style="font-size:10px;font-weight:600;color:${cur?'var(--primary)':'var(--gray-400)'}">¥${(d.v/10000).toFixed(1)}万</span>
+      <div style="width:100%;height:${h}px;background:${cur?'var(--primary)':'var(--gray-200)'};border-radius:3px 3px 0 0"></div>
+    </div>`;
+  }).join('');
+  document.getElementById('rpt-labels').innerHTML=rptMonths.map(d=>
+    `<div style="flex:1;text-align:center;font-size:10px;color:var(--gray-400)">${d.m}</div>`
+  ).join('');
+
+  // 事業所別利用比較
+  const facComp=[
+    {name:'月寒あさがおの郷',val:1680000},
+    {name:'西円山敬樹園',val:1320000},
+    {name:'菊水こまちの郷',val:780000},
+    {name:'きもべつ喜らめきの郷',val:438600}
+  ];
+  const fcMax=Math.max(...facComp.map(d=>d.val));
+  document.getElementById('rpt-fac-bars').innerHTML=facComp.map(d=>{
+    const w=Math.round(d.val/fcMax*100);
+    return `<div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <span>${d.name}</span><span style="font-weight:600">¥${d.val.toLocaleString()}</span>
+      </div>
+      <div style="background:var(--gray-100);border-radius:4px;height:18px;overflow:hidden">
+        <div style="height:100%;width:${w}%;background:var(--primary);border-radius:4px"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // 職種別稼働件数
+  const jobComp=[
+    {name:'介護職（日勤）',val:142},
+    {name:'介護職（夜勤）',val:88},
+    {name:'生活支援員',val:65},
+    {name:'看護助手',val:38},
+    {name:'調理補助',val:29}
+  ];
+  const jMax=Math.max(...jobComp.map(d=>d.val));
+  document.getElementById('rpt-job-bars').innerHTML=jobComp.map(d=>{
+    const w=Math.round(d.val/jMax*100);
+    return `<div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <span>${d.name}</span><span style="font-weight:600">${d.val}件</span>
+      </div>
+      <div style="background:var(--gray-100);border-radius:4px;height:18px;overflow:hidden">
+        <div style="height:100%;width:${w}%;background:var(--accent);border-radius:4px"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // ワーカー稼働ランキング
+  const rankData=[
+    {name:'佐藤 美咲',cert:'介護福祉士',cnt:28,hrs:'224h',rate:4.9},
+    {name:'鈴木 一郎',cert:'介護福祉士',cnt:25,hrs:'200h',rate:4.8},
+    {name:'田中 花子',cert:'初任者研修',cnt:22,hrs:'176h',rate:4.7},
+    {name:'高橋 健太',cert:'介護福祉士',cnt:20,hrs:'160h',rate:4.6},
+    {name:'渡辺 裕子',cert:'実務者研修',cnt:18,hrs:'144h',rate:4.5},
+    {name:'伊藤 大輔',cert:'介護福祉士',cnt:17,hrs:'136h',rate:4.4},
+    {name:'山本 真理',cert:'初任者研修',cnt:16,hrs:'128h',rate:4.6},
+    {name:'中村 翔太',cert:'実務者研修',cnt:15,hrs:'120h',rate:4.3},
+    {name:'小林 さくら',cert:'介護福祉士',cnt:14,hrs:'112h',rate:4.7},
+    {name:'加藤 由美',cert:'初任者研修',cnt:13,hrs:'104h',rate:4.5}
+  ];
+  document.getElementById('rpt-rank').innerHTML=rankData.map((d,i)=>
+    `<tr${i%2?` style="background:var(--gray-50)"`:''}>
+      <td style="padding:8px 12px;font-size:13px;font-weight:600;color:${i<3?'var(--primary)':'var(--gray-500)'}">${i+1}</td>
+      <td style="padding:8px 12px;font-size:13px">${d.name}</td>
+      <td style="padding:8px 12px;font-size:12px;color:var(--gray-500)">${d.cert}</td>
+      <td style="text-align:right;padding:8px 12px;font-size:13px;font-weight:600">${d.cnt}回</td>
+      <td style="text-align:right;padding:8px 12px;font-size:13px">${d.hrs}</td>
+      <td style="text-align:right;padding:8px 12px;font-size:13px;color:var(--primary)">★ ${d.rate}</td>
+    </tr>`
+  ).join('');
+}
+
 /* Init */
-rFac();rWork();rJob();rAtt();rUsage();rReg();rBilling();
+rFac();rWork();rJob();rAtt();rUsage();rReg();rBilling();rDashboard();rReviews();rReport();
 </script>
 </body>
 </html>
