@@ -231,7 +231,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <div class="page on" id="p-facilities">
     <div class="ph">
       <h1>事業所一覧</h1>
-      <button class="btn btn-blue" onclick="openM('m-facility')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>事業所を追加</button>
     </div>
     <p class="ph-sub">事業所用管理画面に移動できます。</p>
 
@@ -481,18 +480,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 </div>
 
 <!-- MODALS -->
-<div class="modal-bg" id="m-facility">
-  <div class="modal">
-    <div class="modal-head"><h3>事業所を追加</h3><button class="modal-x" onclick="closeM('m-facility')">&times;</button></div>
-    <div class="modal-body">
-      <div class="fg"><label>事業所名 *</label><input class="fi" placeholder="例: 介護老人福祉施設 ○○の郷"></div>
-      <div class="fg"><label>エリア *</label><select class="fi"><option value="">選択してください</option><option>札幌市中央区</option><option>札幌市北区</option><option>札幌市東区</option><option>札幌市白石区</option><option>札幌市豊平区</option><option>札幌市南区</option><option>札幌市西区</option><option>札幌市厚別区</option><option>札幌市手稲区</option><option>札幌市清田区</option><option>小樽市</option><option>その他</option></select></div>
-      <div class="fg"><label>住所</label><input class="fi" placeholder="〒000-0000 北海道..."></div>
-      <div class="fg"><label>電話番号</label><input class="fi" placeholder="011-XXX-XXXX"></div>
-    </div>
-    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-facility')">キャンセル</button><button class="btn btn-blue" onclick="closeM('m-facility');toast('事業所を追加しました')">追加する</button></div>
-  </div>
-</div>
 
 <div class="modal-bg" id="m-registry-dl">
   <div class="modal">
