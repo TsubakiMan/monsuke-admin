@@ -260,7 +260,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <div class="page" id="p-company">
     <div class="ph">
       <h1>法人情報</h1>
-      <button class="btn btn-blue" id="edit-btn" onclick="toggleEdit()"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span id="edit-txt">編集する</span></button>
     </div>
     <p class="ph-sub">法人の基本情報を確認・編集できます。</p>
     <div class="fcard">
@@ -274,10 +273,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         <div class="fg"><label>メールアドレス</label><input class="fi" value="info@keijinkai.or.jp" readonly></div>
         <div class="fg"><label>契約プラン</label><input class="fi" value="スタンダードプラン" readonly></div>
         <div class="fg"><label>契約開始日</label><input class="fi" value="2025年4月1日" readonly></div>
-      </div>
-      <div class="factions" id="c-actions" style="display:none">
-        <button class="btn btn-out" onclick="toggleEdit()">キャンセル</button>
-        <button class="btn btn-blue" onclick="toggleEdit();toast('法人情報を保存しました')">保存する</button>
       </div>
     </div>
   </div>
