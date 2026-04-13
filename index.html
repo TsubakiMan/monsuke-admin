@@ -283,6 +283,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
             <option value="review">レビュー</option>
             <option value="billing">請求・支払い</option>
             <option value="worker">ワーカー</option>
+            <option value="cancel">キャンセル</option>
           </select>
         </div>
         <div id="dash-activity" style="font-size:13px"></div>
@@ -1221,7 +1222,10 @@ const DASH_ACTS=[
   {icon:'⭐',cat:'review',text:'西円山敬樹園 — 新着レビュー ★4「業務内容が明確で動きやすかった」',time:'4日前'},
   {icon:'👤',cat:'worker',text:'ワーカー資格更新: 伊藤大輔（介護福祉士 → 実務者研修修了）',time:'5日前'},
   {icon:'✅',cat:'done',text:'菊水こまちの郷 — 稼働完了: 山本真理（日勤介護）',time:'5日前'},
-  {icon:'📋',cat:'match',text:'西円山敬樹園 — 求人「夜勤看護助手」に 小林さくら がマッチ',time:'6日前'}
+  {icon:'📋',cat:'match',text:'西円山敬樹園 — 求人「夜勤看護助手」に 小林さくら がマッチ',time:'6日前'},
+  {icon:'❌',cat:'cancel',text:'月寒あさがおの郷 — 中村翔太 が「日勤介護スタッフ」をキャンセル（体調不良）',time:'1日前'},
+  {icon:'❌',cat:'cancel',text:'きもべつ喜らめきの郷 — 加藤由美 が「生活支援員」をキャンセル（スケジュール変更）',time:'4日前'},
+  {icon:'❌',cat:'cancel',text:'菊水こまちの郷 — 事業所側キャンセル「夜勤介護」（人員充足のため）',time:'7日前'}
 ];
 function rDashActivity(){
   const sel=document.getElementById('dash-act-sel').value;
