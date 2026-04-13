@@ -324,9 +324,8 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <div class="page" id="p-jobs">
     <div class="ph">
       <h1>求人管理</h1>
-      <button class="btn btn-blue" onclick="openM('m-job')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>求人を作成</button>
     </div>
-    <p class="ph-sub">求人の作成・管理ができます。</p>
+    <p class="ph-sub">求人の確認・管理ができます。</p>
 
     <div class="stats">
       <div class="stat"><div class="stat-label">公開中の求人</div><div class="stat-val">8</div></div>
@@ -492,21 +491,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       <div class="fg"><label>電話番号</label><input class="fi" placeholder="011-XXX-XXXX"></div>
     </div>
     <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-facility')">キャンセル</button><button class="btn btn-blue" onclick="closeM('m-facility');toast('事業所を追加しました')">追加する</button></div>
-  </div>
-</div>
-
-<div class="modal-bg" id="m-job">
-  <div class="modal">
-    <div class="modal-head"><h3>求人を作成</h3><button class="modal-x" onclick="closeM('m-job')">&times;</button></div>
-    <div class="modal-body">
-      <div class="fg"><label>事業所 *</label><select class="fi"><option value="">選択してください</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select></div>
-      <div class="fg"><label>職種 *</label><select class="fi"><option value="">選択してください</option><option>介護職</option><option>看護職</option><option>生活支援員</option><option>調理補助</option><option>送迎ドライバー</option></select></div>
-      <div class="fg"><label>勤務日時 *</label><input class="fi" type="datetime-local"></div>
-      <div class="fg"><label>時給（円） *</label><input class="fi" type="number" placeholder="1200" min="900" step="50"></div>
-      <div class="fg"><label>募集人数</label><input class="fi" type="number" value="1" min="1"></div>
-      <div class="fg"><label>備考</label><textarea class="fi" rows="3" placeholder="必要な資格や注意事項など"></textarea></div>
-    </div>
-    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-job')">キャンセル</button><button class="btn btn-blue" onclick="closeM('m-job');toast('求人を作成しました')">作成する</button></div>
   </div>
 </div>
 
