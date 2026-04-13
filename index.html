@@ -347,12 +347,11 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <!-- ===== ワーカー管理 ===== -->
   <div class="page" id="p-workers">
     <div class="ph"><h1>ワーカー管理</h1></div>
-    <p class="ph-sub">登録済みワーカーの情報を確認できます。</p>
+    <p class="ph-sub">もん助でマッチングしたことがあるワーカーの一覧です。</p>
 
     <div class="stats">
-      <div class="stat"><div class="stat-label">登録ワーカー数</div><div class="stat-val">48</div><div class="stat-sub">先月比 +5</div></div>
-      <div class="stat"><div class="stat-label">稼働中</div><div class="stat-val">32</div></div>
-      <div class="stat"><div class="stat-label">待機中</div><div class="stat-val">12</div></div>
+      <div class="stat"><div class="stat-label">マッチング済みワーカー数</div><div class="stat-val">15</div><div class="stat-sub">累計</div></div>
+      <div class="stat"><div class="stat-label">累計マッチング回数</div><div class="stat-val">362<span style="font-size:14px;color:var(--gray-400)">回</span></div></div>
       <div class="stat"><div class="stat-label">平均評価</div><div class="stat-val">4.6</div><div class="stat-sub">★★★★★</div></div>
     </div>
 
@@ -365,7 +364,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       </div>
       <div class="search-filters">
         <select class="sel" id="w-qual" onchange="rWork()"><option value="">全ての資格</option><option>介護福祉士</option><option>初任者研修</option><option>実務者研修</option><option>看護師</option><option>無資格</option></select>
-        <select class="sel" id="w-stat" onchange="rWork()"><option value="">全てのステータス</option><option>稼働中</option><option>待機中</option><option>休止中</option></select>
+        <select class="sel" id="w-fac" onchange="rWork()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
       </div>
     </div>
     <div class="tcard">
@@ -374,7 +373,8 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         <th style="width:100px">ワーカーID</th>
         <th>名前</th>
         <th style="width:100px">資格</th>
-        <th style="width:90px">稼働状況</th>
+        <th>勤務先事業所</th>
+        <th style="width:70px">回数</th>
         <th style="width:100px">評価</th>
         <th style="width:60px"></th>
       </tr></thead><tbody id="w-tb"></tbody></table>
@@ -664,21 +664,21 @@ const FAC=[
   {id:380155,name:'サービス付き高齢者向け住宅 円山',area:'札幌市中央区',st:'未掲載'},
 ];
 const WRK=[
-  {id:'W-10021',name:'佐藤 花子',q:'介護福祉士',st:'稼働中',r:4.8},
-  {id:'W-10034',name:'田中 一郎',q:'初任者研修',st:'稼働中',r:4.5},
-  {id:'W-10045',name:'鈴木 美咲',q:'介護福祉士',st:'待機中',r:4.9},
-  {id:'W-10052',name:'高橋 誠',q:'実務者研修',st:'稼働中',r:4.3},
-  {id:'W-10063',name:'山本 健太',q:'看護師',st:'稼働中',r:4.7},
-  {id:'W-10078',name:'伊藤 さくら',q:'介護福祉士',st:'稼働中',r:4.6},
-  {id:'W-10089',name:'渡辺 大輔',q:'無資格',st:'待機中',r:4.1},
-  {id:'W-10091',name:'中村 幸子',q:'介護福祉士',st:'稼働中',r:4.9},
-  {id:'W-10102',name:'小林 翔',q:'初任者研修',st:'休止中',r:4.0},
-  {id:'W-10115',name:'加藤 真理',q:'実務者研修',st:'稼働中',r:4.4},
-  {id:'W-10128',name:'吉田 圭介',q:'介護福祉士',st:'稼働中',r:4.7},
-  {id:'W-10139',name:'松本 愛',q:'看護師',st:'稼働中',r:4.8},
-  {id:'W-10142',name:'木村 拓也',q:'初任者研修',st:'待機中',r:4.2},
-  {id:'W-10156',name:'清水 由美',q:'介護福祉士',st:'稼働中',r:4.5},
-  {id:'W-10167',name:'森田 隆',q:'無資格',st:'稼働中',r:4.0},
+  {id:'W-10021',name:'佐藤 花子',q:'介護福祉士',facs:['月寒あさがおの郷','西円山敬樹園'],cnt:28,r:4.8},
+  {id:'W-10034',name:'田中 一郎',q:'初任者研修',facs:['月寒あさがおの郷'],cnt:15,r:4.5},
+  {id:'W-10045',name:'鈴木 美咲',q:'介護福祉士',facs:['西円山敬樹園','菊水こまちの郷'],cnt:22,r:4.9},
+  {id:'W-10052',name:'高橋 誠',q:'実務者研修',facs:['西円山敬樹園'],cnt:20,r:4.3},
+  {id:'W-10063',name:'山本 健太',q:'看護師',facs:['月寒あさがおの郷','菊水こまちの郷'],cnt:17,r:4.7},
+  {id:'W-10078',name:'伊藤 さくら',q:'介護福祉士',facs:['きもべつ喜らめきの郷'],cnt:14,r:4.6},
+  {id:'W-10089',name:'渡辺 大輔',q:'無資格',facs:['月寒あさがおの郷'],cnt:8,r:4.1},
+  {id:'W-10091',name:'中村 幸子',q:'介護福祉士',facs:['菊水こまちの郷','西円山敬樹園'],cnt:25,r:4.9},
+  {id:'W-10102',name:'小林 翔',q:'初任者研修',facs:['きもべつ喜らめきの郷'],cnt:5,r:4.0},
+  {id:'W-10115',name:'加藤 真理',q:'実務者研修',facs:['月寒あさがおの郷','きもべつ喜らめきの郷'],cnt:18,r:4.4},
+  {id:'W-10128',name:'吉田 圭介',q:'介護福祉士',facs:['西円山敬樹園'],cnt:16,r:4.7},
+  {id:'W-10139',name:'松本 愛',q:'看護師',facs:['月寒あさがおの郷','菊水こまちの郷','西円山敬樹園'],cnt:13,r:4.8},
+  {id:'W-10142',name:'木村 拓也',q:'初任者研修',facs:['菊水こまちの郷'],cnt:7,r:4.2},
+  {id:'W-10156',name:'清水 由美',q:'介護福祉士',facs:['月寒あさがおの郷','きもべつ喜らめきの郷'],cnt:12,r:4.5},
+  {id:'W-10167',name:'森田 隆',q:'無資格',facs:['きもべつ喜らめきの郷'],cnt:6,r:4.0},
 ];
 const JOBS=[
   {id:'J-2401',fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/15 09:00〜17:00',wage:1200,apps:3,st:'公開中'},
@@ -747,11 +747,11 @@ function rFac(){
 function fWork(){
   const q=(document.getElementById('w-search').value||'').toLowerCase().trim();
   const ql=document.getElementById('w-qual').value;
-  const st=document.getElementById('w-stat').value;
+  const fc=document.getElementById('w-fac').value;
   return WRK.filter(w=>{
     if(q&&!w.name.toLowerCase().includes(q)&&!w.id.toLowerCase().includes(q)) return false;
     if(ql&&w.q!==ql) return false;
-    if(st&&w.st!==st) return false;
+    if(fc&&!w.facs.includes(fc)) return false;
     return true;
   });
 }
@@ -761,7 +761,8 @@ function rWork(){
     <td class="c-id">${w.id}</td>
     <td><strong>${w.name}</strong></td>
     <td>${w.q}</td>
-    <td><span class="st st-${stCls(w.st)}">${w.st}</span></td>
+    <td style="font-size:12px">${w.facs.join('、')}</td>
+    <td style="text-align:center">${w.cnt}回</td>
     <td><span class="stars">${'★'.repeat(Math.floor(w.r))}${'☆'.repeat(5-Math.floor(w.r))}<span>${w.r.toFixed(1)}</span></span></td>
     <td><button class="btn btn-out btn-sm">詳細</button></td>
   </tr>`).join('');
