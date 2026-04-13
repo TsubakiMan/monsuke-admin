@@ -306,6 +306,9 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         </div>
       </div>
       <p class="search-hint">複数の単語で検索できます。入力されたいずれかの単語を含む事業所を一覧表示します。</p>
+      <div class="search-filters" style="margin-top:8px">
+        <select class="sel" id="f-stat" onchange="rFac()"><option value="">全てのステータス</option><option>求人掲載中</option><option>未掲載</option></select>
+      </div>
     </div>
 
     <div class="tcard">
@@ -644,21 +647,21 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 <script>
 /* ── Data ── */
 const FAC=[
-  {id:329236,name:'介護老人福祉施設　月寒あさがおの郷',area:'札幌市豊平区',st:'稼働中'},
-  {id:337155,name:'特別養護老人ホーム 西円山敬樹園',area:'札幌市中央区',st:'稼働中'},
-  {id:349624,name:'地域密着型介護老人福祉施設　菊水こまちの郷',area:'札幌市白石区',st:'稼働中'},
-  {id:350696,name:'介護老人福祉施設 きもべつ喜らめきの郷',area:'喜茂別町',st:'稼働中'},
-  {id:352231,name:'小規模多機能型居宅介護　菊水こまちの郷',area:'札幌市白石区',st:'稼働中'},
-  {id:352941,name:'地域密着型 介護老人福祉施設 るすつ銀河の杜',area:'留寿都村',st:'稼働中'},
-  {id:355102,name:'介護老人福祉施設 まこまないの郷',area:'札幌市南区',st:'稼働中'},
-  {id:358744,name:'特別養護老人ホーム あいの里',area:'札幌市北区',st:'稼働中'},
-  {id:361203,name:'介護老人保健施設 コミュニティホーム白石',area:'札幌市白石区',st:'待機中'},
-  {id:365480,name:'グループホーム 手稲の丘',area:'札幌市手稲区',st:'稼働中'},
-  {id:368912,name:'デイサービスセンター 清田',area:'札幌市清田区',st:'稼働中'},
-  {id:371045,name:'訪問介護ステーション 東札幌',area:'札幌市白石区',st:'休止中'},
-  {id:374289,name:'小規模多機能型居宅介護 厚別の杜',area:'札幌市厚別区',st:'稼働中'},
-  {id:377601,name:'介護老人福祉施設 新琴似の郷',area:'札幌市北区',st:'稼働中'},
-  {id:380155,name:'サービス付き高齢者向け住宅 円山',area:'札幌市中央区',st:'待機中'},
+  {id:329236,name:'介護老人福祉施設　月寒あさがおの郷',area:'札幌市豊平区',st:'求人掲載中'},
+  {id:337155,name:'特別養護老人ホーム 西円山敬樹園',area:'札幌市中央区',st:'求人掲載中'},
+  {id:349624,name:'地域密着型介護老人福祉施設　菊水こまちの郷',area:'札幌市白石区',st:'求人掲載中'},
+  {id:350696,name:'介護老人福祉施設 きもべつ喜らめきの郷',area:'喜茂別町',st:'求人掲載中'},
+  {id:352231,name:'小規模多機能型居宅介護　菊水こまちの郷',area:'札幌市白石区',st:'未掲載'},
+  {id:352941,name:'地域密着型 介護老人福祉施設 るすつ銀河の杜',area:'留寿都村',st:'未掲載'},
+  {id:355102,name:'介護老人福祉施設 まこまないの郷',area:'札幌市南区',st:'求人掲載中'},
+  {id:358744,name:'特別養護老人ホーム あいの里',area:'札幌市北区',st:'求人掲載中'},
+  {id:361203,name:'介護老人保健施設 コミュニティホーム白石',area:'札幌市白石区',st:'未掲載'},
+  {id:365480,name:'グループホーム 手稲の丘',area:'札幌市手稲区',st:'求人掲載中'},
+  {id:368912,name:'デイサービスセンター 清田',area:'札幌市清田区',st:'求人掲載中'},
+  {id:371045,name:'訪問介護ステーション 東札幌',area:'札幌市白石区',st:'未掲載'},
+  {id:374289,name:'小規模多機能型居宅介護 厚別の杜',area:'札幌市厚別区',st:'求人掲載中'},
+  {id:377601,name:'介護老人福祉施設 新琴似の郷',area:'札幌市北区',st:'求人掲載中'},
+  {id:380155,name:'サービス付き高齢者向け住宅 円山',area:'札幌市中央区',st:'未掲載'},
 ];
 const WRK=[
   {id:'W-10021',name:'佐藤 花子',q:'介護福祉士',st:'稼働中',r:4.8},
@@ -707,7 +710,7 @@ const ATT=[
 const PS=10;
 let pg={f:1,w:1,j:1,a:1};
 
-function stCls(s){return{稼働中:'g',待機中:'o',休止中:'x',公開中:'g',締切:'x',マッチ済:'g',確定:'g',承認待ち:'o'}[s]||'g'}
+function stCls(s){return{求人掲載中:'g',未掲載:'x',稼働中:'g',待機中:'o',休止中:'x',公開中:'g',締切:'x',マッチ済:'g',確定:'g',承認待ち:'o'}[s]||'g'}
 function slice(arr,p){const s=(p-1)*PS;return{rows:arr.slice(s,s+PS),total:arr.length,pages:Math.ceil(arr.length/PS),s:s+1,e:Math.min(s+PS,arr.length)}}
 function pagH(id,tp,cur,key){
   const c=document.getElementById(id);if(tp<=1){c.innerHTML='';return}
@@ -721,9 +724,11 @@ function chg(k,p){pg[k]=p;({f:rFac,w:rWork,j:rJob,a:rAtt,u:rUsage,r:rReg})[k]()}
 /* Facilities */
 function fFac(){
   const q=(document.getElementById('f-search').value||'').toLowerCase().trim();
-  if(!q) return FAC;
-  const t=q.split(/\s+/);
-  return FAC.filter(f=>t.some(w=>f.name.toLowerCase().includes(w)||f.area.toLowerCase().includes(w)));
+  const st=document.getElementById('f-stat').value;
+  let list=FAC;
+  if(q){const t=q.split(/\s+/);list=list.filter(f=>t.some(w=>f.name.toLowerCase().includes(w)||f.area.toLowerCase().includes(w)));}
+  if(st) list=list.filter(f=>f.st===st);
+  return list;
 }
 function rFac(){
   pg.f=1; const fl=fFac(),p=slice(fl,pg.f);
