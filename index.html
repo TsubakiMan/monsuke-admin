@@ -274,7 +274,17 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 
       <!-- 直近のアクティビティ -->
       <div class="fcard">
-        <h3>直近のアクティビティ</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <h3 style="margin:0">直近のアクティビティ</h3>
+          <select class="sel" id="dash-act-sel" onchange="rDashActivity()" style="width:auto;min-width:140px;font-size:12px">
+            <option value="">すべて</option>
+            <option value="match">マッチング</option>
+            <option value="done">稼働完了</option>
+            <option value="review">レビュー</option>
+            <option value="billing">請求・支払い</option>
+            <option value="worker">ワーカー</option>
+          </select>
+        </div>
         <div id="dash-activity" style="font-size:13px"></div>
       </div>
     </div>
@@ -1197,16 +1207,28 @@ function rDashChart(){
 function rDashboard(){
   rDashChart();
 
-  // アクティビティフィード
-  const acts=[
-    {icon:'📋',text:'月寒あさがおの郷 — 求人「夜勤介護スタッフ」に 佐藤美咲 がマッチ',time:'30分前'},
-    {icon:'✅',text:'西円山敬樹園 — 稼働完了: 鈴木一郎（日勤介護）',time:'2時間前'},
-    {icon:'⭐',text:'菊水こまちの郷 — 新着レビュー ★5「とても丁寧でした」',time:'3時間前'},
-    {icon:'💰',text:'2026年3月分 請求書が確定しました',time:'昨日'},
-    {icon:'👤',text:'新規ワーカー登録: 高橋健太（介護福祉士）',time:'2日前'},
-    {icon:'📋',text:'きもべつ喜らめきの郷 — 求人「日勤生活支援」に 田中花子 がマッチ',time:'3日前'}
-  ];
-  document.getElementById('dash-activity').innerHTML=acts.map(a=>
+  rDashActivity();
+}
+const DASH_ACTS=[
+  {icon:'📋',cat:'match',text:'月寒あさがおの郷 — 求人「夜勤介護スタッフ」に 佐藤美咲 がマッチ',time:'30分前'},
+  {icon:'✅',cat:'done',text:'西円山敬樹園 — 稼働完了: 鈴木一郎（日勤介護）',time:'2時間前'},
+  {icon:'⭐',cat:'review',text:'菊水こまちの郷 — 新着レビュー ★5「とても丁寧でした」',time:'3時間前'},
+  {icon:'💰',cat:'billing',text:'2026年3月分 請求書が確定しました',time:'昨日'},
+  {icon:'👤',cat:'worker',text:'新規ワーカー登録: 高橋健太（介護福祉士）',time:'2日前'},
+  {icon:'📋',cat:'match',text:'きもべつ喜らめきの郷 — 求人「日勤生活支援」に 田中花子 がマッチ',time:'3日前'},
+  {icon:'✅',cat:'done',text:'月寒あさがおの郷 — 稼働完了: 渡辺裕子（夜勤介護）',time:'3日前'},
+  {icon:'💰',cat:'billing',text:'西円山敬樹園 — 2026年3月利用分の明細が更新されました',time:'4日前'},
+  {icon:'⭐',cat:'review',text:'西円山敬樹園 — 新着レビュー ★4「業務内容が明確で動きやすかった」',time:'4日前'},
+  {icon:'👤',cat:'worker',text:'ワーカー資格更新: 伊藤大輔（介護福祉士 → 実務者研修修了）',time:'5日前'},
+  {icon:'✅',cat:'done',text:'菊水こまちの郷 — 稼働完了: 山本真理（日勤介護）',time:'5日前'},
+  {icon:'📋',cat:'match',text:'西円山敬樹園 — 求人「夜勤看護助手」に 小林さくら がマッチ',time:'6日前'}
+];
+function rDashActivity(){
+  const sel=document.getElementById('dash-act-sel').value;
+  const list=sel?DASH_ACTS.filter(a=>a.cat===sel):DASH_ACTS;
+  const el=document.getElementById('dash-activity');
+  if(!list.length){el.innerHTML='<div style="padding:20px 0;text-align:center;color:var(--gray-400)">該当するアクティビティはありません</div>';return;}
+  el.innerHTML=list.map(a=>
     `<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100)">
       <span style="font-size:16px;flex-shrink:0">${a.icon}</span>
       <div style="flex:1"><div style="line-height:1.5">${a.text}</div>
