@@ -577,18 +577,27 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="search-area">
       <div class="search-filters" style="margin-top:0">
         <select class="sel" id="rv-fac" onchange="rReviews()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
-        <select class="sel" id="rv-score" onchange="rReviews()"><option value="">全てのスコア</option><option value="5">★5</option><option value="4">★4</option><option value="3">★3</option><option value="2">★2以下</option></select>
+        <select class="sel" id="rv-score" onchange="rReviews()"><option value="">全てのレビュー数</option><option value="5">★5</option><option value="4">★4</option><option value="3">★3</option><option value="2">★2以下</option></select>
       </div>
     </div>
     <div class="tcard">
       <div class="tbar"><span id="rv-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:60px">スコア</th>
+        <th style="width:120px">レビュー数</th>
         <th>事業所名</th>
         <th>ワーカー</th>
         <th>コメント</th>
         <th style="width:100px">日付</th>
       </tr></thead><tbody id="rv-tb"></tbody></table>
+      <div id="rv-detail-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:center" onclick="if(event.target===this)this.style.display='none'">
+        <div style="background:#fff;border-radius:12px;padding:24px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h3 style="margin:0;font-size:16px" id="rv-detail-title"></h3>
+            <button onclick="document.getElementById('rv-detail-modal').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray-400)">&times;</button>
+          </div>
+          <div id="rv-detail-body"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1396,24 +1405,26 @@ function rDashActivity(){
 }
 
 /* ===== レビュー ===== */
+const RV_CATS=['予定の正確さ','衛生面や綺麗さ','担当者の指示','求人内容との差','施設の雰囲気'];
 const REVIEWS=[
-  {fac:'月寒あさがおの郷',worker:'佐藤 美咲',score:5,comment:'スタッフの方がとても親切で、安心して働けました。設備も整っていて快適です。',date:'2026-04-10'},
-  {fac:'西円山敬樹園',worker:'鈴木 一郎',score:5,comment:'利用者さんとの関わり方を丁寧に教えていただきました。また働きたいです。',date:'2026-04-08'},
-  {fac:'菊水こまちの郷',worker:'田中 花子',score:5,comment:'とても丁寧に指導していただきました。雰囲気が良い職場です。',date:'2026-04-07'},
-  {fac:'西円山敬樹園',worker:'高橋 健太',score:4,comment:'業務内容が明確で動きやすかったです。休憩室がもう少し広いと嬉しいです。',date:'2026-04-05'},
-  {fac:'月寒あさがおの郷',worker:'渡辺 裕子',score:4,comment:'チームワークが良く、フォロー体制がしっかりしています。',date:'2026-04-03'},
-  {fac:'きもべつ喜らめきの郷',worker:'伊藤 大輔',score:4,comment:'自然豊かな環境で利用者さんもゆったりしていました。通勤が少し大変です。',date:'2026-04-01'},
-  {fac:'菊水こまちの郷',worker:'山本 真理',score:5,comment:'ベテランスタッフが多く安心感があります。学びの多い現場でした。',date:'2026-03-28'},
-  {fac:'月寒あさがおの郷',worker:'中村 翔太',score:3,comment:'業務量が多めでしたが、サポートはありました。事前説明がもう少し欲しいです。',date:'2026-03-25'},
-  {fac:'西円山敬樹園',worker:'小林 さくら',score:5,comment:'利用者さんが穏やかで働きやすい環境です。スタッフ間の連携も素晴らしい。',date:'2026-03-22'},
-  {fac:'きもべつ喜らめきの郷',worker:'加藤 由美',score:4,comment:'のんびりした雰囲気が良いです。送迎があると助かります。',date:'2026-03-20'},
-  {fac:'菊水こまちの郷',worker:'吉田 和也',score:4,comment:'清潔感があり、利用者さんへの対応が丁寧な施設です。',date:'2026-03-18'},
-  {fac:'月寒あさがおの郷',worker:'松本 恵理',score:5,comment:'夜勤でしたが、引き継ぎがスムーズで問題なく対応できました。',date:'2026-03-15'},
-  {fac:'西円山敬樹園',worker:'井上 光',score:4,comment:'設備が新しく快適です。もう少し休憩が取れると嬉しいです。',date:'2026-03-12'},
-  {fac:'きもべつ喜らめきの郷',worker:'木村 純',score:3,comment:'利用者さんは良い方ばかりですが、マニュアルが古い部分があります。',date:'2026-03-08'},
-  {fac:'月寒あさがおの郷',worker:'林 美香',score:4,comment:'教育体制が整っていて初めてでも安心して働けます。',date:'2026-03-05'},
-  {fac:'菊水こまちの郷',worker:'清水 太一',score:5,comment:'スタッフ全員が温かく迎えてくれました。やりがいを感じられる職場です。',date:'2026-03-01'}
+  {fac:'月寒あさがおの郷',worker:'佐藤 美咲',scores:[5,5,5,4,5],comment:'スタッフの方がとても親切で、安心して働けました。設備も整っていて快適です。',date:'2026-04-10'},
+  {fac:'西円山敬樹園',worker:'鈴木 一郎',scores:[5,5,4,5,5],comment:'利用者さんとの関わり方を丁寧に教えていただきました。また働きたいです。',date:'2026-04-08'},
+  {fac:'菊水こまちの郷',worker:'田中 花子',scores:[5,4,5,5,5],comment:'とても丁寧に指導していただきました。雰囲気が良い職場です。',date:'2026-04-07'},
+  {fac:'西円山敬樹園',worker:'高橋 健太',scores:[4,4,5,4,3],comment:'業務内容が明確で動きやすかったです。休憩室がもう少し広いと嬉しいです。',date:'2026-04-05'},
+  {fac:'月寒あさがおの郷',worker:'渡辺 裕子',scores:[4,4,4,5,4],comment:'チームワークが良く、フォロー体制がしっかりしています。',date:'2026-04-03'},
+  {fac:'きもべつ喜らめきの郷',worker:'伊藤 大輔',scores:[4,3,4,4,5],comment:'自然豊かな環境で利用者さんもゆったりしていました。通勤が少し大変です。',date:'2026-04-01'},
+  {fac:'菊水こまちの郷',worker:'山本 真理',scores:[5,5,5,4,5],comment:'ベテランスタッフが多く安心感があります。学びの多い現場でした。',date:'2026-03-28'},
+  {fac:'月寒あさがおの郷',worker:'中村 翔太',scores:[3,3,3,2,4],comment:'業務量が多めでしたが、サポートはありました。事前説明がもう少し欲しいです。',date:'2026-03-25'},
+  {fac:'西円山敬樹園',worker:'小林 さくら',scores:[5,5,5,5,5],comment:'利用者さんが穏やかで働きやすい環境です。スタッフ間の連携も素晴らしい。',date:'2026-03-22'},
+  {fac:'きもべつ喜らめきの郷',worker:'加藤 由美',scores:[4,3,4,4,5],comment:'のんびりした雰囲気が良いです。送迎があると助かります。',date:'2026-03-20'},
+  {fac:'菊水こまちの郷',worker:'吉田 和也',scores:[4,4,4,3,5],comment:'清潔感があり、利用者さんへの対応が丁寧な施設です。',date:'2026-03-18'},
+  {fac:'月寒あさがおの郷',worker:'松本 恵理',scores:[5,5,5,5,4],comment:'夜勤でしたが、引き継ぎがスムーズで問題なく対応できました。',date:'2026-03-15'},
+  {fac:'西円山敬樹園',worker:'井上 光',scores:[4,5,4,3,4],comment:'設備が新しく快適です。もう少し休憩が取れると嬉しいです。',date:'2026-03-12'},
+  {fac:'きもべつ喜らめきの郷',worker:'木村 純',scores:[3,3,3,2,4],comment:'利用者さんは良い方ばかりですが、マニュアルが古い部分があります。',date:'2026-03-08'},
+  {fac:'月寒あさがおの郷',worker:'林 美香',scores:[4,4,4,4,4],comment:'教育体制が整っていて初めてでも安心して働けます。',date:'2026-03-05'},
+  {fac:'菊水こまちの郷',worker:'清水 太一',scores:[5,5,5,5,5],comment:'スタッフ全員が温かく迎えてくれました。やりがいを感じられる職場です。',date:'2026-03-01'}
 ];
+function rvAvg(s){return (s.reduce((a,b)=>a+b,0)/s.length).toFixed(1)}
 const FAC_SCORES={
   '西円山敬樹園':{avg:4.7,cnt:32},
   '月寒あさがおの郷':{avg:4.3,cnt:38},
@@ -1445,19 +1456,35 @@ function rReviews(){
   if(fFac) list=list.filter(r=>r.fac===fFac);
   if(fScore){
     const s=parseInt(fScore);
-    if(s<=2) list=list.filter(r=>r.score<=2);
-    else list=list.filter(r=>r.score===s);
+    if(s<=2) list=list.filter(r=>Math.round(+rvAvg(r.scores))<=2);
+    else list=list.filter(r=>Math.round(+rvAvg(r.scores))===s);
   }
   document.getElementById('rv-cnt').textContent=list.length+'件のレビュー';
-  document.getElementById('rv-tb').innerHTML=list.map((r,i)=>
-    `<tr${i%2?` style="background:var(--gray-50)"`:''}>
-      <td style="padding:10px 12px;font-size:14px;font-weight:600;color:var(--primary)">★ ${r.score}</td>
+  document.getElementById('rv-tb').innerHTML=list.map((r,i)=>{
+    const avg=rvAvg(r.scores);
+    const idx=REVIEWS.indexOf(r);
+    return `<tr${i%2?` style="background:var(--gray-50)"`:''}>
+      <td style="padding:10px 12px;font-size:14px;font-weight:600;color:var(--primary)">★ ${avg} <button class="btn btn-out btn-sm" style="margin-left:4px;font-size:10px;padding:2px 6px" onclick="showRvDetail(${idx})">詳細</button></td>
       <td style="padding:10px 12px;font-size:13px">${r.fac}</td>
       <td style="padding:10px 12px;font-size:13px">${r.worker}</td>
       <td style="padding:10px 12px;font-size:13px;color:var(--gray-500);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.comment}</td>
       <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${r.date}</td>
-    </tr>`
-  ).join('');
+    </tr>`;
+  }).join('');
+}
+function showRvDetail(idx){
+  const r=REVIEWS[idx];
+  const avg=rvAvg(r.scores);
+  document.getElementById('rv-detail-title').textContent=r.worker+' のレビュー';
+  document.getElementById('rv-detail-body').innerHTML=
+    `<div style="text-align:center;margin-bottom:16px;font-size:24px;color:var(--primary);font-weight:700">★ ${avg}</div>`+
+    RV_CATS.map((c,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100)">
+      <span style="font-size:13px;color:var(--gray-500)">${c}</span>
+      <span style="font-size:14px;color:#F59E0B">${'★'.repeat(r.scores[i])}${'☆'.repeat(5-r.scores[i])}</span>
+    </div>`).join('')+
+    `<div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:8px;font-size:13px;color:var(--gray-500)">${r.comment}</div>`;
+  const m=document.getElementById('rv-detail-modal');
+  m.style.display='flex';
 }
 
 /* ===== レポート・分析 ===== */
