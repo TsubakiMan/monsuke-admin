@@ -214,7 +214,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <a class="nav-a" data-p="reviews" onclick="go('reviews')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>レビュー</a>
     <div class="nav-label">管理</div>
     <a class="nav-a" data-p="billing" onclick="go('billing')"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>請求・支払い</a>
-    <a class="nav-a" data-p="usage" onclick="go('usage')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>利用明細</a>
     <a class="nav-a" data-p="registry" onclick="go('registry')"><svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>労働者名簿</a>
     <a class="nav-a" data-p="report" onclick="go('report')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>レポート・分析</a>
     <a class="nav-a" data-p="settings" onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>設定</a>
@@ -460,39 +459,31 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <!-- ===== 請求・支払い ===== -->
   <div class="page" id="p-billing">
     <div class="ph"><h1>請求・支払い</h1></div>
-    <p class="ph-sub">月次の利用料金と支払い状況を確認できます。</p>
+    <p class="ph-sub">月次の利用料金・利用明細・支払い状況を確認できます。</p>
 
-    <div class="stats">
+    <div class="stats" style="grid-template-columns:repeat(4,1fr)">
       <div class="stat"><div class="stat-label">今月の利用額（税込）</div><div class="stat-val">¥387,200</div><div class="stat-sub">2026年4月分</div></div>
       <div class="stat"><div class="stat-label">未払い請求</div><div class="stat-val" style="color:var(--red)">1件</div></div>
       <div class="stat"><div class="stat-label">年間累計</div><div class="stat-val">¥4,218,600</div><div class="stat-sub">2026年度</div></div>
+      <div class="stat"><div class="stat-label">対象事業所</div><div class="stat-val">9<span style="font-size:14px;color:var(--gray-400)">事業所</span></div></div>
     </div>
 
     <div class="tcard standalone">
-      <table><thead><tr><th>月</th><th style="width:80px">利用件数</th><th>合計金額（税込）</th><th style="width:110px">支払い期限</th><th style="width:90px">ステータス</th><th style="width:100px"></th></tr></thead>
+      <table><thead><tr>
+        <th>月</th>
+        <th style="width:60px">事業所数</th>
+        <th style="width:60px">利用件数</th>
+        <th>合計金額（税込）</th>
+        <th style="width:90px">振込手数料</th>
+        <th style="width:90px">支払い期限</th>
+        <th style="width:80px">ステータス</th>
+        <th style="width:80px">請求書</th>
+        <th style="width:100px">明細DL</th>
+      </tr></thead>
       <tbody id="b-tb"></tbody></table>
     </div>
   </div>
 
-  <!-- ===== 利用明細 ===== -->
-  <div class="page" id="p-usage">
-    <div class="ph"><h1>利用明細</h1></div>
-    <p class="ph-sub">いままでの利用明細の確認やCSVファイルのダウンロードができます。</p>
-
-    <div class="tcard standalone">
-      <div class="tbar"><div class="pag" id="u-pag"></div><span id="u-cnt"></span></div>
-      <table><thead><tr>
-        <th>期間</th>
-        <th style="width:70px">対象事業所数</th>
-        <th style="width:60px">対象人数</th>
-        <th style="width:70px">対象求人数</th>
-        <th style="width:90px">振込関連手数料</th>
-        <th style="width:80px">請求額調整</th>
-        <th style="text-align:right">請求額の目安<br><span style="font-weight:400;font-size:10px;color:var(--gray-400)">正確な金額は請求書のPDFをご確認ください</span></th>
-        <th style="width:120px"></th>
-      </tr></thead><tbody id="u-tb"></tbody></table>
-    </div>
-  </div>
 
   <!-- ===== 労働者名簿 ===== -->
   <div class="page" id="p-registry">
@@ -719,7 +710,7 @@ function pagH(id,tp,cur,key){
   h+=`<button onclick="chg('${key}',${cur+1})" ${cur===tp?'disabled':''}>次へ</button>`;
   c.innerHTML=h;
 }
-function chg(k,p){pg[k]=p;({f:rFac,w:rWork,j:rJob,a:rAtt,u:rUsage,r:rReg})[k]()}
+function chg(k,p){pg[k]=p;({f:rFac,w:rWork,j:rJob,a:rAtt,r:rReg})[k]()}
 
 /* Facilities */
 function fFac(){
@@ -841,45 +832,7 @@ function toast(msg){
 }
 
 /* ── Usage Data (monthly summary like Timee) ── */
-const USAGE_MONTHS=[
-  {period:'未確定(月末確定予定)',periodKey:'pending',facs:7,people:62,jobs:80,transFee:'13,640',adj:0,est:603254,link:true},
-  {period:'2026年3月1日〜2026年3月31日',periodKey:'2026-03',facs:9,people:48,jobs:65,transFee:'11,220',adj:0,est:456800,link:true},
-  {period:'2026年2月1日〜2026年2月28日',periodKey:'2026-02',facs:8,people:45,jobs:58,transFee:'10,440',adj:0,est:412500,link:true},
-  {period:'2026年1月1日〜2026年1月31日',periodKey:'2026-01',facs:8,people:42,jobs:52,transFee:'9,680',adj:0,est:389400,link:true},
-  {period:'2025年12月1日〜2025年12月31日',periodKey:'2025-12',facs:7,people:38,jobs:45,transFee:'8,360',adj:0,est:342100,link:true},
-  {period:'2025年11月1日〜2025年11月30日',periodKey:'2025-11',facs:9,people:52,jobs:72,transFee:'12,100',adj:0,est:448200,link:true},
-  {period:'2025年10月1日〜2025年10月31日',periodKey:'2025-10',facs:8,people:46,jobs:61,transFee:'10,780',adj:0,est:398500,link:true},
-  {period:'2025年9月1日〜2025年9月30日',periodKey:'2025-09',facs:9,people:41,jobs:55,transFee:'9,240',adj:0,est:376100,link:true},
-  {period:'2025年8月1日〜2025年8月31日',periodKey:'2025-08',facs:7,people:35,jobs:42,transFee:'7,920',adj:0,est:312400,link:true},
-];
-
-pg.u=1;pg.r=1;
-
-function rUsage(){
-  const p=slice(USAGE_MONTHS,pg.u);
-  document.getElementById('u-tb').innerHTML=p.rows.map(u=>`<tr>
-    <td>${u.link?'<a href="#" class="c-link">'+u.period+'</a>':u.period}</td>
-    <td style="text-align:center">${u.facs}事業所</td>
-    <td style="text-align:center">${u.people}人</td>
-    <td style="text-align:center">${u.jobs}件</td>
-    <td style="text-align:right">${u.transFee}円</td>
-    <td style="text-align:right">${u.adj.toLocaleString()}円</td>
-    <td style="text-align:right">${u.est.toLocaleString()}円</td>
-    <td style="text-align:right">
-      <div class="dl-wrap">
-        <button class="dl-btn" onclick="toggleDlMenu(this)">ダウンロード <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dl-menu">
-          <a onclick="dlUsageCSV('就業別','${u.periodKey}');closeDlMenus()">利用明細（就業別）</a>
-          <a onclick="dlUsageCSV('事業所別','${u.periodKey}');closeDlMenus()">利用明細（事業所別）</a>
-          <a onclick="dlUsageCSV('振込関連手数料','${u.periodKey}');closeDlMenus()">振込関連手数料明細</a>
-          <a onclick="dlUsageCSV('請求額調整','${u.periodKey}');closeDlMenus()">請求額調整明細</a>
-        </div>
-      </div>
-    </td>
-  </tr>`).join('');
-  document.getElementById('u-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${USAGE_MONTHS.length}件中`;
-  pagH('u-pag',p.pages,pg.u,'u');
-}
+pg.r=1;
 function toggleDlMenu(btn){closeDlMenus();btn.nextElementSibling.classList.toggle('open')}
 function closeDlMenus(){document.querySelectorAll('.dl-menu').forEach(m=>m.classList.remove('open'))}
 document.addEventListener('click',e=>{if(!e.target.closest('.dl-wrap'))closeDlMenus()})
@@ -981,7 +934,7 @@ function dlRegistryXlsx(startLabel,endLabel){
 
 /* ── Billing Data & PDF Invoice ── */
 const BILLING=[
-  {month:'2026年4月',count:34,total:387200,due:'2026/05/31',st:'未払い',
+  {month:'2026年4月',count:34,total:387200,due:'2026/05/31',st:'未払い',facCnt:7,transFee:'13,640',
    facs:[
      {name:'イリスもとまち',addr:'日本、〒065-0021 北海道札幌市東区北21条東22丁目5-1 イリスもとまち',org:'さっぽろ高齢者福祉生活協同組合',
       items:[
@@ -998,7 +951,7 @@ const BILLING=[
         {w:'松本 愛',dt:'2026/04/07',time:'08:00 ~ 16:00',pay:12000,trans:500,tax:0},
       ]},
    ]},
-  {month:'2026年3月',count:42,total:456800,due:'2026/04/30',st:'支払済',
+  {month:'2026年3月',count:42,total:456800,due:'2026/04/30',st:'支払済',facCnt:9,transFee:'11,220',
    facs:[
      {name:'イリスもとまち',addr:'日本、〒065-0021 北海道札幌市東区北21条東22丁目5-1 イリスもとまち',org:'さっぽろ高齢者福祉生活協同組合',
       items:[
@@ -1022,31 +975,48 @@ const BILLING=[
         {w:'山本 健太',dt:'2026/03/20',time:'09:00 ~ 17:00',pay:12000,trans:500,tax:0},
       ]},
    ]},
-  {month:'2026年2月',count:38,total:412500,due:'2026/03/31',st:'支払済',facs:[]},
-  {month:'2026年1月',count:35,total:389400,due:'2026/02/28',st:'支払済',facs:[]},
-  {month:'2025年12月',count:30,total:342100,due:'2026/01/31',st:'支払済',facs:[]},
-  {month:'2025年11月',count:41,total:448200,due:'2025/12/31',st:'支払済',facs:[]},
+  {month:'2026年2月',count:38,total:412500,due:'2026/03/31',st:'支払済',facCnt:8,transFee:'10,440',facs:[]},
+  {month:'2026年1月',count:35,total:389400,due:'2026/02/28',st:'支払済',facCnt:8,transFee:'9,680',facs:[]},
+  {month:'2025年12月',count:30,total:342100,due:'2026/01/31',st:'支払済',facCnt:7,transFee:'8,360',facs:[]},
+  {month:'2025年11月',count:41,total:448200,due:'2025/12/31',st:'支払済',facCnt:9,transFee:'12,100',facs:[]},
 ];
 
 function rBilling(){
   document.getElementById('b-tb').innerHTML=BILLING.map((b,i)=>{
     const sc=b.st==='未払い'?'r':'g';
+    const mMatch=b.month.match(/(\d{4})年(\d+)月/);
+    const pKey=mMatch?mMatch[1]+'-'+mMatch[2].padStart(2,'0'):'';
     return `<tr>
       <td class="c-id">${b.month}</td>
-      <td>${b.count}件</td>
+      <td style="text-align:center">${b.facCnt}事業所</td>
+      <td style="text-align:center">${b.count}件</td>
       <td>¥${b.total.toLocaleString()}</td>
+      <td style="text-align:right">${b.transFee}円</td>
       <td>${b.due}</td>
       <td><span class="st st-${sc}">${b.st}</span></td>
-      <td style="text-align:right">
+      <td style="text-align:center">
         <div class="dl-wrap">
-          <button class="btn btn-out btn-sm" onclick="toggleDlMenu(this)" style="gap:4px">
-            <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            明細
+          <button class="btn btn-out btn-sm" onclick="toggleDlMenu(this)" style="gap:4px;padding:5px 10px">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
           </button>
           <div class="dl-menu">${b.facs.length?
             b.facs.map((f,fi)=>`<a onclick="dlInvoicePDF(${i},${fi});closeDlMenus()">${f.name}</a>`).join('')
-            :'<span style="display:block;padding:10px 16px;font-size:12px;color:var(--gray-400)">サンプルデータなし</span>'
+            :'<span style="display:block;padding:10px 16px;font-size:12px;color:var(--gray-400)">データなし</span>'
           }</div>
+        </div>
+      </td>
+      <td style="text-align:center">
+        <div class="dl-wrap">
+          <button class="btn btn-out btn-sm" onclick="toggleDlMenu(this)" style="gap:4px;padding:5px 10px">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV
+          </button>
+          <div class="dl-menu">
+            <a onclick="dlUsageCSV('就業別','${pKey}');closeDlMenus()">利用明細（就業別）</a>
+            <a onclick="dlUsageCSV('事業所別','${pKey}');closeDlMenus()">利用明細（事業所別）</a>
+            <a onclick="dlUsageCSV('振込関連手数料','${pKey}');closeDlMenus()">振込関連手数料明細</a>
+          </div>
         </div>
       </td>
     </tr>`;
@@ -1400,7 +1370,7 @@ function rReport(){
 }
 
 /* Init */
-rFac();rWork();rJob();rAtt();rUsage();rReg();rBilling();rDashboard();rReviews();rReport();
+rFac();rWork();rJob();rAtt();rReg();rBilling();rDashboard();rReviews();rReport();
 </script>
 </body>
 </html>
