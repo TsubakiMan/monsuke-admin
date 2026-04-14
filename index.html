@@ -404,6 +404,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         <th style="width:60px">募集</th>
         <th style="width:60px">応募</th>
         <th style="width:70px">承認済</th>
+        <th style="width:70px">承認待ち</th>
         <th style="width:90px">ステータス</th>
       </tr></thead><tbody id="j-tb"></tbody></table>
     </div>
@@ -723,16 +724,16 @@ const WRK=[
   {id:'W-10167',name:'森田 隆',q:'無資格',facs:['きもべつ喜らめきの郷'],cnt:6,r:4.0},
 ];
 const JOBS=[
-  {fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/15 09:00〜17:00',wage:1200,slots:2,apps:3,approved:1,st:'マッチ済'},
-  {fac:'西円山敬樹園',type:'看護職',dt:'2026/04/16 08:30〜16:30',wage:1500,slots:1,apps:1,approved:0,st:'承認待ち'},
-  {fac:'菊水こまちの郷',type:'介護職',dt:'2026/04/15 17:00〜22:00',wage:1300,slots:2,apps:2,approved:1,st:'マッチ済'},
-  {fac:'きもべつ喜らめきの郷',type:'生活支援員',dt:'2026/04/17 09:00〜15:00',wage:1100,slots:1,apps:0,approved:0,st:'公開中'},
-  {fac:'月寒あさがおの郷',type:'調理補助',dt:'2026/04/18 06:00〜10:00',wage:1050,slots:3,apps:4,approved:2,st:'マッチ済'},
-  {fac:'西円山敬樹園',type:'介護職',dt:'2026/04/12 09:00〜17:00',wage:1200,slots:1,apps:2,approved:1,st:'締切'},
-  {fac:'菊水こまちの郷',type:'送迎ドライバー',dt:'2026/04/14 07:00〜09:00',wage:1100,slots:1,apps:1,approved:0,st:'承認待ち'},
-  {fac:'まこまないの郷',type:'介護職',dt:'2026/04/20 09:00〜17:00',wage:1250,slots:2,apps:5,approved:2,st:'締切'},
-  {fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/10 09:00〜17:00',wage:1200,slots:1,apps:3,approved:1,st:'締切'},
-  {fac:'手稲の丘',type:'生活支援員',dt:'2026/04/19 10:00〜16:00',wage:1150,slots:2,apps:2,approved:0,st:'承認待ち'},
+  {fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/15 09:00〜17:00',wage:1200,slots:2,apps:3,approved:1,pending:1,st:'承認待ち'},
+  {fac:'西円山敬樹園',type:'看護職',dt:'2026/04/16 08:30〜16:30',wage:1500,slots:1,apps:1,approved:0,pending:1,st:'承認待ち'},
+  {fac:'菊水こまちの郷',type:'介護職',dt:'2026/04/15 17:00〜22:00',wage:1300,slots:2,apps:2,approved:1,pending:1,st:'承認待ち'},
+  {fac:'きもべつ喜らめきの郷',type:'生活支援員',dt:'2026/04/17 09:00〜15:00',wage:1100,slots:1,apps:0,approved:0,pending:0,st:'公開中'},
+  {fac:'月寒あさがおの郷',type:'調理補助',dt:'2026/04/18 06:00〜10:00',wage:1050,slots:3,apps:4,approved:2,pending:1,st:'承認待ち'},
+  {fac:'西円山敬樹園',type:'介護職',dt:'2026/04/12 09:00〜17:00',wage:1200,slots:1,apps:2,approved:1,pending:0,st:'締切'},
+  {fac:'菊水こまちの郷',type:'送迎ドライバー',dt:'2026/04/14 07:00〜09:00',wage:1100,slots:1,apps:1,approved:0,pending:1,st:'承認待ち'},
+  {fac:'まこまないの郷',type:'介護職',dt:'2026/04/20 09:00〜17:00',wage:1250,slots:2,apps:5,approved:2,pending:0,st:'締切'},
+  {fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/10 09:00〜17:00',wage:1200,slots:1,apps:3,approved:1,pending:0,st:'締切'},
+  {fac:'手稲の丘',type:'生活支援員',dt:'2026/04/19 10:00〜16:00',wage:1150,slots:2,apps:2,approved:0,pending:2,st:'承認待ち'},
 ];
 const ATT=[
   {dt:'2026/04/10',w:'佐藤 花子',fac:'介護老人福祉施設　月寒あさがおの郷',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
@@ -823,6 +824,7 @@ function rJob(){
     <td style="text-align:center">${j.slots}名</td>
     <td style="text-align:center"><strong>${j.apps}名</strong></td>
     <td style="text-align:center">${j.approved}名</td>
+    <td style="text-align:center">${j.pending}名</td>
     <td><span class="st st-${stCls(j.st)}">${j.st}</span></td>
   </tr>`).join('');
   document.getElementById('j-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${JOBS.length}件中`;
