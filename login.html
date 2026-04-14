@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>もん助 - 法人管理ログイン</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#E97316;
+  --primary-hover:#C2410C;
+  --primary-light:#FFF7ED;
+  --bg:#F8FAFC;
+  --gray-100:#f1f5f9;
+  --gray-200:#e2e8f0;
+  --gray-300:#cbd5e1;
+  --gray-400:#94a3b8;
+  --gray-500:#64748b;
+  --gray-700:#334155;
+  --gray-900:#0f172a;
+  --white:#fff;
+}
+html{font-size:14px}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--bg);
+  color:var(--gray-900);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===== Header bar ===== */
+.header-bar{
+  background:linear-gradient(135deg,#E97316,#F59E0B);
+  height:6px;
+  width:100%;
+  flex-shrink:0;
+}
+
+/* ===== Main layout ===== */
+.login-wrapper{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+}
+
+.login-card{
+  width:100%;
+  max-width:440px;
+  background:var(--white);
+  border-radius:16px;
+  box-shadow:0 4px 24px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.04);
+  padding:48px 40px 40px;
+  position:relative;
+}
+
+/* ===== Badge: 法人管理 ===== */
+.corp-badge{
+  position:absolute;
+  top:-16px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(135deg,#E97316,#F59E0B);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  padding:6px 20px;
+  border-radius:20px;
+  letter-spacing:1px;
+  box-shadow:0 2px 12px rgba(233,115,22,.3);
+  white-space:nowrap;
+}
+
+/* ===== Logo ===== */
+.login-logo{
+  text-align:center;
+  margin-bottom:8px;
+}
+.login-logo img{
+  width:60px;
+  height:60px;
+  border-radius:16px;
+}
+.logo-placeholder{
+  width:60px;
+  height:60px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#F97316,#FB923C);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:700;
+  font-size:24px;
+  box-shadow:0 4px 12px rgba(249,115,22,.25);
+}
+
+.login-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  margin:12px 0 4px;
+  color:var(--gray-900);
+}
+.login-subtitle{
+  text-align:center;
+  font-size:13px;
+  color:var(--gray-500);
+  margin-bottom:32px;
+}
+.login-subtitle .highlight{
+  color:var(--primary);
+  font-weight:600;
+}
+
+/* ===== Form ===== */
+.form-group{
+  margin-bottom:20px;
+}
+.form-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:6px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--gray-700);
+}
+.form-label a{
+  font-size:12px;
+  color:var(--primary);
+  text-decoration:none;
+  font-weight:500;
+}
+.form-label a:hover{text-decoration:underline}
+.form-input-wrap{
+  position:relative;
+}
+.form-input{
+  width:100%;
+  padding:12px 16px;
+  border:1.5px solid var(--gray-200);
+  border-radius:10px;
+  font-size:14px;
+  font-family:inherit;
+  color:var(--gray-900);
+  background:var(--white);
+  transition:border-color .2s,box-shadow .2s;
+  outline:none;
+}
+.form-input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(233,115,22,.12);
+}
+.form-input::placeholder{
+  color:var(--gray-400);
+}
+.pw-toggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:var(--gray-400);
+  padding:4px;
+  display:flex;
+  align-items:center;
+}
+.pw-toggle:hover{color:var(--gray-700)}
+.pw-toggle svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== Checkbox ===== */
+.form-check{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:24px;
+}
+.form-check input[type="checkbox"]{
+  width:16px;height:16px;
+  accent-color:var(--primary);
+  cursor:pointer;
+}
+.form-check label{
+  font-size:13px;
+  color:var(--gray-500);
+  cursor:pointer;
+  user-select:none;
+}
+
+/* ===== Button ===== */
+.btn-login{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg,#E97316,#F59E0B);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:700;
+  font-family:inherit;
+  cursor:pointer;
+  transition:opacity .2s,transform .1s;
+  box-shadow:0 4px 14px rgba(233,115,22,.3);
+  letter-spacing:.5px;
+}
+.btn-login:hover{
+  opacity:.92;
+}
+.btn-login:active{
+  transform:scale(.98);
+}
+
+/* ===== Divider ===== */
+.login-divider{
+  display:flex;
+  align-items:center;
+  margin:24px 0;
+  gap:12px;
+}
+.login-divider::before,
+.login-divider::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--gray-200);
+}
+.login-divider span{
+  font-size:12px;
+  color:var(--gray-400);
+  white-space:nowrap;
+}
+
+/* ===== Facility link ===== */
+.facility-link{
+  text-align:center;
+}
+.facility-link a{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 24px;
+  border:1.5px solid var(--gray-200);
+  border-radius:10px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:500;
+  color:var(--gray-500);
+  transition:all .2s;
+}
+.facility-link a:hover{
+  border-color:#0891B2;
+  color:#0891B2;
+  background:#F0FDFA;
+}
+.facility-link a svg{
+  width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* ===== Footer ===== */
+.login-footer{
+  text-align:center;
+  padding:20px;
+  font-size:11px;
+  color:var(--gray-400);
+}
+
+/* ===== Responsive ===== */
+@media(max-width:480px){
+  .login-card{
+    padding:40px 24px 32px;
+    border-radius:12px;
+  }
+  .login-title{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- Orange gradient header bar -->
+<div class="header-bar"></div>
+
+<div class="login-wrapper">
+  <div class="login-card">
+    <!-- Corp badge -->
+    <div class="corp-badge">法人管理</div>
+
+    <!-- Logo -->
+    <div class="login-logo">
+      <div class="logo-placeholder">も</div>
+    </div>
+
+    <h1 class="login-title">ログイン</h1>
+    <p class="login-subtitle"><span class="highlight">法人管理画面</span>へのログイン</p>
+
+    <!-- Form -->
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <div class="form-input-wrap">
+          <input type="email" class="form-input" id="email" placeholder="admin@example.com" autocomplete="email" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          パスワード
+          <a href="#">パスワードを忘れた</a>
+        </label>
+        <div class="form-input-wrap">
+          <input type="password" class="form-input" id="password" placeholder="パスワードを入力" autocomplete="current-password" required>
+          <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="パスワード表示切替">
+            <svg id="eyeIcon" viewBox="0 0 24 24">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" id="remember">
+        <label for="remember">ログイン状態を保持する</label>
+      </div>
+
+      <button type="submit" class="btn-login">ログイン</button>
+    </form>
+
+    <!-- Divider -->
+    <div class="login-divider">
+      <span>事業所管理はこちら</span>
+    </div>
+
+    <!-- Facility login link -->
+    <div class="facility-link">
+      <a href="https://qacp.monsuke.jp/auth/login">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        事業所管理画面へ
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="login-footer">&copy; 2026 もん助 All rights reserved.</div>
+
+<script>
+function togglePw(){
+  const p=document.getElementById('password');
+  const icon=document.getElementById('eyeIcon');
+  if(p.type==='password'){
+    p.type='text';
+    icon.innerHTML='<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+  }else{
+    p.type='password';
+    icon.innerHTML='<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+
+function handleLogin(e){
+  e.preventDefault();
+  // Demo: redirect to corp admin panel
+  window.location.href='index.html';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monsuke Account Management Flow</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;background:#0F172A;color:#E2E8F0;padding:40px 20px}
+  h1{text-align:center;font-size:28px;margin-bottom:8px;color:#F97316}
+  .sub{text-align:center;font-size:14px;color:#94A3B8;margin-bottom:48px}
+  .section{max-width:900px;margin:0 auto 60px;background:#1E293B;border-radius:16px;padding:32px;border:1px solid #334155}
+  .section h2{font-size:18px;margin-bottom:24px;color:#F97316;display:flex;align-items:center;gap:10px}
+  .section h2 span{background:#F97316;color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid #334155}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#94A3B8}
+  .legend-dot{width:12px;height:12px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<h1>Monsuke Account Management Flow</h1>
+<p class="sub">Corporate Admin Panel &times; Facility Admin Panel — Account Architecture</p>
+
+<!-- ===== 1. Account Hierarchy ===== -->
+<div class="section">
+  <h2><span>1</span>Account Hierarchy</h2>
+  <svg viewBox="0 0 840 520" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr1" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+      <filter id="glow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity=".3"/></filter>
+    </defs>
+
+    <!-- Corporation -->
+    <rect x="290" y="20" width="260" height="52" rx="10" fill="#E97316" filter="url(#glow)"/>
+    <text x="420" y="46" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">Corporation (Keijinkai)</text>
+
+    <!-- Corp-level admins -->
+    <line x1="360" y1="72" x2="140" y2="120" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="420" y1="72" x2="420" y2="120" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="480" y1="72" x2="700" y2="120" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="30" y="120" width="220" height="48" rx="8" fill="#EA580C" filter="url(#glow)"/>
+    <text x="140" y="140" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Corp Owner Admin</text>
+    <text x="140" y="156" text-anchor="middle" fill="#FFEDD5" font-size="10">Full access + Admin mgmt</text>
+
+    <rect x="290" y="120" width="260" height="48" rx="8" fill="#2563EB" filter="url(#glow)"/>
+    <text x="420" y="140" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Corp Admin</text>
+    <text x="420" y="156" text-anchor="middle" fill="#BFDBFE" font-size="10">Full ops (no admin mgmt)</text>
+
+    <rect x="600" y="120" width="200" height="48" rx="8" fill="#475569" filter="url(#glow)"/>
+    <text x="700" y="140" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Corp Viewer</text>
+    <text x="700" y="156" text-anchor="middle" fill="#CBD5E1" font-size="10">Read-only</text>
+
+    <!-- Divider -->
+    <line x1="40" y1="200" x2="800" y2="200" stroke="#334155" stroke-width="1" stroke-dasharray="6,4"/>
+    <text x="420" y="218" text-anchor="middle" fill="#64748B" font-size="11">&#x25BC; Facility Level (Existing)</text>
+
+    <!-- Facilities -->
+    <line x1="420" y1="72" x2="140" y2="258" stroke="#334155" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="420" y1="72" x2="420" y2="258" stroke="#334155" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="420" y1="72" x2="700" y2="258" stroke="#334155" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <!-- Facility A -->
+    <rect x="30" y="248" width="220" height="44" rx="8" fill="#0891B2" filter="url(#glow)"/>
+    <text x="140" y="275" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Facility A: Tsukisamu</text>
+
+    <line x1="100" y1="292" x2="60" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="180" y1="292" x2="210" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="10" y="330" width="130" height="40" rx="6" fill="#059669"/>
+    <text x="75" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Owner Admin</text>
+
+    <rect x="160" y="330" width="130" height="40" rx="6" fill="#475569"/>
+    <text x="225" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Sub Admin</text>
+
+    <!-- Facility B -->
+    <rect x="310" y="248" width="220" height="44" rx="8" fill="#0891B2" filter="url(#glow)"/>
+    <text x="420" y="275" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Facility B: Nishimaruyama</text>
+
+    <line x1="380" y1="292" x2="340" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="460" y1="292" x2="490" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="290" y="330" width="130" height="40" rx="6" fill="#059669"/>
+    <text x="355" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Owner Admin</text>
+
+    <rect x="440" y="330" width="130" height="40" rx="6" fill="#475569"/>
+    <text x="505" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Sub Admin</text>
+
+    <!-- Facility C -->
+    <rect x="590" y="248" width="220" height="44" rx="8" fill="#0891B2" filter="url(#glow)"/>
+    <text x="700" y="275" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Facility C: Kikusui</text>
+
+    <line x1="660" y1="292" x2="620" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="740" y1="292" x2="770" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="570" y="330" width="130" height="40" rx="6" fill="#059669"/>
+    <text x="635" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Owner Admin</text>
+
+    <rect x="720" y="330" width="130" height="40" rx="6" fill="#475569"/>
+    <text x="785" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Sub Admin</text>
+
+    <!-- Corp admin access scope -->
+    <rect x="20" y="236" width="800" height="150" rx="12" fill="none" stroke="#E97316" stroke-width="1.5" stroke-dasharray="6,3" opacity=".5"/>
+    <text x="810" y="252" text-anchor="end" fill="#E97316" font-size="10" opacity=".7">Corp Admin access scope</text>
+
+    <!-- Notes -->
+    <rect x="40" y="420" width="760" height="80" rx="10" fill="#1E293B" stroke="#334155"/>
+    <text x="60" y="446" fill="#F97316" font-size="12" font-weight="700">Key Points</text>
+    <text x="60" y="466" fill="#94A3B8" font-size="11">&#x2022; Corp admins (orange/blue) can access all facilities cross-functionally (higher privilege)</text>
+    <text x="60" y="484" fill="#94A3B8" font-size="11">&#x2022; Facility admins (green/gray) can only access their own facility. No access to Corp panel</text>
+  </svg>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#EA580C"></div>Corp Owner</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Corp Admin</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0891B2"></div>Facility</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>Facility Owner</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#475569"></div>Sub Admin / Viewer</div>
+  </div>
+</div>
+
+<!-- ===== 2. Permission Matrix ===== -->
+<div class="section">
+  <h2><span>2</span>Permission Matrix</h2>
+  <svg viewBox="0 0 840 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Header -->
+    <rect x="0" y="0" width="200" height="44" rx="8" fill="#334155"/>
+    <text x="100" y="26" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="600">Role</text>
+
+    <rect x="220" y="0" width="190" height="44" rx="8" fill="#E97316"/>
+    <text x="315" y="26" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Corp Admin Panel</text>
+
+    <rect x="430" y="0" width="190" height="44" rx="8" fill="#0891B2"/>
+    <text x="525" y="26" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Facility Admin Panel</text>
+
+    <rect x="640" y="0" width="200" height="44" rx="8" fill="#7C3AED"/>
+    <text x="740" y="26" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Admin Management</text>
+
+    <!-- Row 1: Corp Owner -->
+    <rect x="0" y="56" width="200" height="52" rx="8" fill="#EA580C"/>
+    <text x="100" y="78" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Corp Owner Admin</text>
+    <text x="100" y="94" text-anchor="middle" fill="#FFEDD5" font-size="10">Highest privilege</text>
+
+    <rect x="220" y="56" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="315" y="82" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Full Access</text>
+    <text x="315" y="96" text-anchor="middle" fill="#6EE7B7" font-size="10">&#x2713;</text>
+
+    <rect x="430" y="56" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="82" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Full Access</text>
+    <text x="525" y="96" text-anchor="middle" fill="#6EE7B7" font-size="10">All facilities &#x2713;</text>
+
+    <rect x="640" y="56" width="200" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="740" y="82" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Corp + All Facilities</text>
+    <text x="740" y="96" text-anchor="middle" fill="#6EE7B7" font-size="10">Add/Edit/Delete &#x2713;</text>
+
+    <!-- Row 2: Corp Admin -->
+    <rect x="0" y="120" width="200" height="52" rx="8" fill="#2563EB"/>
+    <text x="100" y="150" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Corp Admin</text>
+
+    <rect x="220" y="120" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="315" y="150" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Full Access &#x2713;</text>
+
+    <rect x="430" y="120" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="150" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Full Access &#x2713;</text>
+
+    <rect x="640" y="120" width="200" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="740" y="150" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">No Access &#x2717;</text>
+
+    <!-- Row 3: Corp Viewer -->
+    <rect x="0" y="184" width="200" height="52" rx="8" fill="#475569"/>
+    <text x="100" y="214" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Corp Viewer</text>
+
+    <rect x="220" y="184" width="190" height="52" rx="8" fill="#1E2A3A" stroke="#F59E0B"/>
+    <text x="315" y="214" text-anchor="middle" fill="#FCD34D" font-size="13" font-weight="700">Read Only &#x25CB;</text>
+
+    <rect x="430" y="184" width="190" height="52" rx="8" fill="#1E2A3A" stroke="#F59E0B"/>
+    <text x="525" y="214" text-anchor="middle" fill="#FCD34D" font-size="13" font-weight="700">Read Only &#x25CB;</text>
+
+    <rect x="640" y="184" width="200" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="740" y="214" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">No Access &#x2717;</text>
+
+    <!-- Divider -->
+    <line x1="0" y1="252" x2="840" y2="252" stroke="#334155" stroke-dasharray="6,4"/>
+    <text x="420" y="270" text-anchor="middle" fill="#64748B" font-size="10">&#x25BC; Facility Level (Existing)</text>
+
+    <!-- Row 4: Facility Owner -->
+    <rect x="0" y="284" width="200" height="52" rx="8" fill="#059669"/>
+    <text x="100" y="314" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Facility Owner Admin</text>
+
+    <rect x="220" y="284" width="190" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="315" y="314" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">No Access &#x2717;</text>
+
+    <rect x="430" y="284" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="308" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Full Access</text>
+    <text x="525" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">Own facility only</text>
+
+    <rect x="640" y="284" width="200" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="740" y="308" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Own Facility Only</text>
+    <text x="740" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">Add/Edit &#x2713;</text>
+
+    <!-- Row 5: Facility Sub Admin -->
+    <rect x="0" y="348" width="200" height="52" rx="8" fill="#475569"/>
+    <text x="100" y="378" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">Facility Sub Admin</text>
+
+    <rect x="220" y="348" width="190" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="315" y="378" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">No Access &#x2717;</text>
+
+    <rect x="430" y="348" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="378" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">Full Access (own) &#x2713;</text>
+
+    <rect x="640" y="348" width="200" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="740" y="378" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">No Access &#x2717;</text>
+  </svg>
+</div>
+
+<!-- ===== 3. Login Flow ===== -->
+<div class="section">
+  <h2><span>3</span>Login Flow (Separate Login Pages)</h2>
+  <svg viewBox="0 0 840 580" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr3" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+      <marker id="arr3g" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#059669"/></marker>
+      <marker id="arr3r" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#DC2626"/></marker>
+    </defs>
+
+    <!-- Two login pages -->
+    <rect x="40" y="10" width="340" height="56" rx="10" fill="#E97316" filter="url(#glow)"/>
+    <text x="210" y="32" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Corp Login Page</text>
+    <text x="210" y="50" text-anchor="middle" fill="#FFEDD5" font-size="11">corp.monsuke.jp/auth/login</text>
+
+    <rect x="460" y="10" width="340" height="56" rx="10" fill="#0891B2" filter="url(#glow)"/>
+    <text x="630" y="32" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Facility Login Page</text>
+    <text x="630" y="50" text-anchor="middle" fill="#CFFAFE" font-size="11">qacp.monsuke.jp/auth/login</text>
+
+    <line x1="210" y1="66" x2="210" y2="104" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="630" y1="66" x2="630" y2="104" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <!-- Auth -->
+    <rect x="100" y="104" width="220" height="44" rx="8" fill="#334155"/>
+    <text x="210" y="130" text-anchor="middle" fill="#E2E8F0" font-size="12" font-weight="600">Email + Password Auth</text>
+
+    <rect x="520" y="104" width="220" height="44" rx="8" fill="#334155"/>
+    <text x="630" y="130" text-anchor="middle" fill="#E2E8F0" font-size="12" font-weight="600">Email + Password Auth</text>
+
+    <line x1="210" y1="148" x2="210" y2="182" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="630" y1="148" x2="630" y2="182" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <!-- Corp: check corp roles -->
+    <rect x="60" y="182" width="300" height="50" rx="10" fill="#2563EB" filter="url(#glow)"/>
+    <text x="210" y="204" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Retrieve corp-level permissions</text>
+    <text x="210" y="222" text-anchor="middle" fill="#BFDBFE" font-size="10">Owner Admin / Admin / Viewer</text>
+
+    <!-- Facility: check facility roles -->
+    <rect x="480" y="182" width="300" height="50" rx="10" fill="#2563EB" filter="url(#glow)"/>
+    <text x="630" y="204" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Retrieve facility-level permissions</text>
+    <text x="630" y="222" text-anchor="middle" fill="#BFDBFE" font-size="10">Owner Admin / Sub Admin</text>
+
+    <line x1="210" y1="232" x2="210" y2="266" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="630" y1="232" x2="630" y2="266" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <!-- Corp: multi-corp check -->
+    <polygon points="210,270 310,310 210,350 110,310" fill="#334155" stroke="#64748B"/>
+    <text x="210" y="306" text-anchor="middle" fill="#E2E8F0" font-size="11" font-weight="600">Multiple</text>
+    <text x="210" y="320" text-anchor="middle" fill="#E2E8F0" font-size="11" font-weight="600">corps?</text>
+
+    <!-- Facility: multi-facility check -->
+    <polygon points="630,270 730,310 630,350 530,310" fill="#334155" stroke="#64748B"/>
+    <text x="630" y="306" text-anchor="middle" fill="#E2E8F0" font-size="11" font-weight="600">Multiple</text>
+    <text x="630" y="320" text-anchor="middle" fill="#E2E8F0" font-size="11" font-weight="600">facilities?</text>
+
+    <!-- Corp: single -->
+    <text x="60" y="302" text-anchor="middle" fill="#94A3B8" font-size="10">One</text>
+    <line x1="110" y1="310" x2="40" y2="310" stroke="#059669" stroke-width="1.5" marker-end="url(#arr3g)"/>
+
+    <!-- Corp: multiple → switcher -->
+    <line x1="210" y1="350" x2="210" y2="380" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <text x="224" y="370" fill="#94A3B8" font-size="10">Multiple</text>
+
+    <!-- Facility: single -->
+    <text x="790" y="302" text-anchor="middle" fill="#94A3B8" font-size="10">One</text>
+    <line x1="730" y1="310" x2="800" y2="310" stroke="#059669" stroke-width="1.5" marker-end="url(#arr3g)"/>
+
+    <!-- Facility: multiple → switcher -->
+    <line x1="630" y1="350" x2="630" y2="380" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <text x="644" y="370" fill="#94A3B8" font-size="10">Multiple</text>
+
+    <!-- Corp switcher -->
+    <rect x="80" y="380" width="260" height="44" rx="8" fill="#7C3AED"/>
+    <text x="210" y="406" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Corp Switching UI</text>
+
+    <!-- Facility switcher -->
+    <rect x="500" y="380" width="260" height="44" rx="8" fill="#7C3AED"/>
+    <text x="630" y="406" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Facility Switching UI</text>
+
+    <!-- Destinations -->
+    <line x1="210" y1="424" x2="210" y2="470" stroke="#E97316" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="40" y1="310" x2="40" y2="470" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr3g)"/>
+    <line x1="630" y1="424" x2="630" y2="470" stroke="#0891B2" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="800" y1="310" x2="800" y2="470" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr3g)"/>
+
+    <rect x="60" y="470" width="300" height="44" rx="10" fill="#E97316"/>
+    <text x="210" y="496" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Corp Admin Panel</text>
+
+    <rect x="480" y="470" width="300" height="44" rx="10" fill="#0891B2"/>
+    <text x="630" y="496" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Facility Admin Panel</text>
+
+    <!-- Notes -->
+    <rect x="40" y="530" width="760" height="40" rx="8" fill="#1E293B" stroke="#334155"/>
+    <text x="60" y="554" fill="#94A3B8" font-size="11">&#x2022; Each panel has its own login page and URL. Users log in to the panel matching their role.</text>
+  </svg>
+</div>
+
+<!-- ===== 4. Same Email Permission Resolution ===== -->
+<div class="section">
+  <h2><span>4</span>Same Email — Permission Resolution Flow</h2>
+  <svg viewBox="0 0 840 560" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr4" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+    </defs>
+
+    <!-- User -->
+    <rect x="240" y="10" width="360" height="56" rx="10" fill="#E97316" filter="url(#glow)"/>
+    <text x="420" y="32" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">sato@example.com logs in</text>
+    <text x="420" y="52" text-anchor="middle" fill="#FFEDD5" font-size="11">One email linked to 3 different permissions</text>
+
+    <line x1="420" y1="66" x2="420" y2="96" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- Switching UI -->
+    <rect x="280" y="96" width="280" height="48" rx="10" fill="#7C3AED" filter="url(#glow)"/>
+    <text x="420" y="124" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Account Switching UI</text>
+
+    <!-- 3 branches -->
+    <line x1="320" y1="144" x2="130" y2="190" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="420" y1="144" x2="420" y2="190" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="520" y1="144" x2="710" y2="190" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- Account 1: Corp Admin -->
+    <rect x="20" y="190" width="220" height="48" rx="8" fill="#2563EB" filter="url(#glow)"/>
+    <text x="130" y="210" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">As Corp Admin</text>
+    <text x="130" y="228" text-anchor="middle" fill="#BFDBFE" font-size="10">Keijinkai</text>
+
+    <line x1="70" y1="238" x2="70" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="190" y1="238" x2="190" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <rect x="10" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="70" y="296" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">Corp Panel</text>
+    <text x="70" y="314" text-anchor="middle" fill="#6EE7B7" font-size="10">Full Access &#x2713;</text>
+
+    <rect x="140" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="200" y="292" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">All Facilities</text>
+    <text x="200" y="308" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">Panel</text>
+    <text x="200" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">Full Access &#x2713;</text>
+
+    <rect x="10" y="344" width="250" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="135" y="366" text-anchor="middle" fill="#F87171" font-size="11">Admin Management: No Access &#x2717;</text>
+
+    <!-- Account 2: Facility A Owner -->
+    <rect x="300" y="190" width="240" height="48" rx="8" fill="#059669" filter="url(#glow)"/>
+    <text x="420" y="210" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">As Facility Owner</text>
+    <text x="420" y="228" text-anchor="middle" fill="#D1FAE5" font-size="10">Facility A: Tsukisamu</text>
+
+    <line x1="360" y1="238" x2="360" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="480" y1="238" x2="480" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <rect x="300" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="360" y="296" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">Facility A</text>
+    <text x="360" y="314" text-anchor="middle" fill="#6EE7B7" font-size="10">Full Access &#x2713;</text>
+
+    <rect x="430" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="490" y="292" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">Facility A</text>
+    <text x="490" y="308" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">Admin Mgmt</text>
+    <text x="490" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">Add/Edit &#x2713;</text>
+
+    <rect x="300" y="344" width="250" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="425" y="366" text-anchor="middle" fill="#F87171" font-size="11">Corp Panel: No Access &#x2717;</text>
+
+    <!-- Account 3: Facility B Sub Admin -->
+    <rect x="600" y="190" width="220" height="48" rx="8" fill="#475569" filter="url(#glow)"/>
+    <text x="710" y="210" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">As Sub Admin</text>
+    <text x="710" y="228" text-anchor="middle" fill="#CBD5E1" font-size="10">Facility B: Nishimaruyama</text>
+
+    <line x1="710" y1="238" x2="710" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <rect x="640" y="272" width="140" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="710" y="296" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">Facility B</text>
+    <text x="710" y="314" text-anchor="middle" fill="#6EE7B7" font-size="10">Full Access &#x2713;</text>
+
+    <rect x="600" y="344" width="220" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="710" y="366" text-anchor="middle" fill="#F87171" font-size="11">Admin Mgmt: No Access &#x2717;</text>
+    <rect x="600" y="392" width="220" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="710" y="414" text-anchor="middle" fill="#F87171" font-size="11">Corp Panel: No Access &#x2717;</text>
+
+    <!-- Summary notes -->
+    <rect x="40" y="450" width="760" height="100" rx="10" fill="#1E293B" stroke="#334155"/>
+    <text x="60" y="476" fill="#F97316" font-size="12" font-weight="700">Same Email Operation Rules</text>
+    <text x="60" y="498" fill="#94A3B8" font-size="11">1. After login, the Account Switching UI lets the user choose which permission to operate under</text>
+    <text x="60" y="516" fill="#94A3B8" font-size="11">2. Each account's permissions are independent — Corp Admin access doesn't include Facility Owner rights</text>
+    <text x="60" y="534" fill="#94A3B8" font-size="11">3. Switching is available anytime (similar to Slack workspace switching)</text>
+  </svg>
+</div>
+
+</body>
+</html>
