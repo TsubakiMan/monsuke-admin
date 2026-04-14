@@ -315,8 +315,8 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       <div class="tbar"><div class="pag" id="f-pag"></div><span id="f-cnt"></span></div>
       <table><thead><tr>
         <th style="width:100px">事業所ID</th>
-        <th>事業所名</th>
-        <th style="width:120px">エリア</th>
+        <th class="sortable" onclick="tSort('f','name')">事業所名</th>
+        <th class="sortable" style="width:120px" onclick="tSort('f','area')">エリア</th>
         <th style="width:90px">ステータス</th>
         <th style="width:90px"></th>
       </tr></thead><tbody id="f-tb"></tbody></table>
@@ -371,11 +371,11 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       <div class="tbar"><div class="pag" id="w-pag"></div><span id="w-cnt"></span></div>
       <table><thead><tr>
         <th style="width:100px">ワーカーID</th>
-        <th>名前</th>
+        <th class="sortable" onclick="tSort('w','name')">名前</th>
         <th style="width:100px">資格</th>
         <th>勤務先事業所</th>
-        <th style="width:70px">回数</th>
-        <th style="width:100px">評価</th>
+        <th class="sortable" style="width:70px" onclick="tSort('w','cnt')">回数</th>
+        <th class="sortable" style="width:100px" onclick="tSort('w','rating')">評価</th>
         <th style="width:60px"></th>
       </tr></thead><tbody id="w-tb"></tbody></table>
     </div>
@@ -399,10 +399,10 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       <table><thead><tr>
         <th>事業所名</th>
         <th style="width:100px">職種</th>
-        <th>日時</th>
-        <th style="width:70px">時給</th>
+        <th class="sortable" onclick="tSort('j','dt')">日時</th>
+        <th class="sortable" style="width:70px" onclick="tSort('j','wage')">時給</th>
         <th style="width:60px">募集</th>
-        <th style="width:60px">応募</th>
+        <th class="sortable" style="width:60px" onclick="tSort('j','apps')">応募</th>
         <th style="width:70px">承認済</th>
         <th style="width:70px">承認待ち</th>
         <th style="width:90px">ステータス</th>
@@ -432,12 +432,12 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="tcard">
       <div class="tbar"><div class="pag" id="a-pag"></div><span id="a-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:100px">日付</th>
-        <th>ワーカー名</th>
+        <th class="sortable" style="width:100px" onclick="tSort('a','dt')">日付</th>
+        <th class="sortable" onclick="tSort('a','worker')">ワーカー名</th>
         <th>事業所名</th>
         <th style="width:70px">出勤</th>
         <th style="width:70px">退勤</th>
-        <th style="width:70px">実働</th>
+        <th class="sortable" style="width:70px" onclick="tSort('a','hours')">実働</th>
         <th style="width:90px">ステータス</th>
       </tr></thead><tbody id="a-tb"></tbody></table>
     </div>
@@ -583,11 +583,11 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="tcard">
       <div class="tbar"><span id="rv-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:120px;cursor:pointer;user-select:none" onclick="rvSort('score')">レビュー数 <span id="rv-sort-score"></span></th>
+        <th class="sortable" style="width:120px" onclick="tSort('rv','score')">レビュー数</th>
         <th>事業所名</th>
-        <th style="cursor:pointer;user-select:none" onclick="rvSort('worker')">ワーカー <span id="rv-sort-worker"></span></th>
+        <th class="sortable" onclick="tSort('rv','worker')">ワーカー</th>
         <th>コメント</th>
-        <th style="width:100px;cursor:pointer;user-select:none" onclick="rvSort('date')">日付 <span id="rv-sort-date"></span></th>
+        <th class="sortable" style="width:100px" onclick="tSort('rv','date')">日付</th>
       </tr></thead><tbody id="rv-tb"></tbody></table>
       <div class="tbar" style="border-top:1px solid var(--gray-200);margin-top:0"><span id="rv-pg-cnt"></span></div>
       <div class="pag" id="rv-pag"></div>
@@ -787,7 +787,9 @@ function fFac(){
   return list;
 }
 function rFac(){
-  pg.f=1; const fl=fFac(),p=slice(fl,pg.f);
+  pg.f=1; let fl=fFac();
+  fl=sortList(fl,'f',{name:(a,b)=>a.name.localeCompare(b.name,'ja'),area:(a,b)=>a.area.localeCompare(b.area,'ja')});
+  const p=slice(fl,pg.f);
   document.getElementById('f-tb').innerHTML=p.rows.map(f=>`<tr>
     <td class="c-id">${f.id}</td>
     <td><a href="#" class="c-link">${f.name}</a></td>
@@ -797,6 +799,7 @@ function rFac(){
   </tr>`).join('');
   document.getElementById('f-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${p.total}件中 / 全${FAC.length}件中`;
   pagH('f-pag',p.pages,pg.f,'f');
+  applySortUI('f');
 }
 
 /* Workers */
@@ -812,7 +815,9 @@ function fWork(){
   });
 }
 function rWork(){
-  pg.w=1; const fl=fWork(),p=slice(fl,pg.w);
+  pg.w=1; let fl=fWork();
+  fl=sortList(fl,'w',{name:(a,b)=>a.name.localeCompare(b.name,'ja'),cnt:(a,b)=>a.cnt-b.cnt,rating:(a,b)=>a.r-b.r});
+  const p=slice(fl,pg.w);
   document.getElementById('w-tb').innerHTML=p.rows.map(w=>`<tr>
     <td class="c-id">${w.id}</td>
     <td><strong>${w.name}</strong></td>
@@ -824,11 +829,13 @@ function rWork(){
   </tr>`).join('');
   document.getElementById('w-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${fl.length}件中`;
   pagH('w-pag',p.pages,pg.w,'w');
+  applySortUI('w');
 }
 
 /* Jobs */
 function rJob(){
-  const p=slice(JOBS,pg.j);
+  let list=sortList(JOBS,'j',{dt:(a,b)=>a.dt.localeCompare(b.dt),wage:(a,b)=>a.wage-b.wage,apps:(a,b)=>a.apps-b.apps});
+  const p=slice(list,pg.j);
   document.getElementById('j-tb').innerHTML=p.rows.map(j=>`<tr>
     <td>${j.fac}</td>
     <td>${j.type}</td>
@@ -842,6 +849,7 @@ function rJob(){
   </tr>`).join('');
   document.getElementById('j-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${JOBS.length}件中`;
   pagH('j-pag',p.pages,pg.j,'j');
+  applySortUI('j');
 }
 
 /* Attendance */
@@ -850,7 +858,9 @@ function fAtt(){
   return v?ATT.filter(a=>a.fac.includes(v)):ATT;
 }
 function rAtt(){
-  pg.a=1; const fl=fAtt(),p=slice(fl,pg.a);
+  pg.a=1; let fl=fAtt();
+  fl=sortList(fl,'a',{dt:(a,b)=>a.dt.localeCompare(b.dt),worker:(a,b)=>a.w.localeCompare(b.w,'ja'),hours:(a,b)=>parseFloat(a.h)-parseFloat(b.h)});
+  const p=slice(fl,pg.a);
   document.getElementById('a-tb').innerHTML=p.rows.map(a=>`<tr>
     <td>${a.dt}</td>
     <td><strong>${a.w}</strong></td>
@@ -862,6 +872,7 @@ function rAtt(){
   </tr>`).join('');
   document.getElementById('a-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${fl.length}件中`;
   pagH('a-pag',p.pages,pg.a,'a');
+  applySortUI('a');
 }
 
 /* Nav */
@@ -1012,6 +1023,11 @@ h1{font-size:22px;text-align:center;margin-bottom:8px;letter-spacing:2px}
 .info-row .val{font-weight:600}
 table{width:100%;border-collapse:collapse;margin-bottom:24px}
 th{background:#f8fafc;border:1px solid #e2e8f0;padding:10px 14px;font-size:11px;text-align:left;color:#64748b}
+th.sortable{cursor:pointer;user-select:none;position:relative}
+th.sortable:hover{background:#eef2f7}
+th.sortable::after{content:'⇅';margin-left:4px;font-size:10px;color:#94a3b8}
+th.sortable.asc::after{content:'▲';color:var(--primary)}
+th.sortable.desc::after{content:'▼';color:var(--primary)}
 td{border:1px solid #e2e8f0;padding:10px 14px;font-size:13px}
 .total-row td{font-weight:700;background:#fff7ed}
 .amount{text-align:right}
@@ -1471,11 +1487,35 @@ const FAC_SCORES={
   'きもべつ喜らめきの郷':{avg:3.8,cnt:50}
 };
 function stars(n){return '★'.repeat(Math.floor(n))+(n%1>=0.5?'☆':'')+'☆'.repeat(5-Math.ceil(n))}
-let rvSortKey=null,rvSortDir=0; // 0=none,1=asc,-1=desc
-function rvSort(key){
-  if(rvSortKey===key){rvSortDir=rvSortDir===1?-1:rvSortDir===-1?0:1;}
-  else{rvSortKey=key;rvSortDir=1;}
-  pg.rv=1;rReviews();
+/* ===== 汎用ソート ===== */
+const sortState={};
+function tSort(tbl,key){
+  if(!sortState[tbl]) sortState[tbl]={key:null,dir:0};
+  const s=sortState[tbl];
+  if(s.key===key){s.dir=s.dir===1?-1:s.dir===-1?0:1;}
+  else{s.key=key;s.dir=1;}
+  pg[tbl]=1;
+  ({f:rFac,w:rWork,j:rJob,a:rAtt,rv:rReviews})[tbl]();
+}
+function applySortUI(tbl){
+  const s=sortState[tbl]||{key:null,dir:0};
+  const renderFn={f:'f-tb',w:'w-tb',j:'j-tb',a:'a-tb',rv:'rv-tb'}[tbl];
+  const table=document.getElementById(renderFn)?.closest('table');
+  if(!table) return;
+  table.querySelectorAll('th.sortable').forEach(th=>{
+    th.classList.remove('asc','desc');
+    const onclick=th.getAttribute('onclick')||'';
+    const m=onclick.match(/tSort\('[^']+','([^']+)'\)/);
+    if(m&&m[1]===s.key){
+      if(s.dir===1) th.classList.add('asc');
+      else if(s.dir===-1) th.classList.add('desc');
+    }
+  });
+}
+function sortList(list,tbl,comparators){
+  const s=sortState[tbl]||{key:null,dir:0};
+  if(s.dir===0||!s.key||!comparators[s.key]) return list;
+  return [...list].sort((a,b)=>comparators[s.key](a,b)*s.dir);
 }
 function rReviews(){
   // 事業所別スコアバー
@@ -1504,21 +1544,7 @@ function rReviews(){
     if(s<=2) list=list.filter(r=>Math.round(+rvAvg(r.scores))<=2);
     else list=list.filter(r=>Math.round(+rvAvg(r.scores))===s);
   }
-  // ソート
-  if(rvSortDir!==0&&rvSortKey){
-    list=[...list].sort((a,b)=>{
-      let v=0;
-      if(rvSortKey==='score') v=+rvAvg(a.scores)-+rvAvg(b.scores);
-      else if(rvSortKey==='worker') v=a.worker.localeCompare(b.worker,'ja');
-      else if(rvSortKey==='date') v=a.date.localeCompare(b.date);
-      return v*rvSortDir;
-    });
-  }
-  // ソートインジケーター更新
-  ['score','worker','date'].forEach(k=>{
-    const el=document.getElementById('rv-sort-'+k);
-    if(el) el.textContent=rvSortKey===k?(rvSortDir===1?'▲':rvSortDir===-1?'▼':''):'';
-  });
+  list=sortList(list,'rv',{score:(a,b)=>+rvAvg(a.scores)-+rvAvg(b.scores),worker:(a,b)=>a.worker.localeCompare(b.worker,'ja'),date:(a,b)=>a.date.localeCompare(b.date)});
   const p=sliceRv(list,pg.rv);
   document.getElementById('rv-cnt').textContent=list.length+'件のレビュー';
   document.getElementById('rv-tb').innerHTML=p.rows.map((r,i)=>{
@@ -1534,6 +1560,7 @@ function rReviews(){
   }).join('');
   document.getElementById('rv-pg-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${list.length}件中`;
   pagH('rv-pag',p.pages,pg.rv,'rv');
+  applySortUI('rv');
 }
 function showRvDetail(idx){
   const r=REVIEWS[idx];
