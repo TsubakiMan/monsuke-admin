@@ -443,16 +443,33 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <!-- ===== メッセージ ===== -->
   <div class="page" id="p-messages">
     <div class="ph"><h1>メッセージ</h1></div>
-    <p class="ph-sub">ワーカーや事業所からのメッセージを確認できます。</p>
-    <div class="tcard standalone">
-      <table><thead><tr><th>送信者</th><th>件名</th><th style="width:140px">日時</th><th style="width:80px">ステータス</th></tr></thead>
-      <tbody>
-        <tr><td><strong>佐藤 花子</strong></td><td><a href="#" class="c-link">4/12のシフトについて確認</a></td><td>2026/04/10 09:15</td><td><span class="st st-o">未読</span></td></tr>
-        <tr><td><strong>田中 一郎</strong></td><td><a href="#" class="c-link">資格証明書の更新について</a></td><td>2026/04/09 16:42</td><td><span class="st st-o">未読</span></td></tr>
-        <tr><td><strong>月寒あさがおの郷</strong></td><td><a href="#" class="c-link">来週のシフト追加依頼</a></td><td>2026/04/09 14:20</td><td><span class="st st-o">未読</span></td></tr>
-        <tr><td><strong>鈴木 美咲</strong></td><td><a href="#" class="c-link">勤務報告の修正依頼</a></td><td>2026/04/08 11:30</td><td><span class="st st-g">既読</span></td></tr>
-        <tr><td><strong>西円山敬樹園</strong></td><td><a href="#" class="c-link">ワーカー評価のご連絡</a></td><td>2026/04/07 17:05</td><td><span class="st st-g">既読</span></td></tr>
-      </tbody></table>
+    <p class="ph-sub">事業所ごとのメッセージを確認できます。</p>
+
+    <div class="search-area">
+      <div class="search-filters" style="margin-top:0">
+        <select class="sel" id="msg-fac" onchange="rMessages()">
+          <option value="">全ての事業所</option>
+          <option>月寒あさがおの郷</option>
+          <option>西円山敬樹園</option>
+          <option>菊水こまちの郷</option>
+          <option>きもべつ喜らめきの郷</option>
+        </select>
+        <select class="sel" id="msg-st" onchange="rMessages()">
+          <option value="">全てのステータス</option>
+          <option value="未読">未読</option>
+          <option value="既読">既読</option>
+        </select>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tbar"><span id="msg-cnt"></span></div>
+      <table><thead><tr>
+        <th style="width:160px">事業所</th>
+        <th style="width:120px">送信者</th>
+        <th>内容</th>
+        <th style="width:140px">日時</th>
+        <th style="width:80px">ステータス</th>
+      </tr></thead><tbody id="msg-tb"></tbody></table>
     </div>
   </div>
 
@@ -1525,8 +1542,40 @@ function rReport(){
   ).join('');
 }
 
+/* ===== メッセージ ===== */
+const MESSAGES=[
+  {fac:'月寒あさがおの郷',from:'佐藤 花子',text:'4/12のシフトについて確認させてください。午前のみの勤務は可能でしょうか。',dt:'2026/04/10 09:15',st:'未読'},
+  {fac:'月寒あさがおの郷',from:'田中 一郎',text:'資格証明書の有効期限が近づいています。更新書類の提出先を教えてください。',dt:'2026/04/09 16:42',st:'未読'},
+  {fac:'月寒あさがおの郷',from:'施設担当者',text:'来週月曜〜水曜の夜勤シフトに追加でワーカーを1名お願いしたいです。',dt:'2026/04/09 14:20',st:'未読'},
+  {fac:'西円山敬樹園',from:'鈴木 美咲',text:'3/28の勤務報告で退勤時間に誤りがありました。17:00→17:30に修正をお願いします。',dt:'2026/04/08 11:30',st:'既読'},
+  {fac:'西円山敬樹園',from:'施設担当者',text:'先月勤務いただいたワーカー3名の評価を送付します。全員高評価です。',dt:'2026/04/07 17:05',st:'既読'},
+  {fac:'菊水こまちの郷',from:'山本 真理',text:'4/15の日勤に応募しました。持ち物や注意事項があれば教えてください。',dt:'2026/04/07 10:20',st:'既読'},
+  {fac:'菊水こまちの郷',from:'施設担当者',text:'来月から夜勤の求人を増やしたいので、対応可能なワーカーをご紹介ください。',dt:'2026/04/06 15:40',st:'既読'},
+  {fac:'きもべつ喜らめきの郷',from:'伊藤 大輔',text:'交通費の精算について確認があります。バス代の上限はありますか。',dt:'2026/04/05 09:00',st:'既読'},
+  {fac:'きもべつ喜らめきの郷',from:'施設担当者',text:'GW期間中の稼働について相談させてください。5/3〜5/5で2名希望です。',dt:'2026/04/04 14:10',st:'未読'},
+  {fac:'西円山敬樹園',from:'高橋 健太',text:'次回の勤務日程を確認したいです。4月後半で空きがあれば入りたいです。',dt:'2026/04/03 16:30',st:'既読'},
+];
+function rMessages(){
+  const fac=document.getElementById('msg-fac').value;
+  const st=document.getElementById('msg-st').value;
+  let list=MESSAGES;
+  if(fac) list=list.filter(m=>m.fac===fac);
+  if(st) list=list.filter(m=>m.st===st);
+  document.getElementById('msg-cnt').textContent=list.length+'件のメッセージ';
+  document.getElementById('msg-tb').innerHTML=list.map((m,i)=>{
+    const sc=m.st==='未読'?'o':'g';
+    return `<tr${i%2?` style="background:var(--gray-50)"`:''}>
+      <td style="padding:10px 12px;font-size:12px;font-weight:600">${m.fac}</td>
+      <td style="padding:10px 12px;font-size:13px">${m.from}</td>
+      <td style="padding:10px 12px;font-size:13px;color:var(--gray-600)">${m.text}</td>
+      <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${m.dt}</td>
+      <td style="padding:10px 12px"><span class="st st-${sc}">${m.st}</span></td>
+    </tr>`;
+  }).join('');
+}
+
 /* Init */
-rFac();rWork();rJob();rAtt();rReg();rWithholding();rBilling();rDashboard();rReviews();rReport();
+rFac();rWork();rJob();rAtt();rReg();rWithholding();rBilling();rMessages();rDashboard();rReviews();rReport();
 </script>
 </body>
 </html>
