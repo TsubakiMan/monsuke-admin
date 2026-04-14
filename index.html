@@ -517,7 +517,15 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         </select>
       </div>
       <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px">もん助でマッチングしたワーカーの源泉徴収票をPDFでダウンロードできます。</p>
-      <div class="tcard standalone">
+      <div class="search-area" style="border-radius:var(--radius) var(--radius) 0 0;margin-bottom:0">
+        <div class="search-row">
+          <div class="search-wrap">
+            <input type="text" id="wht-search" placeholder="ワーカー名で検索" oninput="rWithholding()">
+            <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          </div>
+        </div>
+      </div>
+      <div class="tcard" style="border-radius:0 0 var(--radius) var(--radius)">
         <table><thead><tr>
           <th>ワーカー名</th>
           <th style="width:100px">資格</th>
@@ -933,7 +941,9 @@ const WHT_DATA={
 };
 function rWithholding(){
   const yr=document.getElementById('wht-year').value;
-  const list=WHT_DATA[yr]||[];
+  const q=(document.getElementById('wht-search').value||'').toLowerCase().trim();
+  let list=WHT_DATA[yr]||[];
+  if(q) list=list.filter(w=>w.name.toLowerCase().includes(q));
   document.getElementById('wht-tb').innerHTML=list.map((w,i)=>
     `<tr${i%2?` style="background:var(--gray-50)"`:''}>
       <td style="padding:10px 12px;font-size:13px;font-weight:600">${w.name}</td>
