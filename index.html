@@ -402,8 +402,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="tcard standalone">
       <div class="tbar"><div class="pag" id="j-pag"></div><span id="j-cnt"></span></div>
       <table><thead><tr>
-        <th>事業所名</th>
-        <th style="width:100px">職種</th>
+        <th>求人タイトル</th>
         <th class="sortable" onclick="tSort('j','dt')">日時</th>
         <th class="sortable" style="width:70px" onclick="tSort('j','wage')">時給</th>
         <th style="width:60px">募集</th>
@@ -740,16 +739,16 @@ const WRK=[
   {id:'W-10167',name:'森田 隆',q:'無資格',facs:['きもべつ喜らめきの郷'],cnt:6,r:4.0},
 ];
 const JOBS=[
-  {fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/15 09:00〜17:00',wage:1200,slots:2,apps:3,approved:1,pending:1,st:'承認待ち'},
-  {fac:'西円山敬樹園',type:'看護職',dt:'2026/04/16 08:30〜16:30',wage:1500,slots:1,apps:1,approved:0,pending:1,st:'承認待ち'},
-  {fac:'菊水こまちの郷',type:'介護職',dt:'2026/04/15 17:00〜22:00',wage:1300,slots:2,apps:2,approved:1,pending:1,st:'承認待ち'},
-  {fac:'きもべつ喜らめきの郷',type:'生活支援員',dt:'2026/04/17 09:00〜15:00',wage:1100,slots:1,apps:0,approved:0,pending:0,st:'公開中'},
-  {fac:'月寒あさがおの郷',type:'調理補助',dt:'2026/04/18 06:00〜10:00',wage:1050,slots:3,apps:4,approved:2,pending:1,st:'承認待ち'},
-  {fac:'西円山敬樹園',type:'介護職',dt:'2026/04/12 09:00〜17:00',wage:1200,slots:1,apps:2,approved:1,pending:0,st:'締切'},
-  {fac:'菊水こまちの郷',type:'送迎ドライバー',dt:'2026/04/14 07:00〜09:00',wage:1100,slots:1,apps:1,approved:0,pending:1,st:'承認待ち'},
-  {fac:'まこまないの郷',type:'介護職',dt:'2026/04/20 09:00〜17:00',wage:1250,slots:2,apps:5,approved:2,pending:0,st:'締切'},
-  {fac:'月寒あさがおの郷',type:'介護職',dt:'2026/04/10 09:00〜17:00',wage:1200,slots:1,apps:3,approved:1,pending:0,st:'締切'},
-  {fac:'手稲の丘',type:'生活支援員',dt:'2026/04/19 10:00〜16:00',wage:1150,slots:2,apps:2,approved:0,pending:2,st:'承認待ち'},
+  {fac:'月寒あさがおの郷',title:'【北海道札幌市豊平区】介護老人福祉施設での介護業務をお願いします！',dt:'2026/04/15 09:00〜17:00',wage:1200,slots:2,apps:3,approved:1,pending:1,st:'承認待ち'},
+  {fac:'西円山敬樹園',title:'【北海道札幌市中央区】特別養護老人ホームでの看護業務をお願いします！',dt:'2026/04/16 08:30〜16:30',wage:1500,slots:1,apps:1,approved:0,pending:1,st:'承認待ち'},
+  {fac:'菊水こまちの郷',title:'【北海道札幌市白石区】地域密着型施設での夜勤介護業務をお願いします！',dt:'2026/04/15 17:00〜22:00',wage:1300,slots:2,apps:2,approved:1,pending:1,st:'承認待ち'},
+  {fac:'きもべつ喜らめきの郷',title:'【北海道喜茂別町】介護老人福祉施設での生活支援業務をお願いします！',dt:'2026/04/17 09:00〜15:00',wage:1100,slots:1,apps:0,approved:0,pending:0,st:'公開中'},
+  {fac:'月寒あさがおの郷',title:'【北海道札幌市豊平区】介護老人福祉施設での調理補助をお願いします！',dt:'2026/04/18 06:00〜10:00',wage:1050,slots:3,apps:4,approved:2,pending:1,st:'承認待ち'},
+  {fac:'西円山敬樹園',title:'【北海道札幌市中央区】特別養護老人ホームでの介護業務をお願いします！',dt:'2026/04/12 09:00〜17:00',wage:1200,slots:1,apps:2,approved:1,pending:0,st:'締切'},
+  {fac:'菊水こまちの郷',title:'【北海道札幌市白石区】地域密着型施設での送迎ドライバーをお願いします！',dt:'2026/04/14 07:00〜09:00',wage:1100,slots:1,apps:1,approved:0,pending:1,st:'承認待ち'},
+  {fac:'まこまないの郷',title:'【北海道札幌市南区】介護老人福祉施設での介護業務をお願いします！',dt:'2026/04/20 09:00〜17:00',wage:1250,slots:2,apps:5,approved:2,pending:0,st:'締切'},
+  {fac:'月寒あさがおの郷',title:'【北海道札幌市豊平区】介護老人福祉施設での介護業務をお願いします！',dt:'2026/04/10 09:00〜17:00',wage:1200,slots:1,apps:3,approved:1,pending:0,st:'締切'},
+  {fac:'手稲の丘',title:'【北海道札幌市手稲区】グループホームでの生活支援業務をお願いします！',dt:'2026/04/19 10:00〜16:00',wage:1150,slots:2,apps:2,approved:0,pending:2,st:'承認待ち'},
 ];
 const ATT=[
   {dt:'2026/04/10',w:'佐藤 花子',fac:'介護老人福祉施設　月寒あさがおの郷',in:'09:00',out:'17:00',h:'8.0h',st:'確定'},
@@ -842,8 +841,7 @@ function rJob(){
   let list=sortList(JOBS,'j',{dt:(a,b)=>a.dt.localeCompare(b.dt),wage:(a,b)=>a.wage-b.wage,apps:(a,b)=>a.apps-b.apps});
   const p=slice(list,pg.j);
   document.getElementById('j-tb').innerHTML=p.rows.map(j=>`<tr>
-    <td>${j.fac}</td>
-    <td>${j.type}</td>
+    <td style="white-space:normal;max-width:320px"><a href="#" class="c-link" onclick="event.preventDefault();go('facilities')">${j.title}</a><div style="font-size:11px;color:var(--gray-400);margin-top:2px">${j.fac}</div></td>
     <td>${j.dt}</td>
     <td>¥${j.wage.toLocaleString()}</td>
     <td style="text-align:center">${j.slots}名</td>
