@@ -1503,8 +1503,8 @@ function rReviews(){
   document.getElementById('rv-tb').innerHTML=p.rows.map((r,i)=>{
     const avg=rvAvg(r.scores);
     const idx=REVIEWS.indexOf(r);
-    return `<tr${i%2?` style="background:var(--gray-50)"`:''}>
-      <td style="padding:10px 12px;font-size:14px;font-weight:600;color:var(--primary)">★ ${avg} <button class="btn btn-out btn-sm" style="margin-left:4px;font-size:10px;padding:2px 6px" onclick="showRvDetail(${idx})">詳細</button></td>
+    return `<tr onclick="showRvDetail(${idx})" style="cursor:pointer;${i%2?'background:var(--gray-50)':''}">
+      <td style="padding:10px 12px;font-size:14px;font-weight:600;color:var(--primary)">★ ${avg}</td>
       <td style="padding:10px 12px;font-size:13px">${r.fac}</td>
       <td style="padding:10px 12px;font-size:13px">${r.worker}</td>
       <td style="padding:10px 12px;font-size:13px;color:var(--gray-500);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.comment}</td>
