@@ -710,11 +710,19 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     </div>
     <div class="fcard">
       <h3>管理者アカウント</h3>
-      <div class="fgrid">
-        <div class="fg"><label>管理者名</label><input class="fi" value="管理者"></div>
-        <div class="fg"><label>メールアドレス</label><input class="fi" value="admin@keijinkai.or.jp"></div>
-      </div>
-      <div class="factions"><button class="btn btn-blue">保存する</button></div>
+      <p style="font-size:12px;color:var(--gray-400);margin-bottom:16px">オーナー管理者のみが、管理者の追加・権限の編集ができます。</p>
+      <table>
+        <thead><tr>
+          <th>名前</th>
+          <th>メールアドレス</th>
+          <th style="width:120px">権限</th>
+          <th style="width:80px">ステータス</th>
+          <th style="width:100px"></th>
+        </tr></thead>
+        <tbody id="admin-tb"></tbody>
+      </table>
+      <div class="factions"><button class="btn btn-blue" onclick="openM('m-admin-add')">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>管理者を追加</button></div>
     </div>
   </div>
 </div>
@@ -734,6 +742,50 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       </div>
     </div>
     <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-registry-dl')">キャンセル</button><button class="btn btn-blue" onclick="addRegEntry()">追加する</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="m-admin-add">
+  <div class="modal">
+    <div class="modal-head"><h3>管理者を追加</h3><button class="modal-x" onclick="closeM('m-admin-add')">&times;</button></div>
+    <div class="modal-body">
+      <div class="fg"><label>名前</label><input class="fi" id="adm-name" placeholder="管理者名を入力"></div>
+      <div class="fg" style="margin-top:14px"><label>メールアドレス</label><input class="fi" id="adm-email" type="email" placeholder="example@keijinkai.or.jp"></div>
+      <div class="fg" style="margin-top:14px"><label>権限</label>
+        <select class="fi" id="adm-role">
+          <option value="管理者">管理者</option>
+          <option value="閲覧者">閲覧者</option>
+        </select>
+      </div>
+      <div style="margin-top:14px;padding:12px;background:var(--gray-50);border-radius:8px;font-size:12px;color:var(--gray-500)">
+        <div style="font-weight:600;margin-bottom:8px;color:var(--gray-700)">権限の説明</div>
+        <div style="margin-bottom:6px"><strong style="color:var(--primary)">オーナー管理者</strong> — 全機能のアクセス・管理者の追加/編集/削除が可能</div>
+        <div style="margin-bottom:6px"><strong style="color:var(--blue)">管理者</strong> — 全機能のアクセスが可能（管理者の管理は不可）</div>
+        <div><strong style="color:var(--gray-500)">閲覧者</strong> — データの閲覧のみ（編集・操作は不可）</div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-admin-add')">キャンセル</button><button class="btn btn-blue" onclick="addAdmin()">追加する</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="m-admin-edit">
+  <div class="modal">
+    <div class="modal-head"><h3>権限を編集</h3><button class="modal-x" onclick="closeM('m-admin-edit')">&times;</button></div>
+    <div class="modal-body">
+      <div class="fg"><label>名前</label><input class="fi" id="adm-edit-name" readonly></div>
+      <div class="fg" style="margin-top:14px"><label>メールアドレス</label><input class="fi" id="adm-edit-email" readonly></div>
+      <div class="fg" style="margin-top:14px"><label>権限</label>
+        <select class="fi" id="adm-edit-role">
+          <option value="管理者">管理者</option>
+          <option value="閲覧者">閲覧者</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-red" onclick="deleteAdmin()" style="margin-right:auto">削除</button>
+      <button class="btn btn-out" onclick="closeM('m-admin-edit')">キャンセル</button>
+      <button class="btn btn-blue" onclick="saveAdminEdit()">保存する</button>
+    </div>
   </div>
 </div>
 
@@ -1733,7 +1785,55 @@ function rMessages(){
 }
 
 /* Init */
-rFac();rWork();rJob();rAtt();rReg();rWithholding();rBilling();rMessages();rDashboard();rReviews();rReport();
+/* ===== 管理者アカウント ===== */
+const ADMINS=[
+  {name:'山田 太郎',email:'admin@keijinkai.or.jp',role:'オーナー管理者',st:'有効'},
+  {name:'佐藤 花子',email:'sato@keijinkai.or.jp',role:'管理者',st:'有効'},
+  {name:'鈴木 一郎',email:'suzuki@keijinkai.or.jp',role:'閲覧者',st:'有効'},
+];
+let editAdminIdx=-1;
+function roleCls(r){return r==='オーナー管理者'?'st-o':r==='管理者'?'st-b':'st-x'}
+function rAdmin(){
+  document.getElementById('admin-tb').innerHTML=ADMINS.map((a,i)=>`<tr>
+    <td><strong>${a.name}</strong></td>
+    <td style="font-size:12px">${a.email}</td>
+    <td><span class="st st-${roleCls(a.role)}">${a.role}</span></td>
+    <td><span class="st st-g">${a.st}</span></td>
+    <td>${a.role!=='オーナー管理者'?`<button class="btn btn-out btn-sm" onclick="editAdmin(${i})">編集</button>`:''}</td>
+  </tr>`).join('');
+}
+function addAdmin(){
+  const n=document.getElementById('adm-name').value.trim();
+  const e=document.getElementById('adm-email').value.trim();
+  const r=document.getElementById('adm-role').value;
+  if(!n||!e){toast('名前とメールアドレスを入力してください');return;}
+  ADMINS.push({name:n,email:e,role:r,st:'有効'});
+  rAdmin();closeM('m-admin-add');
+  document.getElementById('adm-name').value='';
+  document.getElementById('adm-email').value='';
+  toast('管理者を追加しました');
+}
+function editAdmin(i){
+  editAdminIdx=i;
+  const a=ADMINS[i];
+  document.getElementById('adm-edit-name').value=a.name;
+  document.getElementById('adm-edit-email').value=a.email;
+  document.getElementById('adm-edit-role').value=a.role;
+  openM('m-admin-edit');
+}
+function saveAdminEdit(){
+  if(editAdminIdx<0)return;
+  ADMINS[editAdminIdx].role=document.getElementById('adm-edit-role').value;
+  rAdmin();closeM('m-admin-edit');toast('権限を更新しました');
+}
+function deleteAdmin(){
+  if(editAdminIdx<0)return;
+  if(!confirm(ADMINS[editAdminIdx].name+'を削除しますか？'))return;
+  ADMINS.splice(editAdminIdx,1);
+  rAdmin();closeM('m-admin-edit');toast('管理者を削除しました');
+}
+
+rFac();rWork();rJob();rAtt();rReg();rWithholding();rBilling();rMessages();rDashboard();rReviews();rReport();rAdmin();
 </script>
 </body>
 </html>
