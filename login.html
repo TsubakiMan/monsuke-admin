@@ -329,6 +329,10 @@ body{
         <label for="remember">ログイン状態を保持する</label>
       </div>
 
+      <div id="login-error" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:#FEF2F2;border:1px solid rgba(220,38,38,.2);border-radius:8px;font-size:13px;color:#DC2626;margin-bottom:16px">
+        メールアドレスまたはパスワードが正しくありません。
+      </div>
+
       <button type="submit" class="btn-login">ログイン</button>
     </form>
 
@@ -353,6 +357,18 @@ body{
 <div class="login-footer">&copy; 2026 もん助 All rights reserved.</div>
 
 <script>
+/* ===== アカウントDB ===== */
+const ACCOUNTS=[
+  {email:'admin@keijinkai.or.jp',password:'Monsuke123',name:'山田 太郎',role:'オーナー管理者'},
+  {email:'sato@keijinkai.or.jp',password:'Monsuke123',name:'佐藤 花子',role:'管理者'},
+  {email:'suzuki@keijinkai.or.jp',password:'Monsuke123',name:'鈴木 一郎',role:'閲覧者'},
+];
+
+/* 既にログイン済みならリダイレクト */
+if(localStorage.getItem('monsuke_session')){
+  window.location.href='index.html';
+}
+
 function togglePw(){
   const p=document.getElementById('password');
   const icon=document.getElementById('eyeIcon');
@@ -367,8 +383,37 @@ function togglePw(){
 
 function handleLogin(e){
   e.preventDefault();
-  // Demo: redirect to corp admin panel
-  window.location.href='index.html';
+  const email=document.getElementById('email').value.trim().toLowerCase();
+  const pw=document.getElementById('password').value;
+  const errEl=document.getElementById('login-error');
+
+  const account=ACCOUNTS.find(a=>a.email===email && a.password===pw);
+  if(!account){
+    errEl.style.display='flex';
+    errEl.textContent='メールアドレスまたはパスワードが正しくありません。';
+    document.getElementById('password').value='';
+    return;
+  }
+
+  /* セッション保存 */
+  const session={
+    email:account.email,
+    name:account.name,
+    role:account.role,
+    loginAt:new Date().toISOString()
+  };
+  if(document.getElementById('remember').checked){
+    localStorage.setItem('monsuke_session',JSON.stringify(session));
+  }else{
+    sessionStorage.setItem('monsuke_session',JSON.stringify(session));
+    localStorage.setItem('monsuke_session',JSON.stringify(session));
+  }
+
+  /* ログインボタンのアニメーション */
+  const btn=document.querySelector('.btn-login');
+  btn.textContent='ログイン中...';
+  btn.disabled=true;
+  setTimeout(()=>{window.location.href='index.html';},600);
 }
 </script>
 
