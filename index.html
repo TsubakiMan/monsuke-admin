@@ -576,8 +576,8 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <!-- レビュー一覧 -->
     <div class="search-area">
       <div class="search-filters" style="margin-top:0">
-        <select class="sel" id="rv-fac" onchange="rReviews()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
-        <select class="sel" id="rv-score" onchange="rReviews()"><option value="">全てのレビュー数</option><option value="5">★5</option><option value="4">★4</option><option value="3">★3</option><option value="2">★2以下</option></select>
+        <select class="sel" id="rv-fac" onchange="pg.rv=1;rReviews()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
+        <select class="sel" id="rv-score" onchange="pg.rv=1;rReviews()"><option value="">全てのレビュー数</option><option value="5">★5</option><option value="4">★4</option><option value="3">★3</option><option value="2">★2以下</option></select>
       </div>
     </div>
     <div class="tcard">
@@ -589,6 +589,8 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         <th>コメント</th>
         <th style="width:100px">日付</th>
       </tr></thead><tbody id="rv-tb"></tbody></table>
+      <div class="tbar" style="border-top:1px solid var(--gray-200);margin-top:0"><span id="rv-pg-cnt"></span></div>
+      <div class="pag" id="rv-pag"></div>
       <div id="rv-detail-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:center" onclick="if(event.target===this)this.style.display='none'">
         <div style="background:#fff;border-radius:12px;padding:24px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -760,7 +762,8 @@ const ATT=[
 ];
 
 const PS=10;
-let pg={f:1,w:1,j:1,a:1};
+const RV_PS=50;
+let pg={f:1,w:1,j:1,a:1,rv:1};
 
 function stCls(s){return{求人掲載中:'g',未掲載:'x',公開中:'b',締切:'r',マッチ済:'g',承認待ち:'lb',確定:'g'}[s]||'g'}
 function slice(arr,p){const s=(p-1)*PS;return{rows:arr.slice(s,s+PS),total:arr.length,pages:Math.ceil(arr.length/PS),s:s+1,e:Math.min(s+PS,arr.length)}}
@@ -771,7 +774,8 @@ function pagH(id,tp,cur,key){
   h+=`<button onclick="chg('${key}',${cur+1})" ${cur===tp?'disabled':''}>次へ</button>`;
   c.innerHTML=h;
 }
-function chg(k,p){pg[k]=p;({f:rFac,w:rWork,j:rJob,a:rAtt,r:rReg})[k]()}
+function sliceRv(arr,p){const s=(p-1)*RV_PS;return{rows:arr.slice(s,s+RV_PS),total:arr.length,pages:Math.ceil(arr.length/RV_PS),s:s+1,e:Math.min(s+RV_PS,arr.length)}}
+function chg(k,p){pg[k]=p;({f:rFac,w:rWork,j:rJob,a:rAtt,r:rReg,rv:rReviews})[k]()}
 
 /* Facilities */
 function fFac(){
@@ -1459,8 +1463,9 @@ function rReviews(){
     if(s<=2) list=list.filter(r=>Math.round(+rvAvg(r.scores))<=2);
     else list=list.filter(r=>Math.round(+rvAvg(r.scores))===s);
   }
+  const p=sliceRv(list,pg.rv);
   document.getElementById('rv-cnt').textContent=list.length+'件のレビュー';
-  document.getElementById('rv-tb').innerHTML=list.map((r,i)=>{
+  document.getElementById('rv-tb').innerHTML=p.rows.map((r,i)=>{
     const avg=rvAvg(r.scores);
     const idx=REVIEWS.indexOf(r);
     return `<tr${i%2?` style="background:var(--gray-50)"`:''}>
@@ -1471,6 +1476,8 @@ function rReviews(){
       <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${r.date}</td>
     </tr>`;
   }).join('');
+  document.getElementById('rv-pg-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${list.length}件中`;
+  pagH('rv-pag',p.pages,pg.rv,'rv');
 }
 function showRvDetail(idx){
   const r=REVIEWS[idx];
