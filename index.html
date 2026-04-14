@@ -210,7 +210,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="nav-label">運用</div>
     <a class="nav-a" data-p="jobs" onclick="go('jobs')"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><path d="M9 21V9"/></svg>求人管理</a>
     <a class="nav-a" data-p="attendance" onclick="go('attendance')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>勤怠管理</a>
-    <a class="nav-a" data-p="messages" onclick="go('messages')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>メッセージ<span class="nav-badge">3</span></a>
+    <a class="nav-a" data-p="messages" onclick="go('messages')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>チャット<span class="nav-badge">3</span></a>
     <a class="nav-a" data-p="reviews" onclick="go('reviews')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>レビュー</a>
     <div class="nav-label">管理</div>
     <a class="nav-a" data-p="billing" onclick="go('billing')"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>請求・支払い</a>
@@ -238,7 +238,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       <div class="stat"><div class="stat-label">今月の利用額</div><div class="stat-val">¥387,200</div><div class="stat-sub">前月比 <span style="color:var(--red)">-15.2%</span></div></div>
       <div class="stat"><div class="stat-label">稼働中ワーカー</div><div class="stat-val">32<span style="font-size:14px;color:var(--gray-400)"> / 48名</span></div><div class="stat-sub">待機中 12 / 休止中 4</div></div>
       <div class="stat"><div class="stat-label">今月の稼働件数</div><div class="stat-val">34<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub">前月比 <span style="color:var(--red)">-19.0%</span></div></div>
-      <div class="stat"><div class="stat-label">未読メッセージ</div><div class="stat-val" style="color:var(--primary)">3<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub"><a href="#" class="c-link" onclick="go('messages');return false">確認する →</a></div></div>
+      <div class="stat"><div class="stat-label">未読チャット</div><div class="stat-val" style="color:var(--primary)">3<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub"><a href="#" class="c-link" onclick="go('messages');return false">確認する →</a></div></div>
     </div>
 
     <!-- 月別利用額推移 (CSS bar chart) -->
@@ -440,10 +440,10 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     </div>
   </div>
 
-  <!-- ===== メッセージ ===== -->
+  <!-- ===== チャット ===== -->
   <div class="page" id="p-messages">
-    <div class="ph"><h1>メッセージ</h1></div>
-    <p class="ph-sub">事業所ごとのメッセージを確認できます。</p>
+    <div class="ph"><h1>チャット</h1></div>
+    <p class="ph-sub">事業所ごとのチャットを確認できます。</p>
 
     <div class="search-area">
       <div class="search-filters" style="margin-top:0">
@@ -1542,7 +1542,7 @@ function rReport(){
   ).join('');
 }
 
-/* ===== メッセージ ===== */
+/* ===== チャット ===== */
 const MESSAGES=[
   {fac:'月寒あさがおの郷',from:'佐藤 花子',text:'4/12のシフトについて確認させてください。午前のみの勤務は可能でしょうか。',dt:'2026/04/10 09:15',st:'未読'},
   {fac:'月寒あさがおの郷',from:'田中 一郎',text:'資格証明書の有効期限が近づいています。更新書類の提出先を教えてください。',dt:'2026/04/09 16:42',st:'未読'},
@@ -1561,11 +1561,11 @@ function rMessages(){
   let list=MESSAGES;
   if(fac) list=list.filter(m=>m.fac===fac);
   if(st) list=list.filter(m=>m.st===st);
-  document.getElementById('msg-cnt').textContent=list.length+'件のメッセージ';
+  document.getElementById('msg-cnt').textContent=list.length+'件のチャット';
   document.getElementById('msg-tb').innerHTML=list.map((m,i)=>{
     const sc=m.st==='未読'?'o':'g';
     return `<tr${i%2?` style="background:var(--gray-50)"`:''}>
-      <td style="padding:10px 12px;font-size:12px;font-weight:600">${m.fac}</td>
+      <td style="padding:10px 12px;font-size:12px;font-weight:600"><a href="#" class="c-link" onclick="toast('${m.fac} の管理画面に遷移します');return false">${m.fac}</a></td>
       <td style="padding:10px 12px;font-size:13px">${m.from}</td>
       <td style="padding:10px 12px;font-size:13px;color:var(--gray-600)">${m.text}</td>
       <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${m.dt}</td>
