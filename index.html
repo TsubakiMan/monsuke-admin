@@ -583,11 +583,11 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="tcard">
       <div class="tbar"><span id="rv-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:120px">レビュー数</th>
+        <th style="width:120px;cursor:pointer;user-select:none" onclick="rvSort('score')">レビュー数 <span id="rv-sort-score"></span></th>
         <th>事業所名</th>
-        <th>ワーカー</th>
+        <th style="cursor:pointer;user-select:none" onclick="rvSort('worker')">ワーカー <span id="rv-sort-worker"></span></th>
         <th>コメント</th>
-        <th style="width:100px">日付</th>
+        <th style="width:100px;cursor:pointer;user-select:none" onclick="rvSort('date')">日付 <span id="rv-sort-date"></span></th>
       </tr></thead><tbody id="rv-tb"></tbody></table>
       <div class="tbar" style="border-top:1px solid var(--gray-200);margin-top:0"><span id="rv-pg-cnt"></span></div>
       <div class="pag" id="rv-pag"></div>
@@ -1471,6 +1471,12 @@ const FAC_SCORES={
   'きもべつ喜らめきの郷':{avg:3.8,cnt:50}
 };
 function stars(n){return '★'.repeat(Math.floor(n))+(n%1>=0.5?'☆':'')+'☆'.repeat(5-Math.ceil(n))}
+let rvSortKey=null,rvSortDir=0; // 0=none,1=asc,-1=desc
+function rvSort(key){
+  if(rvSortKey===key){rvSortDir=rvSortDir===1?-1:rvSortDir===-1?0:1;}
+  else{rvSortKey=key;rvSortDir=1;}
+  pg.rv=1;rReviews();
+}
 function rReviews(){
   // 事業所別スコアバー
   const maxCnt=Math.max(...Object.values(FAC_SCORES).map(v=>v.cnt));
@@ -1498,6 +1504,21 @@ function rReviews(){
     if(s<=2) list=list.filter(r=>Math.round(+rvAvg(r.scores))<=2);
     else list=list.filter(r=>Math.round(+rvAvg(r.scores))===s);
   }
+  // ソート
+  if(rvSortDir!==0&&rvSortKey){
+    list=[...list].sort((a,b)=>{
+      let v=0;
+      if(rvSortKey==='score') v=+rvAvg(a.scores)-+rvAvg(b.scores);
+      else if(rvSortKey==='worker') v=a.worker.localeCompare(b.worker,'ja');
+      else if(rvSortKey==='date') v=a.date.localeCompare(b.date);
+      return v*rvSortDir;
+    });
+  }
+  // ソートインジケーター更新
+  ['score','worker','date'].forEach(k=>{
+    const el=document.getElementById('rv-sort-'+k);
+    if(el) el.textContent=rvSortKey===k?(rvSortDir===1?'▲':rvSortDir===-1?'▼':''):'';
+  });
   const p=sliceRv(list,pg.rv);
   document.getElementById('rv-cnt').textContent=list.length+'件のレビュー';
   document.getElementById('rv-tb').innerHTML=p.rows.map((r,i)=>{
