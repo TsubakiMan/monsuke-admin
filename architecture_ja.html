@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>もん助 法人管理画面 — アーキテクチャ図（日本語）</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:#f8fafc;color:#0f172a;line-height:1.7}
+.header{background:linear-gradient(135deg,#1E293B 0%,#334155 100%);color:#fff;padding:48px 40px 40px;text-align:center}
+.header h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.header p{font-size:14px;color:#94a3b8}
+.header .badge{display:inline-block;background:#E97316;color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;margin-top:12px}
+.container{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
+.section{margin-bottom:48px}
+.section-title{font-size:20px;font-weight:700;color:#1e293b;margin-bottom:6px;padding-left:14px;border-left:4px solid #E97316}
+.section-desc{font-size:13px;color:#64748b;margin-bottom:20px;padding-left:18px}
+.diagram-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow-x:auto}
+.diagram-card .mermaid{display:flex;justify-content:center}
+.legend{margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:#64748b;padding:12px 16px;background:#f8fafc;border-radius:8px}
+.legend-item{display:flex;align-items:center;gap:6px}
+.legend-dot{width:12px;height:12px;border-radius:3px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
+.feature-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px;border-top:3px solid #E97316}
+.feature-card h4{font-size:14px;font-weight:700;margin-bottom:8px;color:#1e293b}
+.feature-card ul{font-size:12.5px;color:#475569;padding-left:18px}
+.feature-card ul li{margin-bottom:4px}
+.feature-card .tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;margin-right:4px}
+.tag-green{background:#ecfdf5;color:#059669}
+.tag-orange{background:#fff7ed;color:#c2410c}
+.tag-red{background:#fef2f2;color:#dc2626}
+.tag-blue{background:#eff6ff;color:#2563eb}
+.removed-list{margin-top:16px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px}
+.removed-list h4{font-size:14px;font-weight:700;color:#dc2626;margin-bottom:10px}
+.removed-list ul{font-size:12.5px;color:#7f1d1d;padding-left:18px}
+.removed-list ul li{margin-bottom:4px}
+.footer{text-align:center;padding:20px;font-size:11px;color:#94a3b8}
+@media print{body{background:#fff}.header{padding:24px 20px}.container{padding:16px}.diagram-card{box-shadow:none;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>もん助 法人管理画面</h1>
+  <p>アーキテクチャ図 &amp; 機能要件マップ</p>
+  <div class="badge">バージョン 1.0 — 2026年4月14日</div>
+</div>
+
+<div class="container">
+
+  <!-- 1. システム全体構成 -->
+  <div class="section">
+    <h2 class="section-title">1. システム全体構成</h2>
+    <p class="section-desc">法人管理画面の技術スタック・デプロイフローの概要</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph TB
+  subgraph ユーザー
+    A["👤 法人管理者<br/>（ブラウザ）"]
+  end
+
+  subgraph ホスティング
+    B["▲ Vercel<br/>本番環境"]
+  end
+
+  subgraph ソース管理
+    C["🐙 GitHub<br/>TsubakiMan/monsuke-admin<br/>masterブランチ"]
+  end
+
+  subgraph フロントエンド["フロントエンド（SPA）"]
+    D["📄 index.html<br/>単一ファイル構成"]
+    D --> D1["CSS<br/>カスタムプロパティ<br/>レスポンシブ対応"]
+    D --> D2["JavaScript<br/>ページ切替・フィルタ<br/>データ描画・PDF生成"]
+    D --> D3["HTML<br/>13ページ構成<br/>モーダル・トースト"]
+  end
+
+  subgraph 外部ライブラリ
+    E1["Google Fonts<br/>Noto Sans JP"]
+    E2["SheetJS (xlsx)<br/>Excelエクスポート"]
+  end
+
+  A -->|"HTTPS"| B
+  B -->|"静的配信"| D
+  C -->|"自動デプロイ"| B
+  D --> E1
+  D --> E2
+
+  style A fill:#fff7ed,stroke:#E97316,stroke-width:2px
+  style B fill:#000,color:#fff,stroke:#333
+  style C fill:#24292e,color:#fff,stroke:#555
+  style D fill:#fff,stroke:#E97316,stroke-width:2px
+  style D1 fill:#eff6ff,stroke:#93c5fd
+  style D2 fill:#fff7ed,stroke:#fdba74
+  style D3 fill:#f0fdfa,stroke:#5eead4
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ナビゲーション構造 -->
+  <div class="section">
+    <h2 class="section-title">2. ナビゲーション構造</h2>
+    <p class="section-desc">サイドバーのメニュー構成とページ遷移</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph LR
+  subgraph メイン
+    P1["🏠 ダッシュボード<br/><i>デフォルト表示</i>"]
+    P2["🏢 事業所一覧"]
+    P3["🏛️ 法人情報"]
+    P4["👥 ワーカー管理"]
+  end
+
+  subgraph 運用
+    P5["📋 求人管理"]
+    P6["⏰ 勤怠管理"]
+    P7["💬 メッセージ"]
+    P8["⭐ レビュー"]
+  end
+
+  subgraph 管理
+    P9["💰 請求・支払い"]
+    P10["📄 利用明細"]
+    P11["📒 労働者名簿"]
+    P12["📊 レポート・分析"]
+    P13["⚙️ 設定"]
+  end
+
+  P1 -.->|"確認する →"| P7
+
+  style P1 fill:#fff7ed,stroke:#E97316,stroke-width:2px
+  style P2 fill:#fff,stroke:#e2e8f0
+  style P3 fill:#fff,stroke:#e2e8f0
+  style P4 fill:#fff,stroke:#e2e8f0
+  style P5 fill:#fff,stroke:#e2e8f0
+  style P6 fill:#fff,stroke:#e2e8f0
+  style P7 fill:#fff7ed,stroke:#E97316
+  style P8 fill:#fff,stroke:#e2e8f0
+  style P9 fill:#fff,stroke:#e2e8f0
+  style P10 fill:#fff,stroke:#e2e8f0
+  style P11 fill:#fff,stroke:#e2e8f0
+  style P12 fill:#fff,stroke:#e2e8f0
+  style P13 fill:#fff,stroke:#e2e8f0
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. データフロー -->
+  <div class="section">
+    <h2 class="section-title">3. データフロー</h2>
+    <p class="section-desc">各画面のデータの流れと出力機能</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+flowchart LR
+  subgraph データ["JS内蔵データ"]
+    FAC["FAC<br/>事業所 15件"]
+    WRK["WRK<br/>ワーカー 15件"]
+    JOBS["JOBS<br/>求人 10件"]
+    ATT["ATT<br/>勤怠記録"]
+    BILLING["BILLING<br/>請求データ 6ヶ月"]
+    REVIEWS["REVIEWS<br/>レビュー 16件"]
+    DASH["DASH_FAC_DATA<br/>月別利用額"]
+    ACTS["DASH_ACTS<br/>アクティビティ"]
+  end
+
+  subgraph フィルタ処理
+    F1["検索<br/>テキスト入力"]
+    F2["セレクト<br/>フィルタ"]
+    F3["日付範囲<br/>フィルタ"]
+  end
+
+  subgraph 画面描画
+    R1["テーブル描画"]
+    R2["CSSバーチャート"]
+    R3["統計カード"]
+    R4["アクティビティ<br/>フィード"]
+  end
+
+  subgraph 出力
+    O1["🖨️ PDF請求書<br/>印刷ベース方式"]
+    O2["📊 Excel (.xlsx)<br/>SheetJS"]
+    O3["📥 CSV<br/>エクスポート"]
+  end
+
+  FAC --> F1 & F2
+  WRK --> F1 & F2
+  JOBS --> R1
+  ATT --> F3
+  BILLING --> R1
+  REVIEWS --> F2
+  DASH --> F2
+  ACTS --> F2
+
+  F1 --> R1
+  F2 --> R1 & R2 & R4
+  F3 --> R1
+
+  BILLING --> O1
+  ATT --> O3
+  R1 --> O2
+
+  style O1 fill:#fef2f2,stroke:#fca5a5
+  style O2 fill:#ecfdf5,stroke:#6ee7b7
+  style O3 fill:#eff6ff,stroke:#93c5fd
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 画面別機能マップ -->
+  <div class="section">
+    <h2 class="section-title">4. 画面別 機能マップ</h2>
+    <p class="section-desc">各画面の主要機能と対応コンポーネント</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph TB
+  subgraph ダッシュボード
+    DA1["統計カード ×4"]
+    DA2["月別利用額チャート<br/>📌 事業所フィルタ付き"]
+    DA3["事業所別利用テーブル"]
+    DA4["アクティビティフィード<br/>📌 種類別フィルタ付き<br/>(マッチング/稼働完了/レビュー/<br/>請求・支払い/ワーカー/キャンセル)"]
+  end
+
+  subgraph ワーカー管理
+    WA1["統計カード ×3"]
+    WA2["テキスト検索"]
+    WA3["資格フィルタ"]
+    WA4["事業所フィルタ"]
+    WA5["ワーカー一覧テーブル<br/>📌 勤務先事業所・回数を表示"]
+  end
+
+  subgraph レビュー
+    RV1["統計カード ×3"]
+    RV2["事業所別スコアバー"]
+    RV3["事業所 / スコア フィルタ"]
+    RV4["レビュー一覧テーブル"]
+  end
+
+  subgraph レポート・分析
+    RP1["KPIカード ×4"]
+    RP2["12ヶ月推移チャート"]
+    RP3["事業所別利用比較バー"]
+    RP4["職種別稼働バー"]
+    RP5["ワーカーランキング Top10"]
+  end
+
+  style DA2 fill:#fff7ed,stroke:#E97316
+  style DA4 fill:#fff7ed,stroke:#E97316
+  style WA5 fill:#fff7ed,stroke:#E97316
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 各画面の機能サマリー -->
+  <div class="section">
+    <h2 class="section-title">5. 各画面の機能サマリー</h2>
+    <p class="section-desc">全13画面の機能概要</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>🏠 ダッシュボード</h4>
+        <ul>
+          <li>利用額・ワーカー数・稼働件数・未読メッセージの統計</li>
+          <li>月別利用額チャート（法人全体 / 事業所別切替）</li>
+          <li>事業所別利用状況テーブル</li>
+          <li>アクティビティフィード（6種類のフィルタ）</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>🏢 事業所一覧</h4>
+        <ul>
+          <li>テキスト検索（OR検索対応）</li>
+          <li>ステータスフィルタ（求人掲載中 / 未掲載）</li>
+          <li>事業所管理画面への遷移ボタン</li>
+          <li><span class="tag tag-red">廃止</span> 事業所追加ボタン</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>🏛️ 法人情報</h4>
+        <ul>
+          <li>法人の基本情報を読み取り専用で表示</li>
+          <li>法人ID・法人名・代表者・住所等 9項目</li>
+          <li><span class="tag tag-red">廃止</span> 編集ボタン</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>👥 ワーカー管理</h4>
+        <ul>
+          <li>マッチング済みワーカーの一覧表示</li>
+          <li>勤務先事業所（複数）・マッチング回数を表示</li>
+          <li>資格フィルタ・事業所フィルタ</li>
+          <li><span class="tag tag-red">廃止</span> 稼働ステータス（稼働中/待機中）</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📋 求人管理</h4>
+        <ul>
+          <li>公開中の求人・応募数・マッチング率の統計</li>
+          <li>求人一覧テーブル（ステータス付き）</li>
+          <li><span class="tag tag-red">廃止</span> 求人作成ボタン</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>⏰ 勤怠管理</h4>
+        <ul>
+          <li>日付範囲・事業所による絞り込み</li>
+          <li>出退勤時間・実働時間の確認</li>
+          <li>CSVエクスポート機能</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>💬 メッセージ</h4>
+        <ul>
+          <li>ワーカー・事業所からのメッセージ一覧</li>
+          <li>未読/既読ステータス管理</li>
+          <li>サイドバーに未読バッジ表示</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>⭐ レビュー</h4>
+        <ul>
+          <li>事業所別平均スコアの視覚的バーグラフ</li>
+          <li>事業所・スコアでフィルタ可能</li>
+          <li>レビュー一覧テーブル（16件）</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>💰 請求・支払い</h4>
+        <ul>
+          <li>月次利用料金・支払い状況の確認</li>
+          <li>事業所別PDF請求書ダウンロード</li>
+          <li>印刷ベースPDF生成方式</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📄 利用明細</h4>
+        <ul>
+          <li>期間別利用明細の確認</li>
+          <li>Excel (.xlsx) ダウンロード</li>
+          <li>請求額の目安表示</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📒 労働者名簿</h4>
+        <ul>
+          <li>期間指定で名簿を新規生成</li>
+          <li>Excel (.xlsx) ダウンロード</li>
+          <li>合計人数・金額・源泉徴収額</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📊 レポート・分析</h4>
+        <ul>
+          <li>12ヶ月利用額推移チャート</li>
+          <li>事業所別利用比較 / 職種別稼働比較</li>
+          <li>ワーカー稼働ランキング Top10</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>⚙️ 設定</h4>
+        <ul>
+          <li>メール通知の有効/無効・頻度設定</li>
+          <li>管理者アカウント情報の編集</li>
+          <li><span class="tag tag-red">廃止</span> アカウント削除</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 廃止済み機能 -->
+  <div class="section">
+    <h2 class="section-title">6. 廃止済み機能一覧</h2>
+    <p class="section-desc">意図的に実装しない機能とその理由</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph LR
+  subgraph 廃止機能
+    X1["❌ 求人作成ボタン"]
+    X2["❌ 事業所追加ボタン"]
+    X3["❌ 法人情報編集ボタン"]
+    X4["❌ アカウント削除"]
+    X5["❌ 稼働ステータス<br/>(稼働中/待機中/休止中)"]
+  end
+
+  subgraph 理由
+    R1["事業所管理画面側で管理"]
+    R2["もん助側で管理"]
+    R3["法人側で直接編集不可"]
+    R4["誤操作防止"]
+    R5["マッチング履歴ベースに変更"]
+  end
+
+  X1 --> R1
+  X2 --> R2
+  X3 --> R3
+  X4 --> R4
+  X5 --> R5
+
+  style X1 fill:#fef2f2,stroke:#fca5a5
+  style X2 fill:#fef2f2,stroke:#fca5a5
+  style X3 fill:#fef2f2,stroke:#fca5a5
+  style X4 fill:#fef2f2,stroke:#fca5a5
+  style X5 fill:#fef2f2,stroke:#fca5a5
+  style R1 fill:#f8fafc,stroke:#cbd5e1
+  style R2 fill:#f8fafc,stroke:#cbd5e1
+  style R3 fill:#f8fafc,stroke:#cbd5e1
+  style R4 fill:#f8fafc,stroke:#cbd5e1
+  style R5 fill:#f8fafc,stroke:#cbd5e1
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">もん助 法人管理画面 アーキテクチャ図 v1.0 — 2026年4月14日作成</div>
+
+<script>mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{curve:'basis',padding:16},themeVariables:{primaryColor:'#fff7ed',primaryBorderColor:'#E97316',primaryTextColor:'#0f172a',lineColor:'#94a3b8',secondaryColor:'#f0fdfa',tertiaryColor:'#eff6ff'}});</script>
+</body>
+</html>

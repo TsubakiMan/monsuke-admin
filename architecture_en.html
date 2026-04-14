@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monsuke Corporate Admin — Architecture Diagram (English)</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;line-height:1.7}
+.header{background:linear-gradient(135deg,#1E293B 0%,#334155 100%);color:#fff;padding:48px 40px 40px;text-align:center}
+.header h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.header p{font-size:14px;color:#94a3b8}
+.header .badge{display:inline-block;background:#E97316;color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;margin-top:12px}
+.container{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
+.section{margin-bottom:48px}
+.section-title{font-size:20px;font-weight:700;color:#1e293b;margin-bottom:6px;padding-left:14px;border-left:4px solid #E97316}
+.section-desc{font-size:13px;color:#64748b;margin-bottom:20px;padding-left:18px}
+.diagram-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow-x:auto}
+.diagram-card .mermaid{display:flex;justify-content:center}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
+.feature-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px;border-top:3px solid #E97316}
+.feature-card h4{font-size:14px;font-weight:700;margin-bottom:8px;color:#1e293b}
+.feature-card ul{font-size:12.5px;color:#475569;padding-left:18px}
+.feature-card ul li{margin-bottom:4px}
+.feature-card .tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;margin-right:4px}
+.tag-red{background:#fef2f2;color:#dc2626}
+.footer{text-align:center;padding:20px;font-size:11px;color:#94a3b8}
+@media print{body{background:#fff}.header{padding:24px 20px}.container{padding:16px}.diagram-card{box-shadow:none;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Monsuke — Corporate Admin Dashboard</h1>
+  <p>Architecture Diagram &amp; Feature Requirements Map</p>
+  <div class="badge">Version 1.0 — April 14, 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- 1. System Architecture -->
+  <div class="section">
+    <h2 class="section-title">1. System Architecture</h2>
+    <p class="section-desc">Tech stack and deployment flow overview</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph TB
+  subgraph User
+    A["👤 Corporate Admin<br/>(Browser)"]
+  end
+
+  subgraph Hosting
+    B["▲ Vercel<br/>Production"]
+  end
+
+  subgraph Source_Control["Source Control"]
+    C["🐙 GitHub<br/>TsubakiMan/monsuke-admin<br/>master branch"]
+  end
+
+  subgraph Frontend["Frontend (SPA)"]
+    D["📄 index.html<br/>Single-file Application"]
+    D --> D1["CSS<br/>Custom Properties<br/>Responsive Design"]
+    D --> D2["JavaScript<br/>Page Routing &amp; Filters<br/>Data Rendering &amp; PDF"]
+    D --> D3["HTML<br/>13 Pages<br/>Modals &amp; Toasts"]
+  end
+
+  subgraph External_Libraries["External Libraries"]
+    E1["Google Fonts<br/>Noto Sans JP"]
+    E2["SheetJS (xlsx)<br/>Excel Export"]
+  end
+
+  A -->|"HTTPS"| B
+  B -->|"Static Serving"| D
+  C -->|"Auto Deploy"| B
+  D --> E1
+  D --> E2
+
+  style A fill:#fff7ed,stroke:#E97316,stroke-width:2px
+  style B fill:#000,color:#fff,stroke:#333
+  style C fill:#24292e,color:#fff,stroke:#555
+  style D fill:#fff,stroke:#E97316,stroke-width:2px
+  style D1 fill:#eff6ff,stroke:#93c5fd
+  style D2 fill:#fff7ed,stroke:#fdba74
+  style D3 fill:#f0fdfa,stroke:#5eead4
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Navigation Structure -->
+  <div class="section">
+    <h2 class="section-title">2. Navigation Structure</h2>
+    <p class="section-desc">Sidebar menu organization and page routing</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph LR
+  subgraph Main
+    P1["🏠 Dashboard<br/><i>Default View</i>"]
+    P2["🏢 Facilities"]
+    P3["🏛️ Company Info"]
+    P4["👥 Worker Mgmt"]
+  end
+
+  subgraph Operations
+    P5["📋 Job Postings"]
+    P6["⏰ Attendance"]
+    P7["💬 Messages"]
+    P8["⭐ Reviews"]
+  end
+
+  subgraph Admin["Administration"]
+    P9["💰 Billing"]
+    P10["📄 Usage Details"]
+    P11["📒 Worker Registry"]
+    P12["📊 Reports"]
+    P13["⚙️ Settings"]
+  end
+
+  P1 -.->|"View →"| P7
+
+  style P1 fill:#fff7ed,stroke:#E97316,stroke-width:2px
+  style P2 fill:#fff,stroke:#e2e8f0
+  style P3 fill:#fff,stroke:#e2e8f0
+  style P4 fill:#fff,stroke:#e2e8f0
+  style P5 fill:#fff,stroke:#e2e8f0
+  style P6 fill:#fff,stroke:#e2e8f0
+  style P7 fill:#fff7ed,stroke:#E97316
+  style P8 fill:#fff,stroke:#e2e8f0
+  style P9 fill:#fff,stroke:#e2e8f0
+  style P10 fill:#fff,stroke:#e2e8f0
+  style P11 fill:#fff,stroke:#e2e8f0
+  style P12 fill:#fff,stroke:#e2e8f0
+  style P13 fill:#fff,stroke:#e2e8f0
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Data Flow -->
+  <div class="section">
+    <h2 class="section-title">3. Data Flow</h2>
+    <p class="section-desc">Data sources, processing, and output formats</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+flowchart LR
+  subgraph Data["Embedded JS Data"]
+    FAC["FAC<br/>Facilities ×15"]
+    WRK["WRK<br/>Workers ×15"]
+    JOBS["JOBS<br/>Job Postings ×10"]
+    ATT["ATT<br/>Attendance Records"]
+    BILLING["BILLING<br/>Billing Data (6 months)"]
+    REVIEWS["REVIEWS<br/>Reviews ×16"]
+    DASH["DASH_FAC_DATA<br/>Monthly Revenue"]
+    ACTS["DASH_ACTS<br/>Activity Feed"]
+  end
+
+  subgraph Filters["Filter Processing"]
+    F1["Text Search<br/>Incremental"]
+    F2["Select<br/>Dropdowns"]
+    F3["Date Range<br/>Filter"]
+  end
+
+  subgraph Rendering
+    R1["Table Rendering"]
+    R2["CSS Bar Charts"]
+    R3["Stat Cards"]
+    R4["Activity Feed"]
+  end
+
+  subgraph Output
+    O1["🖨️ PDF Invoice<br/>Print-based"]
+    O2["📊 Excel (.xlsx)<br/>SheetJS"]
+    O3["📥 CSV<br/>Export"]
+  end
+
+  FAC --> F1 & F2
+  WRK --> F1 & F2
+  JOBS --> R1
+  ATT --> F3
+  BILLING --> R1
+  REVIEWS --> F2
+  DASH --> F2
+  ACTS --> F2
+
+  F1 --> R1
+  F2 --> R1 & R2 & R4
+  F3 --> R1
+
+  BILLING --> O1
+  ATT --> O3
+  R1 --> O2
+
+  style O1 fill:#fef2f2,stroke:#fca5a5
+  style O2 fill:#ecfdf5,stroke:#6ee7b7
+  style O3 fill:#eff6ff,stroke:#93c5fd
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Feature Component Map -->
+  <div class="section">
+    <h2 class="section-title">4. Feature Component Map</h2>
+    <p class="section-desc">Key features and UI components per page</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph TB
+  subgraph Dashboard
+    DA1["Stat Cards ×4"]
+    DA2["Monthly Revenue Chart<br/>📌 Facility Filter"]
+    DA3["Facility Usage Table"]
+    DA4["Activity Feed<br/>📌 Category Filter<br/>(Matching / Completed / Review /<br/>Billing / Worker / Cancelled)"]
+  end
+
+  subgraph Worker_Management["Worker Management"]
+    WA1["Stat Cards ×3"]
+    WA2["Text Search"]
+    WA3["Qualification Filter"]
+    WA4["Facility Filter"]
+    WA5["Worker Table<br/>📌 Shows assigned facilities<br/>and match count"]
+  end
+
+  subgraph Reviews
+    RV1["Stat Cards ×3"]
+    RV2["Facility Score Bars"]
+    RV3["Facility / Score Filters"]
+    RV4["Review List Table"]
+  end
+
+  subgraph Reports["Reports &amp; Analytics"]
+    RP1["KPI Cards ×4"]
+    RP2["12-Month Trend Chart"]
+    RP3["Facility Comparison Bars"]
+    RP4["Job Type Breakdown Bars"]
+    RP5["Worker Ranking Top 10"]
+  end
+
+  style DA2 fill:#fff7ed,stroke:#E97316
+  style DA4 fill:#fff7ed,stroke:#E97316
+  style WA5 fill:#fff7ed,stroke:#E97316
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Feature Summary -->
+  <div class="section">
+    <h2 class="section-title">5. Feature Summary by Page</h2>
+    <p class="section-desc">All 13 pages with key features and constraints</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>🏠 Dashboard</h4>
+        <ul>
+          <li>Stats: revenue, active workers, jobs, unread messages</li>
+          <li>Monthly revenue chart (company-wide / per facility)</li>
+          <li>Facility usage breakdown table</li>
+          <li>Activity feed with 6 category filters</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>🏢 Facilities</h4>
+        <ul>
+          <li>Text search (OR logic with spaces)</li>
+          <li>Status filter: Posting Active / Not Posting</li>
+          <li>Link to facility admin panel</li>
+          <li><span class="tag tag-red">Removed</span> Add facility button</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>🏛️ Company Info</h4>
+        <ul>
+          <li>Read-only display of corporate information</li>
+          <li>9 fields: ID, name, representative, address, etc.</li>
+          <li><span class="tag tag-red">Removed</span> Edit button</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>👥 Worker Management</h4>
+        <ul>
+          <li>List of all workers who have been matched</li>
+          <li>Shows facilities worked at (multiple) &amp; match count</li>
+          <li>Filters: qualification, facility</li>
+          <li><span class="tag tag-red">Removed</span> Work status (Active/Standby)</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📋 Job Postings</h4>
+        <ul>
+          <li>Stats: active postings, applications, match rate</li>
+          <li>Job list table with status badges</li>
+          <li><span class="tag tag-red">Removed</span> Create job button</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>⏰ Attendance</h4>
+        <ul>
+          <li>Date range &amp; facility filtering</li>
+          <li>Check-in/out times, hours worked</li>
+          <li>CSV export functionality</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>💬 Messages</h4>
+        <ul>
+          <li>Message list from workers &amp; facilities</li>
+          <li>Read/unread status management</li>
+          <li>Unread badge on sidebar navigation</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>⭐ Reviews</h4>
+        <ul>
+          <li>Visual score bars per facility</li>
+          <li>Filter by facility and score rating</li>
+          <li>Review list table (16 entries)</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>💰 Billing &amp; Payments</h4>
+        <ul>
+          <li>Monthly billing overview &amp; payment status</li>
+          <li>Per-facility PDF invoice download</li>
+          <li>Print-based PDF generation method</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📄 Usage Details</h4>
+        <ul>
+          <li>Period-based usage breakdown</li>
+          <li>Excel (.xlsx) download</li>
+          <li>Estimated billing amounts</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📒 Worker Registry</h4>
+        <ul>
+          <li>Generate registry by date range (modal)</li>
+          <li>Excel (.xlsx) download</li>
+          <li>Total headcount, amount, withholding tax</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>📊 Reports &amp; Analytics</h4>
+        <ul>
+          <li>12-month revenue trend chart</li>
+          <li>Facility comparison / job type breakdown</li>
+          <li>Worker performance ranking Top 10</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h4>⚙️ Settings</h4>
+        <ul>
+          <li>Email notification on/off &amp; frequency</li>
+          <li>Admin account info editing</li>
+          <li><span class="tag tag-red">Removed</span> Delete account</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Removed Features -->
+  <div class="section">
+    <h2 class="section-title">6. Removed Features</h2>
+    <p class="section-desc">Intentionally excluded features and rationale</p>
+    <div class="diagram-card">
+      <div class="mermaid">
+graph LR
+  subgraph Removed_Features["Removed Features"]
+    X1["❌ Create Job Button"]
+    X2["❌ Add Facility Button"]
+    X3["❌ Edit Company Info"]
+    X4["❌ Delete Account"]
+    X5["❌ Work Status<br/>(Active / Standby / Inactive)"]
+  end
+
+  subgraph Rationale
+    R1["Managed in Facility<br/>Admin Panel"]
+    R2["Managed by<br/>Monsuke Platform"]
+    R3["Not editable<br/>by corporate users"]
+    R4["Prevent accidental<br/>deletion"]
+    R5["Replaced with<br/>match history model"]
+  end
+
+  X1 --> R1
+  X2 --> R2
+  X3 --> R3
+  X4 --> R4
+  X5 --> R5
+
+  style X1 fill:#fef2f2,stroke:#fca5a5
+  style X2 fill:#fef2f2,stroke:#fca5a5
+  style X3 fill:#fef2f2,stroke:#fca5a5
+  style X4 fill:#fef2f2,stroke:#fca5a5
+  style X5 fill:#fef2f2,stroke:#fca5a5
+  style R1 fill:#f8fafc,stroke:#cbd5e1
+  style R2 fill:#f8fafc,stroke:#cbd5e1
+  style R3 fill:#f8fafc,stroke:#cbd5e1
+  style R4 fill:#f8fafc,stroke:#cbd5e1
+  style R5 fill:#f8fafc,stroke:#cbd5e1
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Monsuke Corporate Admin — Architecture Diagram v1.0 — Created April 14, 2026</div>
+
+<script>mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{curve:'basis',padding:16},themeVariables:{primaryColor:'#fff7ed',primaryBorderColor:'#E97316',primaryTextColor:'#0f172a',lineColor:'#94a3b8',secondaryColor:'#f0fdfa',tertiaryColor:'#eff6ff'}});</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>もん助 アカウント管理フロー図</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;background:#0F172A;color:#E2E8F0;padding:40px 20px}
+  h1{text-align:center;font-size:28px;margin-bottom:8px;color:#F97316}
+  .sub{text-align:center;font-size:14px;color:#94A3B8;margin-bottom:48px}
+  .section{max-width:900px;margin:0 auto 60px;background:#1E293B;border-radius:16px;padding:32px;border:1px solid #334155}
+  .section h2{font-size:18px;margin-bottom:24px;color:#F97316;display:flex;align-items:center;gap:10px}
+  .section h2 span{background:#F97316;color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid #334155}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#94A3B8}
+  .legend-dot{width:12px;height:12px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<h1>もん助 アカウント管理フロー図</h1>
+<p class="sub">法人管理画面 × 事業所管理画面のアカウント設計</p>
+
+<!-- ===== 1. 階層構造図 ===== -->
+<div class="section">
+  <h2><span>1</span>アカウント階層構造</h2>
+  <svg viewBox="0 0 840 520" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr1" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+      <filter id="glow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity=".3"/></filter>
+    </defs>
+
+    <!-- 法人 -->
+    <rect x="310" y="20" width="220" height="52" rx="10" fill="#E97316" filter="url(#glow)"/>
+    <text x="420" y="46" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">法人（渓仁会）</text>
+
+    <!-- 法人レベル管理者 -->
+    <line x1="360" y1="72" x2="140" y2="120" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="420" y1="72" x2="420" y2="120" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="480" y1="72" x2="700" y2="120" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="40" y="120" width="200" height="48" rx="8" fill="#EA580C" filter="url(#glow)"/>
+    <text x="140" y="140" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">法人オーナー管理者</text>
+    <text x="140" y="156" text-anchor="middle" fill="#FFEDD5" font-size="10">全権限 + 管理者管理</text>
+
+    <rect x="300" y="120" width="240" height="48" rx="8" fill="#2563EB" filter="url(#glow)"/>
+    <text x="420" y="140" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">法人管理者</text>
+    <text x="420" y="156" text-anchor="middle" fill="#BFDBFE" font-size="10">全操作（管理者管理は不可）</text>
+
+    <rect x="600" y="120" width="200" height="48" rx="8" fill="#475569" filter="url(#glow)"/>
+    <text x="700" y="140" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">法人閲覧者</text>
+    <text x="700" y="156" text-anchor="middle" fill="#CBD5E1" font-size="10">閲覧のみ</text>
+
+    <!-- 区切り線 -->
+    <line x1="40" y1="200" x2="800" y2="200" stroke="#334155" stroke-width="1" stroke-dasharray="6,4"/>
+    <text x="420" y="218" text-anchor="middle" fill="#64748B" font-size="11">▼ 事業所レベル（既存）</text>
+
+    <!-- 事業所 -->
+    <line x1="420" y1="72" x2="140" y2="258" stroke="#334155" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="420" y1="72" x2="420" y2="258" stroke="#334155" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="420" y1="72" x2="700" y2="258" stroke="#334155" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <!-- 事業所A -->
+    <rect x="40" y="248" width="200" height="44" rx="8" fill="#0891B2" filter="url(#glow)"/>
+    <text x="140" y="275" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">事業所A：月寒あさがおの郷</text>
+
+    <line x1="100" y1="292" x2="60" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="180" y1="292" x2="210" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="10" y="330" width="130" height="40" rx="6" fill="#059669"/>
+    <text x="75" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">オーナー管理者</text>
+
+    <rect x="160" y="330" width="130" height="40" rx="6" fill="#475569"/>
+    <text x="225" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">サブ管理者</text>
+
+    <!-- 事業所B -->
+    <rect x="320" y="248" width="200" height="44" rx="8" fill="#0891B2" filter="url(#glow)"/>
+    <text x="420" y="275" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">事業所B：西円山敬樹園</text>
+
+    <line x1="380" y1="292" x2="340" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="460" y1="292" x2="490" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="290" y="330" width="130" height="40" rx="6" fill="#059669"/>
+    <text x="355" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">オーナー管理者</text>
+
+    <rect x="440" y="330" width="130" height="40" rx="6" fill="#475569"/>
+    <text x="505" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">サブ管理者</text>
+
+    <!-- 事業所C -->
+    <rect x="600" y="248" width="200" height="44" rx="8" fill="#0891B2" filter="url(#glow)"/>
+    <text x="700" y="275" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">事業所C：菊水こまちの郷</text>
+
+    <line x1="660" y1="292" x2="620" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="740" y1="292" x2="770" y2="330" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+    <rect x="570" y="330" width="130" height="40" rx="6" fill="#059669"/>
+    <text x="635" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">オーナー管理者</text>
+
+    <rect x="720" y="330" width="130" height="40" rx="6" fill="#475569"/>
+    <text x="785" y="354" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">サブ管理者</text>
+
+    <!-- 法人管理者のアクセス範囲 -->
+    <rect x="30" y="236" width="790" height="150" rx="12" fill="none" stroke="#E97316" stroke-width="1.5" stroke-dasharray="6,3" opacity=".5"/>
+    <text x="810" y="252" text-anchor="end" fill="#E97316" font-size="10" opacity=".7">法人管理者のアクセス範囲</text>
+
+    <!-- 注釈 -->
+    <rect x="40" y="420" width="760" height="80" rx="10" fill="#1E293B" stroke="#334155"/>
+    <text x="60" y="446" fill="#F97316" font-size="12" font-weight="700">ポイント</text>
+    <text x="60" y="466" fill="#94A3B8" font-size="11">・法人管理者（オレンジ/青）は全事業所を横断してアクセスできる（上位権限）</text>
+    <text x="60" y="484" fill="#94A3B8" font-size="11">・事業所管理者（緑/グレー）は自分の事業所のみ。法人管理画面にはアクセスできない</text>
+  </svg>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#EA580C"></div>法人オーナー</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>法人管理者</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0891B2"></div>事業所</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>事業所オーナー</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#475569"></div>サブ管理者/閲覧者</div>
+  </div>
+</div>
+
+<!-- ===== 2. 権限マトリクス ===== -->
+<div class="section">
+  <h2><span>2</span>権限マトリクス</h2>
+  <svg viewBox="0 0 840 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- ヘッダー -->
+    <rect x="0" y="0" width="200" height="44" rx="8" fill="#334155"/>
+    <text x="100" y="26" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="600">ロール</text>
+
+    <rect x="220" y="0" width="190" height="44" rx="8" fill="#E97316"/>
+    <text x="315" y="26" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">法人管理画面</text>
+
+    <rect x="430" y="0" width="190" height="44" rx="8" fill="#0891B2"/>
+    <text x="525" y="26" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">事業所管理画面</text>
+
+    <rect x="640" y="0" width="200" height="44" rx="8" fill="#7C3AED"/>
+    <text x="740" y="26" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">管理者の管理</text>
+
+    <!-- Row 1: 法人オーナー -->
+    <rect x="0" y="56" width="200" height="52" rx="8" fill="#EA580C"/>
+    <text x="100" y="78" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">法人オーナー管理者</text>
+    <text x="100" y="94" text-anchor="middle" fill="#FFEDD5" font-size="10">最上位権限</text>
+
+    <rect x="220" y="56" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="315" y="82" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">全操作</text>
+    <text x="315" y="96" text-anchor="middle" fill="#6EE7B7" font-size="10">&#x2713;</text>
+
+    <rect x="430" y="56" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="82" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">全操作</text>
+    <text x="525" y="96" text-anchor="middle" fill="#6EE7B7" font-size="10">全事業所 &#x2713;</text>
+
+    <rect x="640" y="56" width="200" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="740" y="82" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">法人 + 全事業所</text>
+    <text x="740" y="96" text-anchor="middle" fill="#6EE7B7" font-size="10">追加/編集/削除 &#x2713;</text>
+
+    <!-- Row 2: 法人管理者 -->
+    <rect x="0" y="120" width="200" height="52" rx="8" fill="#2563EB"/>
+    <text x="100" y="146" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">法人管理者</text>
+
+    <rect x="220" y="120" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="315" y="150" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">全操作 &#x2713;</text>
+
+    <rect x="430" y="120" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="150" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">全操作 &#x2713;</text>
+
+    <rect x="640" y="120" width="200" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="740" y="150" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">アクセス不可 &#x2717;</text>
+
+    <!-- Row 3: 法人閲覧者 -->
+    <rect x="0" y="184" width="200" height="52" rx="8" fill="#475569"/>
+    <text x="100" y="214" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">法人閲覧者</text>
+
+    <rect x="220" y="184" width="190" height="52" rx="8" fill="#1E2A3A" stroke="#F59E0B"/>
+    <text x="315" y="214" text-anchor="middle" fill="#FCD34D" font-size="13" font-weight="700">閲覧のみ &#x25CB;</text>
+
+    <rect x="430" y="184" width="190" height="52" rx="8" fill="#1E2A3A" stroke="#F59E0B"/>
+    <text x="525" y="214" text-anchor="middle" fill="#FCD34D" font-size="13" font-weight="700">閲覧のみ &#x25CB;</text>
+
+    <rect x="640" y="184" width="200" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="740" y="214" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">アクセス不可 &#x2717;</text>
+
+    <!-- 区切り -->
+    <line x1="0" y1="252" x2="840" y2="252" stroke="#334155" stroke-dasharray="6,4"/>
+    <text x="420" y="270" text-anchor="middle" fill="#64748B" font-size="10">▼ 事業所レベル（既存）</text>
+
+    <!-- Row 4: 事業所オーナー -->
+    <rect x="0" y="284" width="200" height="52" rx="8" fill="#059669"/>
+    <text x="100" y="310" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">事業所オーナー管理者</text>
+
+    <rect x="220" y="284" width="190" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="315" y="314" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">アクセス不可 &#x2717;</text>
+
+    <rect x="430" y="284" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="308" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">全操作</text>
+    <text x="525" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">自事業所のみ</text>
+
+    <rect x="640" y="284" width="200" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="740" y="308" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">自事業所のみ</text>
+    <text x="740" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">追加/編集 &#x2713;</text>
+
+    <!-- Row 5: 事業所サブ管理者 -->
+    <rect x="0" y="348" width="200" height="52" rx="8" fill="#475569"/>
+    <text x="100" y="378" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">事業所サブ管理者</text>
+
+    <rect x="220" y="348" width="190" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="315" y="378" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">アクセス不可 &#x2717;</text>
+
+    <rect x="430" y="348" width="190" height="52" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="525" y="378" text-anchor="middle" fill="#34D399" font-size="13" font-weight="700">全操作（自事業所）&#x2713;</text>
+
+    <rect x="640" y="348" width="200" height="52" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="740" y="378" text-anchor="middle" fill="#F87171" font-size="13" font-weight="700">アクセス不可 &#x2717;</text>
+  </svg>
+</div>
+
+<!-- ===== 3. ログインフロー ===== -->
+<div class="section">
+  <h2><span>3</span>ログインフロー</h2>
+  <svg viewBox="0 0 840 520" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr3" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+      <marker id="arr3g" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#059669"/></marker>
+      <marker id="arr3r" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#DC2626"/></marker>
+    </defs>
+
+    <!-- Step 1: ログイン -->
+    <rect x="300" y="10" width="240" height="56" rx="10" fill="#E97316" filter="url(#glow)"/>
+    <text x="420" y="34" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">ログイン画面</text>
+    <text x="420" y="52" text-anchor="middle" fill="#FFEDD5" font-size="11">メールアドレス + パスワード</text>
+
+    <line x1="420" y1="66" x2="420" y2="96" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <!-- Step 2: 認証 -->
+    <polygon points="420,100 520,140 420,180 320,140" fill="#334155" stroke="#64748B"/>
+    <text x="420" y="144" text-anchor="middle" fill="#E2E8F0" font-size="12" font-weight="600">認証成功？</text>
+
+    <!-- 失敗 -->
+    <line x1="520" y1="140" x2="620" y2="140" stroke="#DC2626" stroke-width="1.5" marker-end="url(#arr3r)"/>
+    <text x="570" y="132" text-anchor="middle" fill="#F87171" font-size="10">失敗</text>
+    <rect x="620" y="118" width="140" height="44" rx="8" fill="#2D1517" stroke="#DC2626"/>
+    <text x="690" y="144" text-anchor="middle" fill="#F87171" font-size="12" font-weight="600">エラー表示</text>
+    <path d="M690,162 L690,180 L280,180 L280,38 L300,38" fill="none" stroke="#DC2626" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr3r)"/>
+
+    <!-- 成功 -->
+    <line x1="420" y1="180" x2="420" y2="210" stroke="#059669" stroke-width="1.5" marker-end="url(#arr3g)"/>
+    <text x="434" y="200" fill="#34D399" font-size="10">成功</text>
+
+    <!-- Step 3: 権限取得 -->
+    <rect x="280" y="210" width="280" height="50" rx="10" fill="#2563EB" filter="url(#glow)"/>
+    <text x="420" y="234" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">メールに紐づく権限・アカウント取得</text>
+    <text x="420" y="250" text-anchor="middle" fill="#BFDBFE" font-size="10">DB照会</text>
+
+    <line x1="420" y1="260" x2="420" y2="290" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <!-- Step 4: 複数判定 -->
+    <polygon points="420,294 540,334 420,374 300,334" fill="#334155" stroke="#64748B"/>
+    <text x="420" y="330" text-anchor="middle" fill="#E2E8F0" font-size="11" font-weight="600">複数アカウント</text>
+    <text x="420" y="346" text-anchor="middle" fill="#E2E8F0" font-size="11" font-weight="600">が存在する？</text>
+
+    <!-- 1つだけ -->
+    <line x1="540" y1="334" x2="680" y2="334" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <text x="610" y="326" text-anchor="middle" fill="#94A3B8" font-size="10">1つだけ</text>
+    <rect x="680" y="312" width="140" height="44" rx="8" fill="#059669"/>
+    <text x="750" y="338" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">直接遷移</text>
+
+    <!-- 複数あり -->
+    <line x1="420" y1="374" x2="420" y2="404" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <text x="434" y="394" fill="#94A3B8" font-size="10">複数あり</text>
+
+    <!-- Step 5: 切替UI -->
+    <rect x="260" y="404" width="320" height="50" rx="10" fill="#7C3AED" filter="url(#glow)"/>
+    <text x="420" y="428" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">アカウント切替UI</text>
+    <text x="420" y="444" text-anchor="middle" fill="#DDD6FE" font-size="10">操作するアカウントを選択</text>
+
+    <!-- 遷移先 -->
+    <line x1="340" y1="454" x2="180" y2="482" stroke="#E97316" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="500" y1="454" x2="660" y2="482" stroke="#0891B2" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="750" y1="356" x2="750" y2="482" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+    <rect x="60" y="480" width="240" height="40" rx="8" fill="#E97316"/>
+    <text x="180" y="504" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">法人管理画面へ</text>
+
+    <rect x="540" y="480" width="280" height="40" rx="8" fill="#0891B2"/>
+    <text x="680" y="504" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">事業所管理画面へ</text>
+  </svg>
+</div>
+
+<!-- ===== 4. 同一メールアドレスの権限解決 ===== -->
+<div class="section">
+  <h2><span>4</span>同一メールアドレスの権限解決フロー</h2>
+  <svg viewBox="0 0 840 560" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr4" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748B"/></marker>
+    </defs>
+
+    <!-- ユーザー -->
+    <rect x="260" y="10" width="320" height="56" rx="10" fill="#E97316" filter="url(#glow)"/>
+    <text x="420" y="32" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">sato@example.com でログイン</text>
+    <text x="420" y="52" text-anchor="middle" fill="#FFEDD5" font-size="11">1つのメールに3つの権限が紐づく</text>
+
+    <line x1="420" y1="66" x2="420" y2="96" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- 切替UI -->
+    <rect x="280" y="96" width="280" height="48" rx="10" fill="#7C3AED" filter="url(#glow)"/>
+    <text x="420" y="124" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">アカウント切替UI</text>
+
+    <!-- 3分岐 -->
+    <line x1="320" y1="144" x2="130" y2="190" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="420" y1="144" x2="420" y2="190" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="520" y1="144" x2="710" y2="190" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <!-- アカウント1: 法人管理者 -->
+    <rect x="20" y="190" width="220" height="48" rx="8" fill="#2563EB" filter="url(#glow)"/>
+    <text x="130" y="210" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">法人管理者として操作</text>
+    <text x="130" y="228" text-anchor="middle" fill="#BFDBFE" font-size="10">渓仁会</text>
+
+    <line x1="70" y1="238" x2="70" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="190" y1="238" x2="190" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <rect x="10" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="70" y="296" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">法人管理画面</text>
+    <text x="70" y="314" text-anchor="middle" fill="#6EE7B7" font-size="10">全操作 &#x2713;</text>
+
+    <rect x="140" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="200" y="292" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">全事業所</text>
+    <text x="200" y="308" text-anchor="middle" fill="#6EE7B7" font-size="10">管理画面</text>
+    <text x="200" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">全操作 &#x2713;</text>
+
+    <rect x="10" y="344" width="250" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="135" y="366" text-anchor="middle" fill="#F87171" font-size="11">管理者の管理：アクセス不可 &#x2717;</text>
+
+    <!-- アカウント2: 事業所Aオーナー -->
+    <rect x="300" y="190" width="240" height="48" rx="8" fill="#059669" filter="url(#glow)"/>
+    <text x="420" y="210" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">事業所オーナーとして操作</text>
+    <text x="420" y="228" text-anchor="middle" fill="#D1FAE5" font-size="10">事業所A：月寒あさがおの郷</text>
+
+    <line x1="360" y1="238" x2="360" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="480" y1="238" x2="480" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <rect x="300" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="360" y="296" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">事業所A</text>
+    <text x="360" y="314" text-anchor="middle" fill="#6EE7B7" font-size="10">全操作 &#x2713;</text>
+
+    <rect x="430" y="272" width="120" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="490" y="292" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">事業所Aの</text>
+    <text x="490" y="308" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">管理者管理</text>
+    <text x="490" y="324" text-anchor="middle" fill="#6EE7B7" font-size="10">追加/編集 &#x2713;</text>
+
+    <rect x="300" y="344" width="250" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="425" y="366" text-anchor="middle" fill="#F87171" font-size="11">法人管理画面：アクセス不可 &#x2717;</text>
+
+    <!-- アカウント3: 事業所Bサブ管理者 -->
+    <rect x="600" y="190" width="220" height="48" rx="8" fill="#475569" filter="url(#glow)"/>
+    <text x="710" y="210" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">サブ管理者として操作</text>
+    <text x="710" y="228" text-anchor="middle" fill="#CBD5E1" font-size="10">事業所B：西円山敬樹園</text>
+
+    <line x1="710" y1="238" x2="710" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr4)"/>
+
+    <rect x="640" y="272" width="140" height="60" rx="8" fill="#1E3A2F" stroke="#059669"/>
+    <text x="710" y="296" text-anchor="middle" fill="#34D399" font-size="11" font-weight="600">事業所B</text>
+    <text x="710" y="314" text-anchor="middle" fill="#6EE7B7" font-size="10">全操作 &#x2713;</text>
+
+    <rect x="600" y="344" width="220" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="710" y="366" text-anchor="middle" fill="#F87171" font-size="11">管理者管理：不可 &#x2717;</text>
+    <rect x="600" y="392" width="220" height="36" rx="6" fill="#2D1517" stroke="#DC2626"/>
+    <text x="710" y="414" text-anchor="middle" fill="#F87171" font-size="11">法人管理画面：不可 &#x2717;</text>
+
+    <!-- まとめ注釈 -->
+    <rect x="40" y="450" width="760" height="100" rx="10" fill="#1E293B" stroke="#334155"/>
+    <text x="60" y="476" fill="#F97316" font-size="12" font-weight="700">同一メールアドレスの運用ルール</text>
+    <text x="60" y="498" fill="#94A3B8" font-size="11">1. ログイン後に「アカウント切替UI」で、どの権限で操作するかを選択する</text>
+    <text x="60" y="516" fill="#94A3B8" font-size="11">2. 各アカウントの権限は独立。法人管理者として入っても、事業所Aのオーナー権限は使えない</text>
+    <text x="60" y="534" fill="#94A3B8" font-size="11">3. 切り替えはいつでも可能（Slackのワークスペース切替のイメージ）</text>
+  </svg>
+</div>
+
+</body>
+</html>
