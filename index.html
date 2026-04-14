@@ -463,7 +463,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 
     <div class="stats" style="grid-template-columns:repeat(4,1fr)">
       <div class="stat"><div class="stat-label">今月の利用額（税込）</div><div class="stat-val">¥387,200</div><div class="stat-sub">2026年4月分</div></div>
-      <div class="stat"><div class="stat-label">未払い請求</div><div class="stat-val" style="color:var(--red)">1件</div></div>
       <div class="stat"><div class="stat-label">年間累計</div><div class="stat-val">¥4,218,600</div><div class="stat-sub">2026年度</div></div>
       <div class="stat"><div class="stat-label">対象事業所</div><div class="stat-val">9<span style="font-size:14px;color:var(--gray-400)">事業所</span></div></div>
     </div>
@@ -476,7 +475,6 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
         <th>合計金額（税込）</th>
         <th style="width:90px">振込手数料</th>
         <th style="width:90px">支払い期限</th>
-        <th style="width:80px">ステータス</th>
         <th style="width:80px">請求書</th>
         <th style="width:100px">明細DL</th>
       </tr></thead>
@@ -1143,7 +1141,6 @@ const BILLING=[
 
 function rBilling(){
   document.getElementById('b-tb').innerHTML=BILLING.map((b,i)=>{
-    const sc=b.st==='未払い'?'r':'g';
     const mMatch=b.month.match(/(\d{4})年(\d+)月/);
     const pKey=mMatch?mMatch[1]+'-'+mMatch[2].padStart(2,'0'):'';
     return `<tr>
@@ -1153,7 +1150,6 @@ function rBilling(){
       <td>¥${b.total.toLocaleString()}</td>
       <td style="text-align:right">${b.transFee}円</td>
       <td>${b.due}</td>
-      <td><span class="st st-${sc}">${b.st}</span></td>
       <td style="text-align:center">
         <div class="dl-wrap">
           <button class="btn btn-out btn-sm" onclick="toggleDlMenu(this)" style="gap:4px;padding:5px 10px">
