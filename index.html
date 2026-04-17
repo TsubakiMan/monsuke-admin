@@ -285,7 +285,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     </a>
     <div class="sidebar-corp">
       <b>社会福祉法人渓仁会</b>
-      法人ID 100234
+      <span data-i18n="sidebar_corp_id">法人ID</span> 100234
     </div>
   </div>
   <nav class="sidebar-nav">
@@ -354,17 +354,17 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <p class="ph-sub" data-i18n="sub_dashboard">法人全体の利用状況を一目で確認できます。</p>
 
     <div class="stats">
-      <div class="stat"><div class="stat-label">今月の利用額</div><div class="stat-val">¥387,200</div><div class="stat-sub">前月比 <span style="color:var(--red)">-15.2%</span></div></div>
-      <div class="stat"><div class="stat-label">今月の稼働件数</div><div class="stat-val">34<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub">前月比 <span style="color:var(--red)">-19.0%</span></div></div>
-      <div class="stat"><div class="stat-label">未読チャット</div><div class="stat-val" style="color:var(--primary)">3<span style="font-size:14px;color:var(--gray-400)">件</span></div><div class="stat-sub"><a href="#" class="c-link" onclick="go('messages');return false">確認する →</a></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_usage_month">今月の利用額</div><div class="stat-val">¥387,200</div><div class="stat-sub"><span data-i18n="stat_vs_prev">前月比</span> <span style="color:var(--red)">-15.2%</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_shifts_month">今月の稼働件数</div><div class="stat-val">34<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_cases">件</span></div><div class="stat-sub"><span data-i18n="stat_vs_prev">前月比</span> <span style="color:var(--red)">-19.0%</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_unread_chats">未読チャット</div><div class="stat-val" style="color:var(--primary)">3<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_cases">件</span></div><div class="stat-sub"><a href="#" class="c-link" onclick="go('messages');return false" data-i18n="stat_check">確認する →</a></div></div>
     </div>
 
     <!-- 月別利用額推移 (CSS bar chart) -->
     <div class="fcard" style="margin-bottom:16px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <h3 style="margin:0">月別利用額推移</h3>
+        <h3 style="margin:0" data-i18n="dash_monthly_chart">月別利用額推移</h3>
         <select class="sel" id="dash-fac-sel" onchange="rDashChart()" style="width:auto;min-width:180px">
-          <option value="">法人全体</option>
+          <option value="" data-i18n="dash_corp_all">法人全体</option>
           <option>月寒あさがおの郷</option>
           <option>西円山敬樹園</option>
           <option>菊水こまちの郷</option>
@@ -377,14 +377,14 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="resp-grid">
       <!-- 事業所別利用状況 -->
       <div class="fcard">
-        <h3>事業所別 今月の利用状況</h3>
+        <h3 data-i18n="dash_by_facility">事業所別 今月の利用状況</h3>
         <table style="width:100%;border-collapse:collapse">
-          <thead><tr><th style="text-align:left;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)">事業所</th><th style="text-align:right;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)">件数</th><th style="text-align:right;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)">金額</th></tr></thead>
-          <tbody>
-            <tr><td style="padding:8px 10px;font-size:13px">月寒あさがおの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">12件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥142,800</td></tr>
-            <tr style="background:var(--gray-50)"><td style="padding:8px 10px;font-size:13px">西円山敬樹園</td><td style="text-align:right;padding:8px 10px;font-size:13px">9件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥108,000</td></tr>
-            <tr><td style="padding:8px 10px;font-size:13px">菊水こまちの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">7件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥78,400</td></tr>
-            <tr style="background:var(--gray-50)"><td style="padding:8px 10px;font-size:13px">きもべつ喜らめきの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">6件</td><td style="text-align:right;padding:8px 10px;font-size:13px">¥58,000</td></tr>
+          <thead><tr><th style="text-align:left;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_facility">事業所</th><th style="text-align:right;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_cases">件数</th><th style="text-align:right;padding:8px 10px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_amount">金額</th></tr></thead>
+          <tbody id="dash-by-fac-tb">
+            <tr><td style="padding:8px 10px;font-size:13px">月寒あさがおの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">12<span data-i18n="unit_cases">件</span></td><td style="text-align:right;padding:8px 10px;font-size:13px">¥142,800</td></tr>
+            <tr style="background:var(--gray-50)"><td style="padding:8px 10px;font-size:13px">西円山敬樹園</td><td style="text-align:right;padding:8px 10px;font-size:13px">9<span data-i18n="unit_cases">件</span></td><td style="text-align:right;padding:8px 10px;font-size:13px">¥108,000</td></tr>
+            <tr><td style="padding:8px 10px;font-size:13px">菊水こまちの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">7<span data-i18n="unit_cases">件</span></td><td style="text-align:right;padding:8px 10px;font-size:13px">¥78,400</td></tr>
+            <tr style="background:var(--gray-50)"><td style="padding:8px 10px;font-size:13px">きもべつ喜らめきの郷</td><td style="text-align:right;padding:8px 10px;font-size:13px">6<span data-i18n="unit_cases">件</span></td><td style="text-align:right;padding:8px 10px;font-size:13px">¥58,000</td></tr>
           </tbody>
         </table>
       </div>
@@ -392,15 +392,15 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
       <!-- 直近のアクティビティ -->
       <div class="fcard">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <h3 style="margin:0">直近のアクティビティ</h3>
+          <h3 style="margin:0" data-i18n="dash_recent_activity">直近のアクティビティ</h3>
           <select class="sel" id="dash-act-sel" onchange="rDashActivity()" style="width:auto;min-width:140px;font-size:12px">
-            <option value="">すべて</option>
-            <option value="match">マッチング</option>
-            <option value="done">稼働完了</option>
-            <option value="review">レビュー</option>
-            <option value="billing">請求・支払い</option>
-            <option value="worker">ワーカー</option>
-            <option value="cancel">キャンセル</option>
+            <option value="" data-i18n="filter_all">すべて</option>
+            <option value="match" data-i18n="filter_match">マッチング</option>
+            <option value="done" data-i18n="filter_done">稼働完了</option>
+            <option value="review" data-i18n="filter_review_cat">レビュー</option>
+            <option value="billing" data-i18n="filter_billing_cat">請求・支払い</option>
+            <option value="worker" data-i18n="filter_worker_cat">ワーカー</option>
+            <option value="cancel" data-i18n="filter_cancel_cat">キャンセル</option>
           </select>
         </div>
         <div id="dash-activity" style="font-size:13px"></div>
@@ -418,23 +418,27 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="search-area">
       <div class="search-row">
         <div class="search-wrap">
-          <input type="text" id="f-search" placeholder="事業所名で検索" oninput="rFac()">
+          <input type="text" id="f-search" data-i18n-ph="ph_search_facility" placeholder="事業所名で検索" oninput="rFac()">
           <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
         </div>
       </div>
-      <p class="search-hint">複数の単語で検索できます。入力されたいずれかの単語を含む事業所を一覧表示します。</p>
+      <p class="search-hint" data-i18n="search_hint">複数の単語で検索できます。入力されたいずれかの単語を含む事業所を一覧表示します。</p>
       <div class="search-filters" style="margin-top:8px">
-        <select class="sel" id="f-stat" onchange="rFac()"><option value="">全てのステータス</option><option>求人掲載中</option><option>未掲載</option></select>
+        <select class="sel" id="f-stat" onchange="rFac()">
+          <option value="" data-i18n="filter_all_statuses">全てのステータス</option>
+          <option value="求人掲載中" data-i18n="status_published">求人掲載中</option>
+          <option value="未掲載" data-i18n="status_unlisted">未掲載</option>
+        </select>
       </div>
     </div>
 
     <div class="tcard">
       <div class="tbar"><div class="pag" id="f-pag"></div><span id="f-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:100px">事業所ID</th>
-        <th class="sortable" onclick="tSort('f','name')">事業所名</th>
-        <th class="sortable" style="width:120px" onclick="tSort('f','area')">エリア</th>
-        <th style="width:90px">ステータス</th>
+        <th style="width:100px" data-i18n="col_facility_id">事業所ID</th>
+        <th class="sortable" onclick="tSort('f','name')" data-i18n="col_facility_name">事業所名</th>
+        <th class="sortable" style="width:120px" onclick="tSort('f','area')" data-i18n="col_area">エリア</th>
+        <th style="width:90px" data-i18n="col_status">ステータス</th>
         <th style="width:90px"></th>
       </tr></thead><tbody id="f-tb"></tbody></table>
     </div>
@@ -448,15 +452,15 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <p class="ph-sub" data-i18n="sub_company">法人の基本情報を確認・編集できます。</p>
     <div class="fcard">
       <div class="fgrid" id="c-form">
-        <div class="fg"><label>法人ID</label><input class="fi" value="100234" readonly></div>
-        <div class="fg"><label>法人名</label><input class="fi" value="社会福祉法人渓仁会" readonly></div>
-        <div class="fg"><label>代表者名</label><input class="fi" value="山田 太郎" readonly></div>
-        <div class="fg"><label>設立日</label><input class="fi" value="1974年4月1日" readonly></div>
-        <div class="fg full"><label>住所</label><input class="fi" value="〒063-0828 北海道札幌市西区発寒8条10丁目2-1" readonly></div>
-        <div class="fg"><label>電話番号</label><input class="fi" value="011-XXX-XXXX" readonly></div>
-        <div class="fg"><label>メールアドレス</label><input class="fi" value="info@keijinkai.or.jp" readonly></div>
-        <div class="fg"><label>契約プラン</label><input class="fi" value="スタンダードプラン" readonly></div>
-        <div class="fg"><label>契約開始日</label><input class="fi" value="2025年4月1日" readonly></div>
+        <div class="fg"><label data-i18n="company_corp_id">法人ID</label><input class="fi" value="100234" readonly></div>
+        <div class="fg"><label data-i18n="company_name">法人名</label><input class="fi" value="社会福祉法人渓仁会" readonly></div>
+        <div class="fg"><label data-i18n="company_representative">代表者名</label><input class="fi" value="山田 太郎" readonly></div>
+        <div class="fg"><label data-i18n="company_founded">設立日</label><input class="fi" value="1974年4月1日" readonly></div>
+        <div class="fg full"><label data-i18n="company_address">住所</label><input class="fi" value="〒063-0828 北海道札幌市西区発寒8条10丁目2-1" readonly></div>
+        <div class="fg"><label data-i18n="company_phone">電話番号</label><input class="fi" value="011-XXX-XXXX" readonly></div>
+        <div class="fg"><label data-i18n="company_email">メールアドレス</label><input class="fi" value="info@keijinkai.or.jp" readonly></div>
+        <div class="fg"><label data-i18n="company_plan">契約プラン</label><input class="fi" value="スタンダードプラン" readonly></div>
+        <div class="fg"><label data-i18n="company_contract_start">契約開始日</label><input class="fi" value="2025年4月1日" readonly></div>
       </div>
     </div>
   </div>
@@ -467,32 +471,45 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <p class="ph-sub" data-i18n="sub_workers">もん助でマッチングしたことがあるワーカーの一覧です。</p>
 
     <div class="stats">
-      <div class="stat"><div class="stat-label">マッチング済みワーカー数</div><div class="stat-val">15</div><div class="stat-sub">累計</div></div>
-      <div class="stat"><div class="stat-label">累計マッチング回数</div><div class="stat-val">362<span style="font-size:14px;color:var(--gray-400)">回</span></div></div>
-      <div class="stat"><div class="stat-label">平均評価</div><div class="stat-val">4.6</div><div class="stat-sub">★★★★★</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_matched_workers">マッチング済みワーカー数</div><div class="stat-val">15</div><div class="stat-sub" data-i18n="stat_cumulative">累計</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_total_matches">累計マッチング回数</div><div class="stat-val">362<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_times">回</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_avg_rating">平均評価</div><div class="stat-val">4.6</div><div class="stat-sub">★★★★★</div></div>
     </div>
 
     <div class="search-area">
       <div class="search-row">
         <div class="search-wrap">
-          <input type="text" id="w-search" placeholder="ワーカー名で検索" oninput="rWork()">
+          <input type="text" id="w-search" data-i18n-ph="ph_search_worker" placeholder="ワーカー名で検索" oninput="rWork()">
           <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
         </div>
       </div>
       <div class="search-filters">
-        <select class="sel" id="w-qual" onchange="rWork()"><option value="">全ての資格</option><option>介護福祉士</option><option>初任者研修</option><option>実務者研修</option><option>看護師</option><option>無資格</option></select>
-        <select class="sel" id="w-fac" onchange="rWork()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
+        <select class="sel" id="w-qual" onchange="rWork()">
+          <option value="" data-i18n="filter_all_qualifications">全ての資格</option>
+          <option value="介護福祉士" data-i18n="qual_care_worker">介護福祉士</option>
+          <option value="初任者研修" data-i18n="qual_initial">初任者研修</option>
+          <option value="実務者研修" data-i18n="qual_practical">実務者研修</option>
+          <option value="看護師" data-i18n="qual_nurse">看護師</option>
+          <option value="無資格" data-i18n="qual_no_qual">無資格</option>
+        </select>
+        <select class="sel" id="w-fac" onchange="rWork()">
+          <option value="" data-i18n="filter_all_facilities">全ての事業所</option>
+          <option>月寒あさがおの郷</option>
+          <option>西円山敬樹園</option>
+          <option>菊水こまちの郷</option>
+          <option>きもべつ喜らめきの郷</option>
+        </select>
       </div>
     </div>
     <div class="tcard">
       <div class="tbar"><div class="pag" id="w-pag"></div><span id="w-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:100px">ワーカーID</th>
-        <th class="sortable" onclick="tSort('w','name')">名前</th>
-        <th style="width:100px">資格</th>
-        <th>勤務先事業所</th>
-        <th class="sortable" style="width:70px" onclick="tSort('w','cnt')">回数</th>
-        <th class="sortable" style="width:100px" onclick="tSort('w','rating')">評価</th>
+        <th style="width:100px" data-i18n="col_worker_id">ワーカーID</th>
+        <th class="sortable" onclick="tSort('w','name')" data-i18n="col_name">名前</th>
+        <th style="width:100px" data-i18n="col_qualification">資格</th>
+        <th data-i18n="col_workplaces">勤務先事業所</th>
+        <th class="sortable" style="width:70px" onclick="tSort('w','cnt')" data-i18n="col_count">回数</th>
+        <th class="sortable" style="width:100px" onclick="tSort('w','rating')" data-i18n="col_rating">評価</th>
         <th style="width:60px"></th>
       </tr></thead><tbody id="w-tb"></tbody></table>
     </div>
@@ -506,22 +523,22 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <p class="ph-sub" data-i18n="sub_jobs">求人の確認・管理ができます。</p>
 
     <div class="stats">
-      <div class="stat"><div class="stat-label">公開中の求人</div><div class="stat-val">5</div></div>
-      <div class="stat"><div class="stat-label">応募総数（今月）</div><div class="stat-val">23</div></div>
-      <div class="stat"><div class="stat-label">マッチング率</div><div class="stat-val">78%</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_active_jobs">公開中の求人</div><div class="stat-val">5</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_applies_month">応募総数（今月）</div><div class="stat-val">23</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_match_rate">マッチング率</div><div class="stat-val">78%</div></div>
     </div>
 
     <div class="tcard standalone">
       <div class="tbar"><div class="pag" id="j-pag"></div><span id="j-cnt"></span></div>
       <table><thead><tr>
-        <th>求人タイトル</th>
-        <th class="sortable" onclick="tSort('j','dt')">日時</th>
-        <th class="sortable" style="width:70px" onclick="tSort('j','wage')">時給</th>
-        <th style="width:60px">募集</th>
-        <th class="sortable" style="width:60px" onclick="tSort('j','apps')">応募</th>
-        <th style="width:70px">承認済</th>
-        <th style="width:70px">承認待ち</th>
-        <th style="width:90px">ステータス</th>
+        <th data-i18n="col_job_title">求人タイトル</th>
+        <th class="sortable" onclick="tSort('j','dt')" data-i18n="col_datetime">日時</th>
+        <th class="sortable" style="width:70px" onclick="tSort('j','wage')" data-i18n="col_wage">時給</th>
+        <th style="width:60px" data-i18n="col_slots">募集</th>
+        <th class="sortable" style="width:60px" onclick="tSort('j','apps')" data-i18n="col_apps">応募</th>
+        <th style="width:70px" data-i18n="col_approved">承認済</th>
+        <th style="width:70px" data-i18n="col_pending">承認待ち</th>
+        <th style="width:90px" data-i18n="col_status">ステータス</th>
       </tr></thead><tbody id="j-tb"></tbody></table>
     </div>
   </div>
@@ -530,7 +547,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <div class="page" id="p-attendance">
     <div class="ph">
       <h1 data-i18n="page_attendance">勤怠管理</h1>
-      <button class="btn btn-out" onclick="toast('CSVをダウンロードしました')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSVエクスポート</button>
+      <button class="btn btn-out" onclick="toast(t('toast_csv_downloaded'))"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span data-i18n="btn_download_csv">CSVエクスポート</span></button>
     </div>
     <p class="ph-sub" data-i18n="sub_attendance">ワーカーの勤怠記録を確認できます。</p>
 
@@ -541,20 +558,25 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
           <span style="color:var(--gray-400);font-size:12px">〜</span>
           <input type="date" value="2026-04-10">
         </div>
-        <select class="sel" id="a-fac" onchange="rAtt()"><option value="">全ての事業所</option><option value="月寒">月寒あさがおの郷</option><option value="西円山">西円山敬樹園</option><option value="菊水">菊水こまちの郷</option></select>
-        <button class="btn btn-blue btn-sm" onclick="rAtt()">検索</button>
+        <select class="sel" id="a-fac" onchange="rAtt()">
+          <option value="" data-i18n="filter_all_facilities">全ての事業所</option>
+          <option value="月寒">月寒あさがおの郷</option>
+          <option value="西円山">西円山敬樹園</option>
+          <option value="菊水">菊水こまちの郷</option>
+        </select>
+        <button class="btn btn-blue btn-sm" onclick="rAtt()" data-i18n="btn_search">検索</button>
       </div>
     </div>
     <div class="tcard">
       <div class="tbar"><div class="pag" id="a-pag"></div><span id="a-cnt"></span></div>
       <table><thead><tr>
-        <th class="sortable" style="width:100px" onclick="tSort('a','dt')">日付</th>
-        <th class="sortable" onclick="tSort('a','worker')">ワーカー名</th>
-        <th>事業所名</th>
-        <th style="width:70px">出勤</th>
-        <th style="width:70px">退勤</th>
-        <th class="sortable" style="width:70px" onclick="tSort('a','hours')">実働</th>
-        <th style="width:90px">ステータス</th>
+        <th class="sortable" style="width:100px" onclick="tSort('a','dt')" data-i18n="col_date">日付</th>
+        <th class="sortable" onclick="tSort('a','worker')" data-i18n="col_worker_name">ワーカー名</th>
+        <th data-i18n="col_facility_name">事業所名</th>
+        <th style="width:70px" data-i18n="col_clock_in">出勤</th>
+        <th style="width:70px" data-i18n="col_clock_out">退勤</th>
+        <th class="sortable" style="width:70px" onclick="tSort('a','hours')" data-i18n="col_hours">実働</th>
+        <th style="width:90px" data-i18n="col_status">ステータス</th>
       </tr></thead><tbody id="a-tb"></tbody></table>
     </div>
   </div>
@@ -567,27 +589,27 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <div class="search-area">
       <div class="search-filters" style="margin-top:0">
         <select class="sel" id="msg-fac" onchange="rMessages()">
-          <option value="">全ての事業所</option>
+          <option value="" data-i18n="filter_all_facilities">全ての事業所</option>
           <option>月寒あさがおの郷</option>
           <option>西円山敬樹園</option>
           <option>菊水こまちの郷</option>
           <option>きもべつ喜らめきの郷</option>
         </select>
         <select class="sel" id="msg-st" onchange="rMessages()">
-          <option value="">全てのステータス</option>
-          <option value="未読">未読</option>
-          <option value="既読">既読</option>
+          <option value="" data-i18n="filter_all_statuses">全てのステータス</option>
+          <option value="未読" data-i18n="status_unread">未読</option>
+          <option value="既読" data-i18n="status_read">既読</option>
         </select>
       </div>
     </div>
     <div class="tcard">
       <div class="tbar"><span id="msg-cnt"></span></div>
       <table><thead><tr>
-        <th style="width:160px">事業所</th>
-        <th style="width:120px">送信者</th>
-        <th>内容</th>
-        <th style="width:140px">日時</th>
-        <th style="width:80px">ステータス</th>
+        <th style="width:160px" data-i18n="col_facility">事業所</th>
+        <th style="width:120px" data-i18n="col_sender">送信者</th>
+        <th data-i18n="col_content">内容</th>
+        <th style="width:140px" data-i18n="col_datetime">日時</th>
+        <th style="width:80px" data-i18n="col_status">ステータス</th>
       </tr></thead><tbody id="msg-tb"></tbody></table>
     </div>
   </div>
@@ -598,21 +620,21 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <p class="ph-sub" data-i18n="sub_billing">月次の利用料金・利用明細・支払い状況を確認できます。</p>
 
     <div class="stats" style="grid-template-columns:repeat(4,1fr)">
-      <div class="stat"><div class="stat-label">今月の利用額（税込）</div><div class="stat-val">¥387,200</div><div class="stat-sub">2026年4月分</div></div>
-      <div class="stat"><div class="stat-label">年間累計</div><div class="stat-val">¥4,218,600</div><div class="stat-sub">2026年度</div></div>
-      <div class="stat"><div class="stat-label">対象事業所</div><div class="stat-val">9<span style="font-size:14px;color:var(--gray-400)">事業所</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_usage_tax">今月の利用額（税込）</div><div class="stat-val">¥387,200</div><div class="stat-sub" data-i18n="stat_april_2026">2026年4月分</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_annual_total">年間累計</div><div class="stat-val">¥4,218,600</div><div class="stat-sub" data-i18n="stat_fy_2026">2026年度</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_target_facilities">対象事業所</div><div class="stat-val">9<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_facilities">事業所</span></div></div>
     </div>
 
     <div class="tcard standalone">
       <table><thead><tr>
-        <th>月</th>
-        <th style="width:60px">事業所数</th>
-        <th style="width:60px">利用件数</th>
-        <th>合計金額（税込）</th>
-        <th style="width:90px">振込手数料</th>
-        <th style="width:90px">支払い期限</th>
-        <th style="width:80px">請求書</th>
-        <th style="width:100px">明細DL</th>
+        <th data-i18n="col_month">月</th>
+        <th style="width:60px" data-i18n="col_fac_count">事業所数</th>
+        <th style="width:60px" data-i18n="col_usage_count">利用件数</th>
+        <th data-i18n="col_amount_incl_tax">合計金額（税込）</th>
+        <th style="width:90px" data-i18n="col_transfer_fee">振込手数料</th>
+        <th style="width:90px" data-i18n="col_due_date">支払い期限</th>
+        <th style="width:80px" data-i18n="col_invoice">請求書</th>
+        <th style="width:100px" data-i18n="col_detail_dl">明細DL</th>
       </tr></thead>
       <tbody id="b-tb"></tbody></table>
     </div>
@@ -627,15 +649,15 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <!-- 労働者名簿テーブル -->
     <div class="fcard" style="margin-bottom:24px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3 style="margin:0">労働者名簿</h3>
-        <button class="btn btn-blue btn-sm" onclick="openM('m-registry-dl')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>新規追加</button>
+        <h3 style="margin:0" data-i18n="reg_list_title">労働者名簿</h3>
+        <button class="btn btn-blue btn-sm" onclick="openM('m-registry-dl')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span data-i18n="btn_new">新規追加</span></button>
       </div>
       <div class="tcard standalone">
         <table><thead><tr>
-          <th>期間</th>
-          <th style="width:80px">合計人数</th>
-          <th style="width:100px">合計金額</th>
-          <th style="width:100px">合計源泉徴収額</th>
+          <th data-i18n="col_period">期間</th>
+          <th style="width:80px" data-i18n="col_people_total">合計人数</th>
+          <th style="width:100px" data-i18n="col_amount_total">合計金額</th>
+          <th style="width:100px" data-i18n="col_tax_total">合計源泉徴収額</th>
           <th style="width:200px"></th>
         </tr></thead><tbody id="r-tb"></tbody></table>
       </div>
@@ -644,28 +666,28 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <!-- 源泉徴収票 -->
     <div class="fcard">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3 style="margin:0">源泉徴収票</h3>
+        <h3 style="margin:0" data-i18n="reg_slip_title">源泉徴収票</h3>
         <select class="sel" id="wht-year" onchange="rWithholding()" style="width:auto;min-width:120px">
-          <option value="2026">2026年度</option>
-          <option value="2025">2025年度</option>
+          <option value="2026" data-i18n="reg_fy_2026">2026年度</option>
+          <option value="2025" data-i18n="reg_fy_2025">2025年度</option>
         </select>
       </div>
-      <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px">もん助でマッチングしたワーカーの源泉徴収票をPDFでダウンロードできます。</p>
+      <p style="font-size:12px;color:var(--gray-500);margin-bottom:14px" data-i18n="reg_slip_desc">もん助でマッチングしたワーカーの源泉徴収票をPDFでダウンロードできます。</p>
       <div class="search-area" style="border-radius:var(--radius) var(--radius) 0 0;margin-bottom:0">
         <div class="search-row">
           <div class="search-wrap">
-            <input type="text" id="wht-search" placeholder="ワーカー名で検索" oninput="rWithholding()">
+            <input type="text" id="wht-search" data-i18n-ph="ph_search_worker" placeholder="ワーカー名で検索" oninput="rWithholding()">
             <span class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
           </div>
         </div>
       </div>
       <div class="tcard" style="border-radius:0 0 var(--radius) var(--radius)">
         <table><thead><tr>
-          <th>ワーカー名</th>
-          <th style="width:100px">資格</th>
-          <th style="width:100px">支払金額</th>
-          <th style="width:100px">源泉徴収税額</th>
-          <th style="width:70px">稼働回数</th>
+          <th data-i18n="col_worker_name">ワーカー名</th>
+          <th style="width:100px" data-i18n="col_qualification">資格</th>
+          <th style="width:100px" data-i18n="col_pay_amount">支払金額</th>
+          <th style="width:100px" data-i18n="col_tax_amount">源泉徴収税額</th>
+          <th style="width:70px" data-i18n="col_work_count">稼働回数</th>
           <th style="width:100px"></th>
         </tr></thead><tbody id="wht-tb"></tbody></table>
       </div>
@@ -678,32 +700,44 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
     <p class="ph-sub" data-i18n="sub_reviews">ワーカーから事業所に寄せられた評価・レビューを確認できます。</p>
 
     <div class="stats">
-      <div class="stat"><div class="stat-label">全体平均スコア</div><div class="stat-val">4.3<span style="font-size:14px;color:var(--accent)"> / 5.0</span></div><div class="stat-sub">★★★★☆ (全200件)</div></div>
-      <div class="stat"><div class="stat-label">今月の新着レビュー</div><div class="stat-val">8<span style="font-size:14px;color:var(--gray-400)">件</span></div></div>
-      <div class="stat"><div class="stat-label">最も高評価の事業所</div><div class="stat-val" style="font-size:16px">西円山敬樹園</div><div class="stat-sub">★4.7 (32件)</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_overall_score">全体平均スコア</div><div class="stat-val">4.3<span style="font-size:14px;color:var(--accent)"> / 5.0</span></div><div class="stat-sub">★★★★☆ <span data-i18n="stat_overall_sub">(全200件)</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_new_reviews">今月の新着レビュー</div><div class="stat-val">8<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_cases">件</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_top_facility">最も高評価の事業所</div><div class="stat-val" style="font-size:16px">西円山敬樹園</div><div class="stat-sub">★4.7 (32<span data-i18n="unit_cases">件</span>)</div></div>
     </div>
 
     <!-- 事業所別スコア -->
     <div class="fcard" style="margin-bottom:16px">
-      <h3>事業所別 平均スコア</h3>
+      <h3 data-i18n="review_by_facility">事業所別 平均スコア</h3>
       <div id="review-bars" style="display:flex;flex-direction:column;gap:12px;margin-top:12px"></div>
     </div>
 
     <!-- レビュー一覧 -->
     <div class="search-area">
       <div class="search-filters" style="margin-top:0">
-        <select class="sel" id="rv-fac" onchange="pg.rv=1;rReviews()"><option value="">全ての事業所</option><option>月寒あさがおの郷</option><option>西円山敬樹園</option><option>菊水こまちの郷</option><option>きもべつ喜らめきの郷</option></select>
-        <select class="sel" id="rv-score" onchange="pg.rv=1;rReviews()"><option value="">全てのレビュー数</option><option value="5">★5</option><option value="4">★4</option><option value="3">★3</option><option value="2">★2以下</option></select>
+        <select class="sel" id="rv-fac" onchange="pg.rv=1;rReviews()">
+          <option value="" data-i18n="filter_all_facilities">全ての事業所</option>
+          <option>月寒あさがおの郷</option>
+          <option>西円山敬樹園</option>
+          <option>菊水こまちの郷</option>
+          <option>きもべつ喜らめきの郷</option>
+        </select>
+        <select class="sel" id="rv-score" onchange="pg.rv=1;rReviews()">
+          <option value="" data-i18n="filter_all_reviews">全てのレビュー数</option>
+          <option value="5">★5</option>
+          <option value="4">★4</option>
+          <option value="3">★3</option>
+          <option value="2">★2</option>
+        </select>
       </div>
     </div>
     <div class="tcard">
       <div class="tbar"><span id="rv-cnt"></span></div>
       <table><thead><tr>
-        <th class="sortable" style="width:120px" onclick="tSort('rv','score')">レビュー数</th>
-        <th>事業所名</th>
-        <th class="sortable" onclick="tSort('rv','worker')">ワーカー</th>
-        <th>コメント</th>
-        <th class="sortable" style="width:100px" onclick="tSort('rv','date')">日付</th>
+        <th class="sortable" style="width:120px" onclick="tSort('rv','score')" data-i18n="col_review_score">レビュー数</th>
+        <th data-i18n="col_facility_name">事業所名</th>
+        <th class="sortable" onclick="tSort('rv','worker')" data-i18n="col_worker">ワーカー</th>
+        <th data-i18n="col_comment">コメント</th>
+        <th class="sortable" style="width:100px" onclick="tSort('rv','date')" data-i18n="col_date">日付</th>
       </tr></thead><tbody id="rv-tb"></tbody></table>
       <div class="tbar" style="border-top:1px solid var(--gray-200);margin-top:0"><span id="rv-pg-cnt"></span></div>
       <div class="pag" id="rv-pag"></div>
@@ -726,44 +760,44 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 
     <!-- KPI -->
     <div class="stats" style="grid-template-columns:repeat(4,1fr)">
-      <div class="stat"><div class="stat-label">年間利用総額</div><div class="stat-val">¥4,218,600</div><div class="stat-sub">2026年度</div></div>
-      <div class="stat"><div class="stat-label">月平均利用額</div><div class="stat-val">¥421,860</div><div class="stat-sub">直近10ヶ月</div></div>
-      <div class="stat"><div class="stat-label">累計稼働ワーカー</div><div class="stat-val">48<span style="font-size:14px;color:var(--gray-400)">名</span></div></div>
-      <div class="stat"><div class="stat-label">累計稼働回数</div><div class="stat-val">362<span style="font-size:14px;color:var(--gray-400)">回</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_annual_usage">年間利用総額</div><div class="stat-val">¥4,218,600</div><div class="stat-sub" data-i18n="stat_fy_2026">2026年度</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_avg_month">月平均利用額</div><div class="stat-val">¥421,860</div><div class="stat-sub" data-i18n="stat_last_10mo">直近10ヶ月</div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_total_workers">累計稼働ワーカー</div><div class="stat-val">48<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_persons_name">名</span></div></div>
+      <div class="stat"><div class="stat-label" data-i18n="stat_total_shifts">累計稼働回数</div><div class="stat-val">362<span style="font-size:14px;color:var(--gray-400)" data-i18n="unit_times">回</span></div></div>
     </div>
 
     <!-- 月別推移グラフ -->
     <div class="fcard" style="margin-bottom:16px">
-      <h3>月別利用額推移（直近12ヶ月）</h3>
+      <h3 data-i18n="rpt_monthly_12mo">月別利用額推移（直近12ヶ月）</h3>
       <div id="rpt-chart" style="display:flex;align-items:flex-end;gap:6px;height:200px;padding-top:16px;border-bottom:2px solid var(--gray-200)"></div>
       <div id="rpt-labels" style="display:flex;gap:6px;padding-top:6px"></div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div class="resp-grid" style="margin-bottom:16px">
       <!-- 事業所別利用比較 -->
       <div class="fcard">
-        <h3>事業所別 利用比較（今年度）</h3>
+        <h3 data-i18n="rpt_by_facility_year">事業所別 利用比較（今年度）</h3>
         <div id="rpt-fac-bars" style="display:flex;flex-direction:column;gap:10px;margin-top:12px"></div>
       </div>
 
       <!-- 職種別稼働 -->
       <div class="fcard">
-        <h3>職種別 稼働件数</h3>
+        <h3 data-i18n="rpt_by_job_type">職種別 稼働件数</h3>
         <div id="rpt-job-bars" style="display:flex;flex-direction:column;gap:10px;margin-top:12px"></div>
       </div>
     </div>
 
     <!-- ワーカー稼働ランキング -->
     <div class="fcard">
-      <h3>ワーカー稼働ランキング（Top 10）</h3>
+      <h3 data-i18n="rpt_worker_ranking">ワーカー稼働ランキング（Top 10）</h3>
       <table style="width:100%;border-collapse:collapse;margin-top:8px">
         <thead><tr>
-          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200);width:40px">#</th>
-          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">ワーカー名</th>
-          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">資格</th>
-          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">稼働回数</th>
-          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">累計時間</th>
-          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)">評価</th>
+          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200);width:40px" data-i18n="col_rank">#</th>
+          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_worker_name">ワーカー名</th>
+          <th style="text-align:left;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_qualification">資格</th>
+          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_work_count">稼働回数</th>
+          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_cumulative_hours">累計時間</th>
+          <th style="text-align:right;padding:8px 12px;font-size:11px;border-bottom:2px solid var(--gray-200)" data-i18n="col_rating">評価</th>
         </tr></thead>
         <tbody id="rpt-rank"></tbody>
       </table>
@@ -805,17 +839,17 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
 
 <div class="modal-bg" id="m-registry-dl">
   <div class="modal">
-    <div class="modal-head"><h3>労働者名簿を新規追加</h3><button class="modal-x" onclick="closeM('m-registry-dl')">&times;</button></div>
+    <div class="modal-head"><h3 data-i18n="modal_reg_add_title">労働者名簿を新規追加</h3><button class="modal-x" onclick="closeM('m-registry-dl')">&times;</button></div>
     <div class="modal-body">
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">期間を指定してください。確定済みシフトを対象に集計します。</p>
-      <div class="fg"><label>開始日</label><input class="fi" type="date" id="reg-start" value="2025-01-01"></div>
-      <div class="fg" style="margin-top:14px"><label>終了日（基準日）</label><input class="fi" type="date" id="reg-end" value="2026-04-10"></div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px" data-i18n="modal_reg_desc">期間を指定してください。確定済みシフトを対象に集計します。</p>
+      <div class="fg"><label data-i18n="modal_reg_start">開始日</label><input class="fi" type="date" id="reg-start" value="2025-01-01"></div>
+      <div class="fg" style="margin-top:14px"><label data-i18n="modal_reg_end">終了日（基準日）</label><input class="fi" type="date" id="reg-end" value="2026-04-10"></div>
       <div style="margin-top:14px;padding:12px;background:var(--blue-light);border-radius:6px;font-size:12px;color:var(--blue)">
-        <strong>出力形式:</strong> Excel (.xlsx) — 全19列<br>
-        <strong>ファイル名:</strong> 更新_{法人名}様_{基準日}までの労働者名簿.xlsx
+        <strong data-i18n="modal_reg_output">出力形式:</strong> Excel (.xlsx)<br>
+        <strong data-i18n="modal_reg_filename">ファイル名:</strong> 更新_{法人名}様_{基準日}までの労働者名簿.xlsx
       </div>
     </div>
-    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-registry-dl')">キャンセル</button><button class="btn btn-blue" onclick="addRegEntry()">追加する</button></div>
+    <div class="modal-foot"><button class="btn btn-out" onclick="closeM('m-registry-dl')" data-i18n="btn_cancel">キャンセル</button><button class="btn btn-blue" onclick="addRegEntry()" data-i18n="btn_add">追加する</button></div>
   </div>
 </div>
 
@@ -823,7 +857,7 @@ td{padding:12px 20px;font-size:13px;white-space:nowrap}
   <div class="modal">
     <div class="modal-head"><h3 data-i18n="admin_add_title">管理者を追加</h3><button class="modal-x" onclick="closeM('m-admin-add')">&times;</button></div>
     <div class="modal-body">
-      <div class="fg"><label data-i18n="admin_name">名前</label><input class="fi" id="adm-name" placeholder="管理者名を入力"></div>
+      <div class="fg"><label data-i18n="admin_name">名前</label><input class="fi" id="adm-name" data-i18n-ph="ph_admin_name" placeholder="管理者名を入力"></div>
       <div class="fg" style="margin-top:14px"><label data-i18n="admin_email">メールアドレス</label><input class="fi" id="adm-email" type="email" placeholder="example@keijinkai.or.jp"></div>
       <div class="fg" style="margin-top:14px"><label data-i18n="admin_role">権限</label>
         <select class="fi" id="adm-role">
@@ -878,9 +912,23 @@ const isOwner=currentRole==='オーナー管理者';
 const isAdmin=currentRole==='管理者';
 const isViewer=currentRole==='閲覧者';
 
-/* 言語切替時にロールバッジ再描画などを行う */
-function onLangChange(lang){
+/* 言語切替時に全テーブルを再描画 */
+function rerenderAll(){
+  if(typeof rFac==='function') rFac();
+  if(typeof rWork==='function') rWork();
+  if(typeof rJob==='function') rJob();
+  if(typeof rAtt==='function') rAtt();
+  if(typeof rReg==='function') rReg();
+  if(typeof rWithholding==='function') rWithholding();
+  if(typeof rBilling==='function') rBilling();
+  if(typeof rMessages==='function') rMessages();
+  if(typeof rDashboard==='function') rDashboard();
+  if(typeof rReviews==='function') rReviews();
+  if(typeof rReport==='function') rReport();
   if(typeof rAdmin==='function') rAdmin();
+}
+function onLangChange(lang){
+  /* rerenderAllがapplyI18n内で呼ばれるのでここでは何もしない */
 }
 
 /* ユーザー情報をUIに反映 */
@@ -1025,9 +1073,9 @@ function stCls(s){return{求人掲載中:'g',未掲載:'x',公開中:'b',締切:
 function slice(arr,p){const s=(p-1)*PS;return{rows:arr.slice(s,s+PS),total:arr.length,pages:Math.ceil(arr.length/PS),s:s+1,e:Math.min(s+PS,arr.length)}}
 function pagH(id,tp,cur,key){
   const c=document.getElementById(id);if(tp<=1){c.innerHTML='';return}
-  let h=`<button onclick="chg('${key}',${cur-1})" ${cur===1?'disabled':''}>前へ</button>`;
+  let h=`<button onclick="chg('${key}',${cur-1})" ${cur===1?'disabled':''}>${t('pg_prev')}</button>`;
   for(let i=1;i<=tp;i++) h+=`<button class="pn${i===cur?' on':''}" onclick="chg('${key}',${i})">${i}</button>`;
-  h+=`<button onclick="chg('${key}',${cur+1})" ${cur===tp?'disabled':''}>次へ</button>`;
+  h+=`<button onclick="chg('${key}',${cur+1})" ${cur===tp?'disabled':''}>${t('pg_next')}</button>`;
   c.innerHTML=h;
 }
 function sliceRv(arr,p){const s=(p-1)*RV_PS;return{rows:arr.slice(s,s+RV_PS),total:arr.length,pages:Math.ceil(arr.length/RV_PS),s:s+1,e:Math.min(s+RV_PS,arr.length)}}
@@ -1050,10 +1098,10 @@ function rFac(){
     <td class="c-id">${f.id}</td>
     <td><a href="#" class="c-link">${f.name}</a></td>
     <td>${f.area}</td>
-    <td><span class="st st-${stCls(f.st)}">${f.st}</span></td>
-    <td><button class="btn btn-blue btn-sm">管理画面</button></td>
+    <td><span class="st st-${stCls(f.st)}">${stLabel(f.st)}</span></td>
+    <td><button class="btn btn-blue btn-sm">${t('btn_admin_screen')}</button></td>
   </tr>`).join('');
-  document.getElementById('f-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${p.total}件中 / 全${FAC.length}件中`;
+  document.getElementById('f-cnt').textContent=t('pg_showing_of_all',{s:p.s,e:p.e,total:p.total,all:FAC.length});
   pagH('f-pag',p.pages,pg.f,'f');
   applySortUI('f');
 }
@@ -1077,13 +1125,13 @@ function rWork(){
   document.getElementById('w-tb').innerHTML=p.rows.map(w=>`<tr>
     <td class="c-id">${w.id}</td>
     <td><strong>${w.name}</strong></td>
-    <td>${w.q}</td>
+    <td>${qualLabel(w.q)}</td>
     <td style="font-size:12px">${w.facs.join('、')}</td>
-    <td style="text-align:center">${w.cnt}回</td>
+    <td style="text-align:center">${w.cnt}${t('unit_times')}</td>
     <td><span class="stars">${'★'.repeat(Math.floor(w.r))}${'☆'.repeat(5-Math.floor(w.r))}<span>${w.r.toFixed(1)}</span></span></td>
-    <td><button class="btn btn-out btn-sm">詳細</button></td>
+    <td><button class="btn btn-out btn-sm">${t('btn_detail')}</button></td>
   </tr>`).join('');
-  document.getElementById('w-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${fl.length}件中`;
+  document.getElementById('w-cnt').textContent=t('pg_showing_of',{s:p.s,e:p.e,total:fl.length});
   pagH('w-pag',p.pages,pg.w,'w');
   applySortUI('w');
 }
@@ -1092,17 +1140,18 @@ function rWork(){
 function rJob(){
   let list=sortList(JOBS,'j',{dt:(a,b)=>a.dt.localeCompare(b.dt),wage:(a,b)=>a.wage-b.wage,apps:(a,b)=>a.apps-b.apps});
   const p=slice(list,pg.j);
+  const u=t('unit_persons_name');
   document.getElementById('j-tb').innerHTML=p.rows.map(j=>`<tr>
     <td style="white-space:normal;max-width:320px"><a href="#" class="c-link" onclick="event.preventDefault();go('facilities')">${j.title}</a><div style="font-size:11px;color:var(--gray-400);margin-top:2px">${j.fac}</div></td>
     <td>${j.dt}</td>
     <td>¥${j.wage.toLocaleString()}</td>
-    <td style="text-align:center">${j.slots}名</td>
-    <td style="text-align:center"><strong>${j.apps}名</strong></td>
-    <td style="text-align:center">${j.approved}名</td>
-    <td style="text-align:center">${j.pending}名</td>
-    <td><span class="st st-${stCls(j.st)}">${j.st}</span></td>
+    <td style="text-align:center">${j.slots}${u}</td>
+    <td style="text-align:center"><strong>${j.apps}${u}</strong></td>
+    <td style="text-align:center">${j.approved}${u}</td>
+    <td style="text-align:center">${j.pending}${u}</td>
+    <td><span class="st st-${stCls(j.st)}">${stLabel(j.st)}</span></td>
   </tr>`).join('');
-  document.getElementById('j-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${JOBS.length}件中`;
+  document.getElementById('j-cnt').textContent=t('pg_showing_of',{s:p.s,e:p.e,total:JOBS.length});
   pagH('j-pag',p.pages,pg.j,'j');
   applySortUI('j');
 }
@@ -1123,9 +1172,9 @@ function rAtt(){
     <td>${a.in}</td>
     <td>${a.out}</td>
     <td>${a.h}</td>
-    <td><span class="st st-${stCls(a.st)}">${a.st}</span></td>
+    <td><span class="st st-${stCls(a.st)}">${stLabel(a.st)}</span></td>
   </tr>`).join('');
-  document.getElementById('a-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${fl.length}件中`;
+  document.getElementById('a-cnt').textContent=t('pg_showing_of',{s:p.s,e:p.e,total:fl.length});
   pagH('a-pag',p.pages,pg.a,'a');
   applySortUI('a');
 }
@@ -1180,12 +1229,12 @@ let regNextId=3;
 function rReg(){
   document.getElementById('r-tb').innerHTML=REG_ENTRIES.map(r=>`<tr>
     <td><a href="#" class="c-link">${r.start}〜${r.end}</a></td>
-    <td style="text-align:center">${r.people}人</td>
-    <td style="text-align:right">${r.amount.toLocaleString()}円</td>
-    <td style="text-align:right">${r.tax.toLocaleString()}円</td>
+    <td style="text-align:center">${r.people}${t('unit_people')}</td>
+    <td style="text-align:right">${r.amount.toLocaleString()}${t('unit_yen')}</td>
+    <td style="text-align:right">${r.tax.toLocaleString()}${t('unit_yen')}</td>
     <td style="text-align:right;white-space:nowrap">
-      <button class="dl-btn" onclick="dlRegistryXlsx('${r.start}','${r.end}')">ダウンロード</button>
-      <button class="dl-del" onclick="delRegEntry(${r.id})" style="margin-left:6px"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> 削除</button>
+      <button class="dl-btn" onclick="dlRegistryXlsx('${r.start}','${r.end}')">${t('btn_download')}</button>
+      <button class="dl-del" onclick="delRegEntry(${r.id})" style="margin-left:6px"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> ${t('btn_delete')}</button>
     </td>
   </tr>`).join('');
 }
@@ -1193,17 +1242,17 @@ function rReg(){
 function addRegEntry(){
   const s=document.getElementById('reg-start').value;
   const e=document.getElementById('reg-end').value;
-  if(!s||!e){toast('期間を指定してください');return;}
+  if(!s||!e){toast(t('toast_period_required'));return;}
   const fmt=d=>d.replace(/-/g,'/').replace(/(\d{4})\/0?(\d+)\/0?(\d+)/,'$1年$2月$3日');
   REG_ENTRIES.unshift({id:regNextId++,start:fmt(s),end:fmt(e),people:Math.floor(Math.random()*50)+10,amount:Math.floor(Math.random()*3000000)+200000,tax:0});
   closeM('m-registry-dl');
   rReg();
-  toast('労働者名簿を追加しました');
+  toast(t('toast_reg_added'));
 }
 
 function delRegEntry(id){
   const idx=REG_ENTRIES.findIndex(r=>r.id===id);
-  if(idx>=0){REG_ENTRIES.splice(idx,1);rReg();toast('労働者名簿を削除しました');}
+  if(idx>=0){REG_ENTRIES.splice(idx,1);rReg();toast(t('toast_reg_deleted'));}
 }
 
 /* ── Withholding Tax Slip (源泉徴収票) ── */
@@ -1246,14 +1295,14 @@ function rWithholding(){
   document.getElementById('wht-tb').innerHTML=list.map((w,i)=>
     `<tr${i%2?` style="background:var(--gray-50)"`:''}>
       <td style="padding:10px 12px;font-size:13px;font-weight:600">${w.name}</td>
-      <td style="padding:10px 12px;font-size:12px;color:var(--gray-500)">${w.q}</td>
+      <td style="padding:10px 12px;font-size:12px;color:var(--gray-500)">${qualLabel(w.q)}</td>
       <td style="padding:10px 12px;text-align:right;font-size:13px">¥${w.pay.toLocaleString()}</td>
       <td style="padding:10px 12px;text-align:right;font-size:13px">¥${w.tax.toLocaleString()}</td>
-      <td style="padding:10px 12px;text-align:center;font-size:13px">${w.cnt}回</td>
+      <td style="padding:10px 12px;text-align:center;font-size:13px">${w.cnt}${t('unit_times')}</td>
       <td style="padding:10px 12px;text-align:center">
         <button class="btn btn-out btn-sm" onclick="dlWithholdingPDF('${w.name}','${w.q}',${w.pay},${w.tax},${w.cnt},'${yr}')" style="gap:4px">
           <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          PDF
+          ${t('btn_pdf')}
         </button>
       </td>
     </tr>`
@@ -1261,9 +1310,10 @@ function rWithholding(){
 }
 function dlWithholdingPDF(name,qual,pay,tax,cnt,yr){
   const w=window.open('','_blank');
-  if(!w){toast('ポップアップがブロックされました。許可してください。');return;}
-  w.document.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8">
-<title>源泉徴収票_${yr}年_${name}</title>
+  if(!w){toast(t('toast_popup_blocked'));return;}
+  const lang=getLang();
+  w.document.write(`<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8">
+<title>${t('slip_title')}_${yr}_${name}</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Sans JP',sans-serif;padding:40px;max-width:800px;margin:0 auto;color:#1e293b}
@@ -1289,35 +1339,35 @@ td{border:1px solid #e2e8f0;padding:10px 14px;font-size:13px}
 .btn-cl{padding:10px 28px;background:#fff;color:#64748b;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;cursor:pointer}
 </style></head><body>
 <div class="print-bar no-print">
-  <button class="btn-dl" onclick="window.print()">PDFとして保存 / 印刷</button>
-  <button class="btn-cl" onclick="window.close()">閉じる</button>
+  <button class="btn-dl" onclick="window.print()">${t('slip_print')}</button>
+  <button class="btn-cl" onclick="window.close()">${t('btn_close')}</button>
 </div>
-<h1>給与所得の源泉徴収票</h1>
-<p class="sub">${yr}年度（${yr}年1月1日 〜 ${yr}年12月31日）</p>
+<h1>${t('slip_title')}</h1>
+<p class="sub">${t('slip_fy_range',{yr:yr})}</p>
 
 <div class="info-grid">
   <div class="info-box">
-    <h3>受給者</h3>
-    <div class="info-row"><span class="label">氏名</span><span class="val">${name}</span></div>
-    <div class="info-row"><span class="label">資格</span><span class="val">${qual}</span></div>
-    <div class="info-row"><span class="label">稼働回数</span><span class="val">${cnt}回</span></div>
+    <h3>${t('slip_recipient')}</h3>
+    <div class="info-row"><span class="label">${t('slip_full_name')}</span><span class="val">${name}</span></div>
+    <div class="info-row"><span class="label">${t('col_qualification')}</span><span class="val">${qualLabel(qual)}</span></div>
+    <div class="info-row"><span class="label">${t('col_work_count')}</span><span class="val">${cnt}${t('unit_times')}</span></div>
   </div>
   <div class="info-box">
-    <h3>支払者</h3>
-    <div class="info-row"><span class="label">名称</span><span class="val">社会福祉法人渓仁会</span></div>
-    <div class="info-row"><span class="label">住所</span><span class="val">北海道札幌市西区発寒8条10丁目2-1</span></div>
-    <div class="info-row"><span class="label">法人番号</span><span class="val">100234</span></div>
+    <h3>${t('slip_payer')}</h3>
+    <div class="info-row"><span class="label">${t('slip_pay_name')}</span><span class="val">社会福祉法人渓仁会</span></div>
+    <div class="info-row"><span class="label">${t('company_address')}</span><span class="val">北海道札幌市西区発寒8条10丁目2-1</span></div>
+    <div class="info-row"><span class="label">${t('slip_corp_no')}</span><span class="val">100234</span></div>
   </div>
 </div>
 
 <table>
-  <thead><tr><th>項目</th><th class="amount" style="width:180px">金額</th></tr></thead>
+  <thead><tr><th>${t('slip_item')}</th><th class="amount" style="width:180px">${t('slip_amount')}</th></tr></thead>
   <tbody>
-    <tr><td>支払金額</td><td class="amount">¥${pay.toLocaleString()}</td></tr>
-    <tr><td>給与所得控除後の金額</td><td class="amount">¥${Math.floor(pay*0.7).toLocaleString()}</td></tr>
-    <tr><td>所得控除の額の合計額</td><td class="amount">¥480,000</td></tr>
-    <tr class="total-row"><td>源泉徴収税額</td><td class="amount">¥${tax.toLocaleString()}</td></tr>
-    <tr><td>社会保険料等の金額</td><td class="amount">¥0</td></tr>
+    <tr><td>${t('col_pay_amount')}</td><td class="amount">¥${pay.toLocaleString()}</td></tr>
+    <tr><td>${t('slip_deduction_after')}</td><td class="amount">¥${Math.floor(pay*0.7).toLocaleString()}</td></tr>
+    <tr><td>${t('slip_deduction_total')}</td><td class="amount">¥480,000</td></tr>
+    <tr class="total-row"><td>${t('col_tax_amount')}</td><td class="amount">¥${tax.toLocaleString()}</td></tr>
+    <tr><td>${t('slip_social_ins')}</td><td class="amount">¥0</td></tr>
   </tbody>
 </table>
 
@@ -1326,10 +1376,10 @@ td{border:1px solid #e2e8f0;padding:10px 14px;font-size:13px}
   <div style="font-size:12px;color:#64748b;margin-top:4px">〒060-0000 北海道札幌市中央区大通西X丁目</div>
   <div style="font-size:12px;color:#64748b">TEL: 011-XXX-XXXX</div>
 </div>
-<p class="footer-note">この源泉徴収票は、もん助を通じた報酬支払いに基づき発行されたものです。</p>
+<p class="footer-note">${t('slip_footer')}</p>
 </body></html>`);
   w.document.close();
-  toast('源泉徴収票を新しいタブで開きました。');
+  toast(t('toast_slip_opened'));
 }
 
 /* ── CSV Download ── */
@@ -1340,23 +1390,23 @@ function dlCSV(filename, header, rows){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);a.download=filename;a.click();
   URL.revokeObjectURL(a.href);
-  toast(filename+' をダウンロードしました');
+  toast(t('toast_file_downloaded',{file:filename}));
 }
 
 function dlUsageCSV(type,periodKey){
   const bom='\uFEFF';
-  const h=['事業所名','人数','件数','手数料','請求額'];
+  const h=[t('col_facility_name'),t('col_people_total'),t('col_usage_count'),t('col_transfer_fee'),t('col_amount_total')];
   const rows=[['月寒あさがおの郷','24','60','4,620','368,775'],['西円山敬樹園','18','42','3,960','285,400'],['菊水こまちの郷','12','30','2,640','198,500']];
   const csv=bom+h.join(',')+'\n'+rows.map(r=>r.join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);a.download=`利用明細_${type}_${periodKey}.csv`;a.click();
+  a.href=URL.createObjectURL(blob);a.download=`statement_${type}_${periodKey}.csv`;a.click();
   URL.revokeObjectURL(a.href);
-  toast(`利用明細（${type}）をダウンロードしました`);
+  toast(t('toast_billing_cat_dl',{type:type}));
 }
 
 function dlRegistryXlsx(startLabel,endLabel){
-  if(typeof XLSX==='undefined'){toast('Excelライブラリを読み込み中です。少し待ってから再度お試しください。');return;}
+  if(typeof XLSX==='undefined'){toast(t('toast_xlsx_loading'));return;}
   const fileName=`更新_社会福祉法人渓仁会様_${endLabel}までの労働者名簿.xlsx`;
 
   // Sample data matching the 19-column spec
@@ -1386,9 +1436,9 @@ function dlRegistryXlsx(startLabel,endLabel){
     return{wch:16};
   });
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'労働者名簿');
+  XLSX.utils.book_append_sheet(wb,ws,t('reg_list_title'));
   XLSX.writeFile(wb,fileName);
-  toast(fileName+' をダウンロードしました');
+  toast(t('toast_file_downloaded',{file:fileName}));
 }
 
 /* ── Billing Data & PDF Invoice ── */
@@ -1446,20 +1496,20 @@ function rBilling(){
     const pKey=mMatch?mMatch[1]+'-'+mMatch[2].padStart(2,'0'):'';
     return `<tr>
       <td class="c-id">${b.month}</td>
-      <td style="text-align:center">${b.facCnt}事業所</td>
-      <td style="text-align:center">${b.count}件</td>
+      <td style="text-align:center">${b.facCnt}${t('unit_facilities')}</td>
+      <td style="text-align:center">${b.count}${t('unit_cases')}</td>
       <td>¥${b.total.toLocaleString()}</td>
-      <td style="text-align:right">${b.transFee}円</td>
+      <td style="text-align:right">${b.transFee}${t('unit_yen')}</td>
       <td>${b.due}</td>
       <td style="text-align:center">
         <div class="dl-wrap">
           <button class="btn btn-out btn-sm" onclick="toggleDlMenu(this)" style="gap:4px;padding:5px 10px">
             <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            PDF
+            ${t('btn_pdf')}
           </button>
           <div class="dl-menu">${b.facs.length?
             b.facs.map((f,fi)=>`<a onclick="dlInvoicePDF(${i},${fi});closeDlMenus()">${f.name}</a>`).join('')
-            :'<span style="display:block;padding:10px 16px;font-size:12px;color:var(--gray-400)">データなし</span>'
+            :`<span style="display:block;padding:10px 16px;font-size:12px;color:var(--gray-400)">${t('dl_no_data')}</span>`
           }</div>
         </div>
       </td>
@@ -1467,12 +1517,12 @@ function rBilling(){
         <div class="dl-wrap">
           <button class="btn btn-out btn-sm" onclick="toggleDlMenu(this)" style="gap:4px;padding:5px 10px">
             <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            CSV
+            ${t('btn_csv')}
           </button>
           <div class="dl-menu">
-            <a onclick="dlUsageCSV('就業別','${pKey}');closeDlMenus()">利用明細（就業別）</a>
-            <a onclick="dlUsageCSV('事業所別','${pKey}');closeDlMenus()">利用明細（事業所別）</a>
-            <a onclick="dlUsageCSV('振込関連手数料','${pKey}');closeDlMenus()">振込関連手数料明細</a>
+            <a onclick="dlUsageCSV(t('csv_type_by_job'),'${pKey}');closeDlMenus()">${t('csv_item_by_job')}</a>
+            <a onclick="dlUsageCSV(t('csv_type_by_facility'),'${pKey}');closeDlMenus()">${t('csv_item_by_facility')}</a>
+            <a onclick="dlUsageCSV(t('csv_type_transfer_fee'),'${pKey}');closeDlMenus()">${t('csv_item_transfer_fee')}</a>
           </div>
         </div>
       </td>
@@ -1484,7 +1534,7 @@ function rBilling(){
 function dlInvoicePDF(billingIdx, facIdx){
   const b=BILLING[billingIdx];
   const fac=b.facs[facIdx];
-  if(!fac){toast('請求データがありません');return;}
+  if(!fac){toast(t('toast_invoice_no_data'));return;}
 
   const items=fac.items;
   const subtotal=items.reduce((s,it)=>s+it.pay,0);
@@ -1624,6 +1674,11 @@ const DASH_FAC_DATA={
     {m:'2月',v:51800},{m:'3月',v:57000},{m:'4月',v:58000}
   ]
 };
+function monthLabel(m){
+  /* '4月' => t('month_4') */
+  const n=parseInt(m);
+  return isNaN(n)?m:t('month_'+n);
+}
 function rDashChart(){
   const sel=document.getElementById('dash-fac-sel').value;
   const dMonths=DASH_FAC_DATA[sel]||DASH_FAC_DATA[''];
@@ -1632,9 +1687,9 @@ function rDashChart(){
     const h=Math.round(d.v/dMax*160);
     const cur=d.m==='4月';
     return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-      <span style="font-size:11px;font-weight:600;color:${cur?'var(--primary)':'var(--gray-500)'}">¥${(d.v/10000).toFixed(1)}万</span>
+      <span style="font-size:11px;font-weight:600;color:${cur?'var(--primary)':'var(--gray-500)'}">¥${(d.v/10000).toFixed(1)}${t('unit_man_yen')}</span>
       <div style="width:100%;height:${h}px;background:${cur?'var(--primary)':'var(--gray-200)'};border-radius:4px 4px 0 0"></div>
-      <span style="font-size:11px;color:var(--gray-400)">${d.m}</span>
+      <span style="font-size:11px;color:var(--gray-400)">${monthLabel(d.m)}</span>
     </div>`;
   }).join('');
 }
@@ -1660,16 +1715,18 @@ const DASH_ACTS=[
   {icon:'❌',cat:'cancel',text:'きもべつ喜らめきの郷 — 加藤由美 が「生活支援員」をキャンセル（スケジュール変更）',time:'4日前'},
   {icon:'❌',cat:'cancel',text:'菊水こまちの郷 — 事業所側キャンセル「夜勤介護」（人員充足のため）',time:'7日前'}
 ];
+const TIME_MAP={'30分前':'time_30min','2時間前':'time_2hr','3時間前':'time_3hr','昨日':'time_yesterday','1日前':'time_1d','2日前':'time_2d','3日前':'time_3d','4日前':'time_4d','5日前':'time_5d','6日前':'time_6d','7日前':'time_7d'};
+function timeLabel(t0){const k=TIME_MAP[t0];return k?t(k):t0}
 function rDashActivity(){
   const sel=document.getElementById('dash-act-sel').value;
   const list=sel?DASH_ACTS.filter(a=>a.cat===sel):DASH_ACTS;
   const el=document.getElementById('dash-activity');
-  if(!list.length){el.innerHTML='<div style="padding:20px 0;text-align:center;color:var(--gray-400)">該当するアクティビティはありません</div>';return;}
+  if(!list.length){el.innerHTML=`<div style="padding:20px 0;text-align:center;color:var(--gray-400)">${t('dash_no_activity')}</div>`;return;}
   el.innerHTML=list.map(a=>
     `<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100)">
       <span style="font-size:16px;flex-shrink:0">${a.icon}</span>
       <div style="flex:1"><div style="line-height:1.5">${a.text}</div>
-      <div style="font-size:11px;color:var(--gray-400);margin-top:2px">${a.time}</div></div>
+      <div style="font-size:11px;color:var(--gray-400);margin-top:2px">${timeLabel(a.time)}</div></div>
     </div>`
   ).join('');
 }
@@ -1776,7 +1833,7 @@ function rReviews(){
       const w=Math.round(d.avg/5*100);
       return `<div>
         <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-          <span>${name}</span><span style="font-weight:600;color:var(--primary)">★ ${d.avg.toFixed(1)} <span style="color:var(--gray-400);font-weight:400">(${d.cnt}件)</span></span>
+          <span>${name}</span><span style="font-weight:600;color:var(--primary)">★ ${d.avg.toFixed(1)} <span style="color:var(--gray-400);font-weight:400">(${d.cnt}${t('unit_cases')})</span></span>
         </div>
         <div style="background:var(--gray-100);border-radius:4px;height:20px;overflow:hidden">
           <div style="height:100%;width:${w}%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:4px"></div>
@@ -1796,7 +1853,7 @@ function rReviews(){
   }
   list=sortList(list,'rv',{score:(a,b)=>+rvAvg(a.scores)-+rvAvg(b.scores),worker:(a,b)=>a.worker.localeCompare(b.worker,'ja'),date:(a,b)=>a.date.localeCompare(b.date)});
   const p=sliceRv(list,pg.rv);
-  document.getElementById('rv-cnt').textContent=list.length+'件のレビュー';
+  document.getElementById('rv-cnt').textContent=t('rv_count',{n:list.length});
   document.getElementById('rv-tb').innerHTML=p.rows.map((r,i)=>{
     const avg=rvAvg(r.scores);
     const idx=REVIEWS.indexOf(r);
@@ -1808,18 +1865,19 @@ function rReviews(){
       <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${r.date}</td>
     </tr>`;
   }).join('');
-  document.getElementById('rv-pg-cnt').textContent=`${p.s}〜${p.e}件表示中 / ${list.length}件中`;
+  document.getElementById('rv-pg-cnt').textContent=t('pg_showing_of',{s:p.s,e:p.e,total:list.length});
   pagH('rv-pag',p.pages,pg.rv,'rv');
   applySortUI('rv');
 }
+const RV_CAT_KEYS=['review_cat_accuracy','review_cat_hygiene','review_cat_instruction','review_cat_job_gap','review_cat_atmosphere'];
 function showRvDetail(idx){
   const r=REVIEWS[idx];
   const avg=rvAvg(r.scores);
-  document.getElementById('rv-detail-title').textContent=r.worker+' のレビュー';
+  document.getElementById('rv-detail-title').textContent=t('review_of_worker',{name:r.worker});
   document.getElementById('rv-detail-body').innerHTML=
     `<div style="text-align:center;margin-bottom:16px;font-size:24px;color:var(--primary);font-weight:700">★ ${avg}</div>`+
-    RV_CATS.map((c,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100)">
-      <span style="font-size:13px;color:var(--gray-500)">${c}</span>
+    RV_CAT_KEYS.map((k,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100)">
+      <span style="font-size:13px;color:var(--gray-500)">${t(k)}</span>
       <span style="font-size:14px;color:#F59E0B">${'★'.repeat(r.scores[i])}${'☆'.repeat(5-r.scores[i])}</span>
     </div>`).join('')+
     `<div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:8px;font-size:13px;color:var(--gray-500)">${r.comment}</div>`;
@@ -1840,12 +1898,12 @@ function rReport(){
     const h=Math.round(d.v/rMax*180);
     const cur=d.m==='4月';
     return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-      <span style="font-size:10px;font-weight:600;color:${cur?'var(--primary)':'var(--gray-400)'}">¥${(d.v/10000).toFixed(1)}万</span>
+      <span style="font-size:10px;font-weight:600;color:${cur?'var(--primary)':'var(--gray-400)'}">¥${(d.v/10000).toFixed(1)}${t('unit_man_yen')}</span>
       <div style="width:100%;height:${h}px;background:${cur?'var(--primary)':'var(--gray-200)'};border-radius:3px 3px 0 0"></div>
     </div>`;
   }).join('');
   document.getElementById('rpt-labels').innerHTML=rptMonths.map(d=>
-    `<div style="flex:1;text-align:center;font-size:10px;color:var(--gray-400)">${d.m}</div>`
+    `<div style="flex:1;text-align:center;font-size:10px;color:var(--gray-400)">${monthLabel(d.m)}</div>`
   ).join('');
 
   // 事業所別利用比較
@@ -1870,18 +1928,18 @@ function rReport(){
 
   // 職種別稼働件数
   const jobComp=[
-    {name:'介護職（日勤）',val:142},
-    {name:'介護職（夜勤）',val:88},
-    {name:'生活支援員',val:65},
-    {name:'看護助手',val:38},
-    {name:'調理補助',val:29}
+    {key:'rpt_job_day',val:142},
+    {key:'rpt_job_night',val:88},
+    {key:'rpt_job_support',val:65},
+    {key:'rpt_job_assist',val:38},
+    {key:'rpt_job_cooking',val:29}
   ];
   const jMax=Math.max(...jobComp.map(d=>d.val));
   document.getElementById('rpt-job-bars').innerHTML=jobComp.map(d=>{
     const w=Math.round(d.val/jMax*100);
     return `<div>
       <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
-        <span>${d.name}</span><span style="font-weight:600">${d.val}件</span>
+        <span>${t(d.key)}</span><span style="font-weight:600">${d.val}${t('unit_cases')}</span>
       </div>
       <div style="background:var(--gray-100);border-radius:4px;height:18px;overflow:hidden">
         <div style="height:100%;width:${w}%;background:var(--accent);border-radius:4px"></div>
@@ -1906,8 +1964,8 @@ function rReport(){
     `<tr${i%2?` style="background:var(--gray-50)"`:''}>
       <td style="padding:8px 12px;font-size:13px;font-weight:600;color:${i<3?'var(--primary)':'var(--gray-500)'}">${i+1}</td>
       <td style="padding:8px 12px;font-size:13px">${d.name}</td>
-      <td style="padding:8px 12px;font-size:12px;color:var(--gray-500)">${d.cert}</td>
-      <td style="text-align:right;padding:8px 12px;font-size:13px;font-weight:600">${d.cnt}回</td>
+      <td style="padding:8px 12px;font-size:12px;color:var(--gray-500)">${qualLabel(d.cert)}</td>
+      <td style="text-align:right;padding:8px 12px;font-size:13px;font-weight:600">${d.cnt}${t('unit_times')}</td>
       <td style="text-align:right;padding:8px 12px;font-size:13px">${d.hrs}</td>
       <td style="text-align:right;padding:8px 12px;font-size:13px;color:var(--primary)">★ ${d.rate}</td>
     </tr>`
@@ -1933,15 +1991,15 @@ function rMessages(){
   let list=MESSAGES;
   if(fac) list=list.filter(m=>m.fac===fac);
   if(st) list=list.filter(m=>m.st===st);
-  document.getElementById('msg-cnt').textContent=list.length+'件のチャット';
+  document.getElementById('msg-cnt').textContent=t('msg_count',{n:list.length});
   document.getElementById('msg-tb').innerHTML=list.map((m,i)=>{
     const sc=m.st==='未読'?'o':'g';
     return `<tr${i%2?` style="background:var(--gray-50)"`:''}>
-      <td style="padding:10px 12px;font-size:12px;font-weight:600"><a href="#" class="c-link" onclick="toast('${m.fac} の管理画面に遷移します');return false">${m.fac}</a></td>
+      <td style="padding:10px 12px;font-size:12px;font-weight:600"><a href="#" class="c-link" onclick="toast(t('toast_facility_nav',{fac:'${m.fac}'}));return false">${m.fac}</a></td>
       <td style="padding:10px 12px;font-size:13px">${m.from}</td>
       <td style="padding:10px 12px;font-size:13px;color:var(--gray-600)">${m.text}</td>
       <td style="padding:10px 12px;font-size:12px;color:var(--gray-400)">${m.dt}</td>
-      <td style="padding:10px 12px"><span class="st st-${sc}">${m.st}</span></td>
+      <td style="padding:10px 12px"><span class="st st-${sc}">${stLabel(m.st)}</span></td>
     </tr>`;
   }).join('');
 }
@@ -1969,7 +2027,7 @@ function addAdmin(){
   const n=document.getElementById('adm-name').value.trim();
   const e=document.getElementById('adm-email').value.trim();
   const r=document.getElementById('adm-role').value;
-  if(!n||!e){toast('名前とメールアドレスを入力してください');return;}
+  if(!n||!e){toast(t('toast_admin_required'));return;}
   ADMINS.push({name:n,email:e,role:r,st:'有効'});
   rAdmin();closeM('m-admin-add');
   document.getElementById('adm-name').value='';

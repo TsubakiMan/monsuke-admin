@@ -35,11 +35,12 @@ const I18N = {
     settings: '設定',
     logout: 'ログアウト',
 
-    /* Sidebar nav labels */
+    /* Sidebar */
     nav_main: 'メイン',
     nav_ops: '運用',
     nav_mgmt: '管理',
     sidebar_foot: 'もん助 管理画面 v1.0',
+    sidebar_corp_id: '法人ID',
 
     /* Pages */
     page_dashboard: 'ダッシュボード',
@@ -69,29 +70,48 @@ const I18N = {
     sub_report: '利用状況の推移や事業所別比較を確認できます。',
     sub_settings: 'アカウントや通知の設定を変更できます。',
 
-    /* Stat cards */
+    /* Stat cards — dashboard */
     stat_usage_month: '今月の利用額',
     stat_shifts_month: '今月の稼働件数',
     stat_unread_chats: '未読チャット',
+    stat_vs_prev: '前月比',
+    stat_check: '確認する →',
+    stat_cumulative: '累計',
+    /* Stat — workers */
     stat_matched_workers: 'マッチング済みワーカー数',
     stat_total_matches: '累計マッチング回数',
     stat_avg_rating: '平均評価',
+    /* Stat — jobs */
     stat_active_jobs: '公開中の求人',
     stat_applies_month: '応募総数（今月）',
     stat_match_rate: 'マッチング率',
+    /* Stat — billing */
     stat_usage_tax: '今月の利用額（税込）',
     stat_annual_total: '年間累計',
     stat_target_facilities: '対象事業所',
+    stat_fy_2026: '2026年度',
+    stat_april_2026: '2026年4月分',
+    /* Stat — reviews */
     stat_overall_score: '全体平均スコア',
+    stat_overall_sub: '(全200件)',
     stat_new_reviews: '今月の新着レビュー',
     stat_top_facility: '最も高評価の事業所',
+    /* Stat — report */
     stat_annual_usage: '年間利用総額',
     stat_avg_month: '月平均利用額',
     stat_total_workers: '累計稼働ワーカー',
     stat_total_shifts: '累計稼働回数',
-    stat_vs_prev: '前月比',
-    stat_check: '確認する →',
-    stat_cumulative: '累計',
+    stat_last_10mo: '直近10ヶ月',
+
+    /* Units / suffixes */
+    unit_cases: '件',
+    unit_persons_name: '名',
+    unit_times: '回',
+    unit_people: '人',
+    unit_yen: '円',
+    unit_facilities: '事業所',
+    unit_reviews: '件',
+    unit_man_yen: '万',
 
     /* Buttons */
     btn_search: '検索',
@@ -102,9 +122,108 @@ const I18N = {
     btn_edit: '編集',
     btn_detail: '詳細',
     btn_detail_confirm: '詳細確認',
+    btn_admin_screen: '管理画面',
+    btn_download: 'ダウンロード',
     btn_download_csv: 'CSVエクスポート',
     btn_new: '新規追加',
     btn_add_admin: '管理者を追加',
+    btn_pdf: 'PDF',
+    btn_csv: 'CSV',
+    btn_close: '閉じる',
+
+    /* Pagination */
+    pg_prev: '前へ',
+    pg_next: '次へ',
+    pg_showing_of: '{s}〜{e}件表示中 / {total}件中',
+    pg_showing_of_all: '{s}〜{e}件表示中 / {total}件中 / 全{all}件中',
+
+    /* Common table labels */
+    col_period: '期間',
+    col_people_total: '合計人数',
+    col_amount_total: '合計金額',
+    col_tax_total: '合計源泉徴収額',
+    col_facility_id: '事業所ID',
+    col_facility_name: '事業所名',
+    col_facility: '事業所',
+    col_area: 'エリア',
+    col_status: 'ステータス',
+    col_worker_id: 'ワーカーID',
+    col_worker_name: 'ワーカー名',
+    col_name: '名前',
+    col_qualification: '資格',
+    col_workplaces: '勤務先事業所',
+    col_count: '回数',
+    col_rating: '評価',
+    col_job_title: '求人タイトル',
+    col_datetime: '日時',
+    col_wage: '時給',
+    col_slots: '募集',
+    col_apps: '応募',
+    col_approved: '承認済',
+    col_pending: '承認待ち',
+    col_date: '日付',
+    col_clock_in: '出勤',
+    col_clock_out: '退勤',
+    col_hours: '実働',
+    col_month: '月',
+    col_fac_count: '事業所数',
+    col_usage_count: '利用件数',
+    col_amount_incl_tax: '合計金額（税込）',
+    col_transfer_fee: '振込手数料',
+    col_due_date: '支払い期限',
+    col_invoice: '請求書',
+    col_detail_dl: '明細DL',
+    col_pay_amount: '支払金額',
+    col_tax_amount: '源泉徴収税額',
+    col_work_count: '稼働回数',
+    col_sender: '送信者',
+    col_content: '内容',
+    col_review_score: 'レビュー数',
+    col_worker: 'ワーカー',
+    col_comment: 'コメント',
+    col_rank: '#',
+    col_cumulative_hours: '累計時間',
+    col_cases: '件数',
+    col_amount: '金額',
+
+    /* Status values */
+    status_published: '求人掲載中',
+    status_unlisted: '未掲載',
+    status_open: '公開中',
+    status_closed: '締切',
+    status_matched: 'マッチ済',
+    status_pending: '承認待ち',
+    status_confirmed: '確定',
+    status_unread: '未読',
+    status_read: '既読',
+    status_paid: '支払済',
+    status_unpaid: '未払い',
+
+    /* Qualifications */
+    qual_care_worker: '介護福祉士',
+    qual_initial: '初任者研修',
+    qual_practical: '実務者研修',
+    qual_nurse: '看護師',
+    qual_no_qual: '無資格',
+
+    /* Filter options */
+    filter_all_statuses: '全てのステータス',
+    filter_all_facilities: '全ての事業所',
+    filter_all_qualifications: '全ての資格',
+    filter_all_reviews: '全てのレビュー数',
+    filter_all: 'すべて',
+    filter_match: 'マッチング',
+    filter_done: '稼働完了',
+    filter_review_cat: 'レビュー',
+    filter_billing_cat: '請求・支払い',
+    filter_worker_cat: 'ワーカー',
+    filter_cancel_cat: 'キャンセル',
+
+    /* Search placeholders */
+    ph_search_facility: '事業所名で検索',
+    ph_search_worker: 'ワーカー名で検索',
+    ph_admin_name: '管理者名を入力',
+    search_hint: '複数の単語で検索できます。入力されたいずれかの単語を含む事業所を一覧表示します。',
 
     /* Roles */
     role_owner: 'オーナー管理者',
@@ -128,7 +247,7 @@ const I18N = {
     admin_desc_admin: '管理者 — 全機能のアクセスが可能（管理者の管理は不可）',
     admin_desc_viewer: '閲覧者 — データの閲覧のみ（編集・操作は不可）',
 
-    /* Notifications */
+    /* Notifications settings */
     notif_settings_title: '通知設定',
     notif_email: 'メール通知',
     notif_freq: '通知頻度',
@@ -138,19 +257,124 @@ const I18N = {
     notif_daily: '1日1回',
     notif_weekly: '週1回',
 
-    /* Toast */
+    /* Company info labels */
+    company_corp_id: '法人ID',
+    company_name: '法人名',
+    company_representative: '代表者名',
+    company_founded: '設立日',
+    company_address: '住所',
+    company_phone: '電話番号',
+    company_email: 'メールアドレス',
+    company_plan: '契約プラン',
+    company_contract_start: '契約開始日',
+
+    /* Dashboard sections */
+    dash_monthly_chart: '月別利用額推移',
+    dash_corp_all: '法人全体',
+    dash_by_facility: '事業所別 今月の利用状況',
+    dash_recent_activity: '直近のアクティビティ',
+    dash_no_activity: '該当するアクティビティはありません',
+
+    /* Registry sections */
+    reg_list_title: '労働者名簿',
+    reg_slip_title: '源泉徴収票',
+    reg_slip_desc: 'もん助でマッチングしたワーカーの源泉徴収票をPDFでダウンロードできます。',
+    reg_fy_2026: '2026年度',
+    reg_fy_2025: '2025年度',
+    modal_reg_add_title: '労働者名簿を新規追加',
+    modal_reg_desc: '期間を指定してください。確定済みシフトを対象に集計します。',
+    modal_reg_start: '開始日',
+    modal_reg_end: '終了日（基準日）',
+    modal_reg_output: '出力形式',
+    modal_reg_filename: 'ファイル名',
+
+    /* Report sections */
+    rpt_monthly_12mo: '月別利用額推移（直近12ヶ月）',
+    rpt_by_facility_year: '事業所別 利用比較（今年度）',
+    rpt_by_job_type: '職種別 稼働件数',
+    rpt_worker_ranking: 'ワーカー稼働ランキング（Top 10）',
+    rpt_job_day: '介護職（日勤）',
+    rpt_job_night: '介護職（夜勤）',
+    rpt_job_support: '生活支援員',
+    rpt_job_assist: '看護助手',
+    rpt_job_cooking: '調理補助',
+
+    /* Review sections */
+    review_by_facility: '事業所別 平均スコア',
+    review_of_worker: '{name} のレビュー',
+    review_cat_accuracy: '予定の正確さ',
+    review_cat_hygiene: '衛生面や綺麗さ',
+    review_cat_instruction: '担当者の指示',
+    review_cat_job_gap: '求人内容との差',
+    review_cat_atmosphere: '施設の雰囲気',
+    rv_count: '{n}件のレビュー',
+
+    /* Messages */
+    msg_count: '{n}件のチャット',
+
+    /* PDF — Withholding slip */
+    slip_title: '給与所得の源泉徴収票',
+    slip_fy_range: '{yr}年度（{yr}年1月1日 〜 {yr}年12月31日）',
+    slip_recipient: '受給者',
+    slip_full_name: '氏名',
+    slip_payer: '支払者',
+    slip_pay_name: '名称',
+    slip_corp_no: '法人番号',
+    slip_item: '項目',
+    slip_amount: '金額',
+    slip_deduction_after: '給与所得控除後の金額',
+    slip_deduction_total: '所得控除の額の合計額',
+    slip_social_ins: '社会保険料等の金額',
+    slip_print: 'PDFとして保存 / 印刷',
+    slip_footer: 'この源泉徴収票は、もん助を通じた報酬支払いに基づき発行されたものです。',
+
+    /* Toast messages */
     toast_admin_added: '管理者を追加しました',
     toast_admin_updated: '権限を更新しました',
     toast_admin_deleted: '管理者を削除しました',
     toast_csv_downloaded: 'CSVをダウンロードしました',
+    toast_file_downloaded: '{file} をダウンロードしました',
+    toast_reg_added: '労働者名簿を追加しました',
+    toast_reg_deleted: '労働者名簿を削除しました',
+    toast_period_required: '期間を指定してください',
+    toast_slip_opened: '源泉徴収票を新しいタブで開きました。',
+    toast_popup_blocked: 'ポップアップがブロックされました。許可してください。',
+    toast_invoice_no_data: '請求データがありません',
+    toast_admin_required: '名前とメールアドレスを入力してください',
+    toast_xlsx_loading: 'Excelライブラリを読み込み中です。少し待ってから再度お試しください。',
+    toast_billing_cat_dl: '利用明細（{type}）をダウンロードしました',
+    toast_facility_nav: '{fac} の管理画面に遷移します',
     toast_logout_confirm: 'ログアウトしますか？',
 
-    /* Placeholder */
-    ph_search_facility: '事業所名で検索...',
-    ph_search_worker: 'ワーカー名で検索...',
+    /* Billing CSV types */
+    csv_type_by_job: '就業別',
+    csv_type_by_facility: '事業所別',
+    csv_type_transfer_fee: '振込関連手数料',
+    csv_item_by_job: '利用明細（就業別）',
+    csv_item_by_facility: '利用明細（事業所別）',
+    csv_item_transfer_fee: '振込関連手数料明細',
+    dl_no_data: 'データなし',
+
+    /* Month labels */
+    month_1: '1月', month_2: '2月', month_3: '3月', month_4: '4月', month_5: '5月', month_6: '6月',
+    month_7: '7月', month_8: '8月', month_9: '9月', month_10: '10月', month_11: '11月', month_12: '12月',
+
+    /* Time ago */
+    time_30min: '30分前',
+    time_2hr: '2時間前',
+    time_3hr: '3時間前',
+    time_yesterday: '昨日',
+    time_2d: '2日前',
+    time_3d: '3日前',
+    time_4d: '4日前',
+    time_5d: '5日前',
+    time_6d: '6日前',
+    time_7d: '7日前',
+    time_1d: '1日前',
   },
 
   en: {
+    /* Common */
     app_name: 'Monsuke',
     corp_admin: 'Corporate Admin',
     corp_admin_panel: 'Corporate Admin Panel',
@@ -183,6 +407,7 @@ const I18N = {
     nav_ops: 'OPERATIONS',
     nav_mgmt: 'MANAGEMENT',
     sidebar_foot: 'Monsuke Admin v1.0',
+    sidebar_corp_id: 'Corp ID',
 
     page_dashboard: 'Dashboard',
     page_facilities: 'Facilities',
@@ -213,6 +438,9 @@ const I18N = {
     stat_usage_month: 'Usage This Month',
     stat_shifts_month: 'Shifts This Month',
     stat_unread_chats: 'Unread Chats',
+    stat_vs_prev: 'vs last month',
+    stat_check: 'Check →',
+    stat_cumulative: 'Cumulative',
     stat_matched_workers: 'Matched Workers',
     stat_total_matches: 'Total Matches',
     stat_avg_rating: 'Avg Rating',
@@ -222,16 +450,26 @@ const I18N = {
     stat_usage_tax: 'Usage This Month (Tax Incl.)',
     stat_annual_total: 'Annual Total',
     stat_target_facilities: 'Target Facilities',
+    stat_fy_2026: 'FY 2026',
+    stat_april_2026: 'April 2026',
     stat_overall_score: 'Overall Score',
+    stat_overall_sub: '(200 reviews)',
     stat_new_reviews: 'New Reviews This Month',
     stat_top_facility: 'Top-Rated Facility',
     stat_annual_usage: 'Annual Usage Total',
     stat_avg_month: 'Monthly Avg Usage',
     stat_total_workers: 'Total Active Workers',
     stat_total_shifts: 'Total Shifts',
-    stat_vs_prev: 'vs last month',
-    stat_check: 'Check →',
-    stat_cumulative: 'Cumulative',
+    stat_last_10mo: 'Last 10 months',
+
+    unit_cases: '',
+    unit_persons_name: '',
+    unit_times: 'x',
+    unit_people: '',
+    unit_yen: ' JPY',
+    unit_facilities: ' facilities',
+    unit_reviews: ' reviews',
+    unit_man_yen: '0K',
 
     btn_search: 'Search',
     btn_add: 'Add',
@@ -241,9 +479,102 @@ const I18N = {
     btn_edit: 'Edit',
     btn_detail: 'Details',
     btn_detail_confirm: 'View Details',
+    btn_admin_screen: 'Admin Panel',
+    btn_download: 'Download',
     btn_download_csv: 'Export CSV',
-    btn_new: 'New',
+    btn_new: 'Add New',
     btn_add_admin: 'Add Admin',
+    btn_pdf: 'PDF',
+    btn_csv: 'CSV',
+    btn_close: 'Close',
+
+    pg_prev: 'Prev',
+    pg_next: 'Next',
+    pg_showing_of: 'Showing {s}-{e} of {total}',
+    pg_showing_of_all: 'Showing {s}-{e} of {total} (Total {all})',
+
+    col_period: 'Period',
+    col_people_total: 'Total People',
+    col_amount_total: 'Total Amount',
+    col_tax_total: 'Total Tax Withheld',
+    col_facility_id: 'Facility ID',
+    col_facility_name: 'Facility Name',
+    col_facility: 'Facility',
+    col_area: 'Area',
+    col_status: 'Status',
+    col_worker_id: 'Worker ID',
+    col_worker_name: 'Worker Name',
+    col_name: 'Name',
+    col_qualification: 'Qualification',
+    col_workplaces: 'Workplaces',
+    col_count: 'Count',
+    col_rating: 'Rating',
+    col_job_title: 'Job Title',
+    col_datetime: 'Date & Time',
+    col_wage: 'Wage',
+    col_slots: 'Slots',
+    col_apps: 'Apps',
+    col_approved: 'Approved',
+    col_pending: 'Pending',
+    col_date: 'Date',
+    col_clock_in: 'In',
+    col_clock_out: 'Out',
+    col_hours: 'Hours',
+    col_month: 'Month',
+    col_fac_count: 'Facilities',
+    col_usage_count: 'Usage',
+    col_amount_incl_tax: 'Total (Tax Incl.)',
+    col_transfer_fee: 'Transfer Fee',
+    col_due_date: 'Due Date',
+    col_invoice: 'Invoice',
+    col_detail_dl: 'Detail DL',
+    col_pay_amount: 'Payment',
+    col_tax_amount: 'Tax Withheld',
+    col_work_count: 'Shifts',
+    col_sender: 'Sender',
+    col_content: 'Message',
+    col_review_score: 'Score',
+    col_worker: 'Worker',
+    col_comment: 'Comment',
+    col_rank: '#',
+    col_cumulative_hours: 'Total Hours',
+    col_cases: 'Cases',
+    col_amount: 'Amount',
+
+    status_published: 'Posted',
+    status_unlisted: 'Unlisted',
+    status_open: 'Open',
+    status_closed: 'Closed',
+    status_matched: 'Matched',
+    status_pending: 'Pending',
+    status_confirmed: 'Confirmed',
+    status_unread: 'Unread',
+    status_read: 'Read',
+    status_paid: 'Paid',
+    status_unpaid: 'Unpaid',
+
+    qual_care_worker: 'Care Worker',
+    qual_initial: 'Initial Training',
+    qual_practical: 'Practical Training',
+    qual_nurse: 'Nurse',
+    qual_no_qual: 'No Qualification',
+
+    filter_all_statuses: 'All Statuses',
+    filter_all_facilities: 'All Facilities',
+    filter_all_qualifications: 'All Qualifications',
+    filter_all_reviews: 'All Scores',
+    filter_all: 'All',
+    filter_match: 'Matching',
+    filter_done: 'Shift Done',
+    filter_review_cat: 'Reviews',
+    filter_billing_cat: 'Billing',
+    filter_worker_cat: 'Workers',
+    filter_cancel_cat: 'Cancellations',
+
+    ph_search_facility: 'Search by facility name',
+    ph_search_worker: 'Search by worker name',
+    ph_admin_name: 'Enter admin name',
+    search_hint: 'Supports multi-word search. Shows facilities containing any of the entered words.',
 
     role_owner: 'Owner Admin',
     role_admin: 'Admin',
@@ -274,14 +605,109 @@ const I18N = {
     notif_daily: 'Once a day',
     notif_weekly: 'Weekly',
 
+    company_corp_id: 'Corp ID',
+    company_name: 'Company Name',
+    company_representative: 'Representative',
+    company_founded: 'Founded',
+    company_address: 'Address',
+    company_phone: 'Phone',
+    company_email: 'Email',
+    company_plan: 'Plan',
+    company_contract_start: 'Contract Start',
+
+    dash_monthly_chart: 'Monthly Usage Trend',
+    dash_corp_all: 'All Facilities',
+    dash_by_facility: 'Usage by Facility (This Month)',
+    dash_recent_activity: 'Recent Activity',
+    dash_no_activity: 'No matching activity.',
+
+    reg_list_title: 'Worker Registry',
+    reg_slip_title: 'Tax Withholding Slips',
+    reg_slip_desc: 'Download tax withholding slips (PDF) for workers matched via Monsuke.',
+    reg_fy_2026: 'FY 2026',
+    reg_fy_2025: 'FY 2025',
+    modal_reg_add_title: 'Add New Worker Registry',
+    modal_reg_desc: 'Specify a period. Confirmed shifts will be aggregated.',
+    modal_reg_start: 'Start Date',
+    modal_reg_end: 'End Date (Cutoff)',
+    modal_reg_output: 'Output Format',
+    modal_reg_filename: 'File Name',
+
+    rpt_monthly_12mo: 'Monthly Usage Trend (Last 12 Months)',
+    rpt_by_facility_year: 'Usage by Facility (Current FY)',
+    rpt_by_job_type: 'Shifts by Job Type',
+    rpt_worker_ranking: 'Worker Ranking (Top 10)',
+    rpt_job_day: 'Care (Day)',
+    rpt_job_night: 'Care (Night)',
+    rpt_job_support: 'Life Support',
+    rpt_job_assist: 'Nursing Assistant',
+    rpt_job_cooking: 'Cooking Assistant',
+
+    review_by_facility: 'Average Score by Facility',
+    review_of_worker: "Review by {name}",
+    review_cat_accuracy: 'Schedule Accuracy',
+    review_cat_hygiene: 'Cleanliness',
+    review_cat_instruction: 'Supervisor Instructions',
+    review_cat_job_gap: 'Job Description Match',
+    review_cat_atmosphere: 'Facility Atmosphere',
+    rv_count: '{n} reviews',
+
+    msg_count: '{n} messages',
+
+    slip_title: 'Tax Withholding Slip',
+    slip_fy_range: 'FY {yr} ({yr}/1/1 — {yr}/12/31)',
+    slip_recipient: 'Recipient',
+    slip_full_name: 'Name',
+    slip_payer: 'Payer',
+    slip_pay_name: 'Name',
+    slip_corp_no: 'Corp Number',
+    slip_item: 'Item',
+    slip_amount: 'Amount',
+    slip_deduction_after: 'Amount after earned income deduction',
+    slip_deduction_total: 'Total income deductions',
+    slip_social_ins: 'Social insurance premiums',
+    slip_print: 'Save as PDF / Print',
+    slip_footer: 'This slip is issued based on payments made via Monsuke.',
+
     toast_admin_added: 'Admin added',
     toast_admin_updated: 'Role updated',
     toast_admin_deleted: 'Admin deleted',
     toast_csv_downloaded: 'CSV downloaded',
+    toast_file_downloaded: '{file} downloaded',
+    toast_reg_added: 'Worker registry added',
+    toast_reg_deleted: 'Worker registry deleted',
+    toast_period_required: 'Please specify a period',
+    toast_slip_opened: 'Tax withholding slip opened in a new tab.',
+    toast_popup_blocked: 'Popup was blocked. Please allow popups.',
+    toast_invoice_no_data: 'No invoice data available',
+    toast_admin_required: 'Please enter name and email',
+    toast_xlsx_loading: 'Excel library is loading. Please try again shortly.',
+    toast_billing_cat_dl: 'Usage statement ({type}) downloaded',
+    toast_facility_nav: 'Navigating to {fac} admin panel',
     toast_logout_confirm: 'Log out?',
 
-    ph_search_facility: 'Search by facility name...',
-    ph_search_worker: 'Search by worker name...',
+    csv_type_by_job: 'by-job',
+    csv_type_by_facility: 'by-facility',
+    csv_type_transfer_fee: 'transfer-fee',
+    csv_item_by_job: 'Statement (by job)',
+    csv_item_by_facility: 'Statement (by facility)',
+    csv_item_transfer_fee: 'Transfer fee statement',
+    dl_no_data: 'No data',
+
+    month_1: 'Jan', month_2: 'Feb', month_3: 'Mar', month_4: 'Apr', month_5: 'May', month_6: 'Jun',
+    month_7: 'Jul', month_8: 'Aug', month_9: 'Sep', month_10: 'Oct', month_11: 'Nov', month_12: 'Dec',
+
+    time_30min: '30 min ago',
+    time_2hr: '2 hours ago',
+    time_3hr: '3 hours ago',
+    time_yesterday: 'Yesterday',
+    time_2d: '2 days ago',
+    time_3d: '3 days ago',
+    time_4d: '4 days ago',
+    time_5d: '5 days ago',
+    time_6d: '6 days ago',
+    time_7d: '7 days ago',
+    time_1d: '1 day ago',
   },
 
   vi: {
@@ -317,6 +743,7 @@ const I18N = {
     nav_ops: 'VẬN HÀNH',
     nav_mgmt: 'QUẢN LÝ',
     sidebar_foot: 'Monsuke Quản trị v1.0',
+    sidebar_corp_id: 'ID doanh nghiệp',
 
     page_dashboard: 'Bảng điều khiển',
     page_facilities: 'Danh sách cơ sở',
@@ -347,6 +774,9 @@ const I18N = {
     stat_usage_month: 'Sử dụng tháng này',
     stat_shifts_month: 'Số ca tháng này',
     stat_unread_chats: 'Tin nhắn chưa đọc',
+    stat_vs_prev: 'so với tháng trước',
+    stat_check: 'Xem chi tiết →',
+    stat_cumulative: 'Tích lũy',
     stat_matched_workers: 'Nhân viên đã kết nối',
     stat_total_matches: 'Tổng số lượt kết nối',
     stat_avg_rating: 'Đánh giá trung bình',
@@ -356,16 +786,26 @@ const I18N = {
     stat_usage_tax: 'Sử dụng tháng này (đã bao gồm thuế)',
     stat_annual_total: 'Tổng năm',
     stat_target_facilities: 'Cơ sở mục tiêu',
+    stat_fy_2026: 'Năm tài chính 2026',
+    stat_april_2026: 'Tháng 4/2026',
     stat_overall_score: 'Điểm tổng thể',
+    stat_overall_sub: '(200 đánh giá)',
     stat_new_reviews: 'Đánh giá mới tháng này',
     stat_top_facility: 'Cơ sở được đánh giá cao nhất',
     stat_annual_usage: 'Tổng sử dụng hàng năm',
     stat_avg_month: 'Trung bình tháng',
     stat_total_workers: 'Tổng nhân viên đã làm việc',
     stat_total_shifts: 'Tổng số ca',
-    stat_vs_prev: 'so với tháng trước',
-    stat_check: 'Xem chi tiết →',
-    stat_cumulative: 'Tích lũy',
+    stat_last_10mo: '10 tháng gần nhất',
+
+    unit_cases: '',
+    unit_persons_name: '',
+    unit_times: ' lần',
+    unit_people: ' người',
+    unit_yen: ' JPY',
+    unit_facilities: ' cơ sở',
+    unit_reviews: ' đánh giá',
+    unit_man_yen: '0K',
 
     btn_search: 'Tìm kiếm',
     btn_add: 'Thêm',
@@ -375,9 +815,102 @@ const I18N = {
     btn_edit: 'Chỉnh sửa',
     btn_detail: 'Chi tiết',
     btn_detail_confirm: 'Xem chi tiết',
+    btn_admin_screen: 'Trang quản trị',
+    btn_download: 'Tải xuống',
     btn_download_csv: 'Xuất CSV',
     btn_new: 'Thêm mới',
     btn_add_admin: 'Thêm quản trị viên',
+    btn_pdf: 'PDF',
+    btn_csv: 'CSV',
+    btn_close: 'Đóng',
+
+    pg_prev: 'Trước',
+    pg_next: 'Sau',
+    pg_showing_of: 'Hiển thị {s}-{e} / {total}',
+    pg_showing_of_all: 'Hiển thị {s}-{e} / {total} (Tổng {all})',
+
+    col_period: 'Kỳ',
+    col_people_total: 'Tổng số người',
+    col_amount_total: 'Tổng số tiền',
+    col_tax_total: 'Tổng thuế khấu trừ',
+    col_facility_id: 'ID cơ sở',
+    col_facility_name: 'Tên cơ sở',
+    col_facility: 'Cơ sở',
+    col_area: 'Khu vực',
+    col_status: 'Trạng thái',
+    col_worker_id: 'ID nhân viên',
+    col_worker_name: 'Tên nhân viên',
+    col_name: 'Họ tên',
+    col_qualification: 'Bằng cấp',
+    col_workplaces: 'Nơi làm việc',
+    col_count: 'Số lần',
+    col_rating: 'Đánh giá',
+    col_job_title: 'Tiêu đề tin tuyển',
+    col_datetime: 'Ngày & giờ',
+    col_wage: 'Lương/giờ',
+    col_slots: 'Chỗ trống',
+    col_apps: 'Ứng tuyển',
+    col_approved: 'Đã duyệt',
+    col_pending: 'Chờ duyệt',
+    col_date: 'Ngày',
+    col_clock_in: 'Vào',
+    col_clock_out: 'Ra',
+    col_hours: 'Giờ',
+    col_month: 'Tháng',
+    col_fac_count: 'Số cơ sở',
+    col_usage_count: 'Số lượt',
+    col_amount_incl_tax: 'Tổng (bao gồm thuế)',
+    col_transfer_fee: 'Phí chuyển khoản',
+    col_due_date: 'Hạn thanh toán',
+    col_invoice: 'Hóa đơn',
+    col_detail_dl: 'Tải chi tiết',
+    col_pay_amount: 'Số tiền TT',
+    col_tax_amount: 'Thuế khấu trừ',
+    col_work_count: 'Số ca',
+    col_sender: 'Người gửi',
+    col_content: 'Nội dung',
+    col_review_score: 'Điểm',
+    col_worker: 'Nhân viên',
+    col_comment: 'Bình luận',
+    col_rank: '#',
+    col_cumulative_hours: 'Tổng giờ',
+    col_cases: 'Số lượt',
+    col_amount: 'Số tiền',
+
+    status_published: 'Đang đăng',
+    status_unlisted: 'Chưa đăng',
+    status_open: 'Đang mở',
+    status_closed: 'Đã đóng',
+    status_matched: 'Đã khớp',
+    status_pending: 'Chờ duyệt',
+    status_confirmed: 'Xác nhận',
+    status_unread: 'Chưa đọc',
+    status_read: 'Đã đọc',
+    status_paid: 'Đã thanh toán',
+    status_unpaid: 'Chưa thanh toán',
+
+    qual_care_worker: 'Điều dưỡng viên',
+    qual_initial: 'Đào tạo cơ bản',
+    qual_practical: 'Đào tạo thực hành',
+    qual_nurse: 'Y tá',
+    qual_no_qual: 'Không bằng cấp',
+
+    filter_all_statuses: 'Tất cả trạng thái',
+    filter_all_facilities: 'Tất cả cơ sở',
+    filter_all_qualifications: 'Tất cả bằng cấp',
+    filter_all_reviews: 'Tất cả đánh giá',
+    filter_all: 'Tất cả',
+    filter_match: 'Kết nối',
+    filter_done: 'Ca hoàn thành',
+    filter_review_cat: 'Đánh giá',
+    filter_billing_cat: 'Thanh toán',
+    filter_worker_cat: 'Nhân viên',
+    filter_cancel_cat: 'Hủy',
+
+    ph_search_facility: 'Tìm theo tên cơ sở',
+    ph_search_worker: 'Tìm theo tên nhân viên',
+    ph_admin_name: 'Nhập tên quản trị viên',
+    search_hint: 'Hỗ trợ tìm nhiều từ. Hiển thị các cơ sở chứa bất kỳ từ nào đã nhập.',
 
     role_owner: 'Quản trị viên chủ',
     role_admin: 'Quản trị viên',
@@ -408,14 +941,109 @@ const I18N = {
     notif_daily: 'Mỗi ngày một lần',
     notif_weekly: 'Hàng tuần',
 
+    company_corp_id: 'ID doanh nghiệp',
+    company_name: 'Tên doanh nghiệp',
+    company_representative: 'Người đại diện',
+    company_founded: 'Ngày thành lập',
+    company_address: 'Địa chỉ',
+    company_phone: 'Số điện thoại',
+    company_email: 'Email',
+    company_plan: 'Gói dịch vụ',
+    company_contract_start: 'Ngày bắt đầu hợp đồng',
+
+    dash_monthly_chart: 'Xu hướng sử dụng theo tháng',
+    dash_corp_all: 'Toàn doanh nghiệp',
+    dash_by_facility: 'Sử dụng theo cơ sở (tháng này)',
+    dash_recent_activity: 'Hoạt động gần đây',
+    dash_no_activity: 'Không có hoạt động phù hợp.',
+
+    reg_list_title: 'Hồ sơ nhân viên',
+    reg_slip_title: 'Phiếu khấu trừ thuế',
+    reg_slip_desc: 'Tải phiếu khấu trừ thuế (PDF) của các nhân viên đã kết nối qua Monsuke.',
+    reg_fy_2026: 'Năm 2026',
+    reg_fy_2025: 'Năm 2025',
+    modal_reg_add_title: 'Thêm hồ sơ nhân viên mới',
+    modal_reg_desc: 'Chọn khoảng thời gian. Các ca đã xác nhận sẽ được tổng hợp.',
+    modal_reg_start: 'Ngày bắt đầu',
+    modal_reg_end: 'Ngày kết thúc (chốt)',
+    modal_reg_output: 'Định dạng xuất',
+    modal_reg_filename: 'Tên tệp',
+
+    rpt_monthly_12mo: 'Xu hướng sử dụng hàng tháng (12 tháng gần nhất)',
+    rpt_by_facility_year: 'So sánh sử dụng theo cơ sở (năm tài chính)',
+    rpt_by_job_type: 'Số ca theo loại công việc',
+    rpt_worker_ranking: 'Xếp hạng nhân viên (Top 10)',
+    rpt_job_day: 'Chăm sóc (ngày)',
+    rpt_job_night: 'Chăm sóc (đêm)',
+    rpt_job_support: 'Hỗ trợ cuộc sống',
+    rpt_job_assist: 'Trợ lý y tá',
+    rpt_job_cooking: 'Trợ lý nấu ăn',
+
+    review_by_facility: 'Điểm trung bình theo cơ sở',
+    review_of_worker: 'Đánh giá của {name}',
+    review_cat_accuracy: 'Độ chính xác lịch trình',
+    review_cat_hygiene: 'Vệ sinh & sạch sẽ',
+    review_cat_instruction: 'Hướng dẫn của người phụ trách',
+    review_cat_job_gap: 'Khớp với mô tả công việc',
+    review_cat_atmosphere: 'Không khí cơ sở',
+    rv_count: '{n} đánh giá',
+
+    msg_count: '{n} tin nhắn',
+
+    slip_title: 'Phiếu khấu trừ thuế thu nhập',
+    slip_fy_range: 'Năm {yr} ({yr}/1/1 — {yr}/12/31)',
+    slip_recipient: 'Người nhận',
+    slip_full_name: 'Họ tên',
+    slip_payer: 'Người chi trả',
+    slip_pay_name: 'Tên',
+    slip_corp_no: 'Mã số doanh nghiệp',
+    slip_item: 'Khoản mục',
+    slip_amount: 'Số tiền',
+    slip_deduction_after: 'Số tiền sau khi khấu trừ thu nhập làm công',
+    slip_deduction_total: 'Tổng khấu trừ thu nhập',
+    slip_social_ins: 'Phí bảo hiểm xã hội',
+    slip_print: 'Lưu dưới dạng PDF / In',
+    slip_footer: 'Phiếu này được cấp dựa trên thanh toán qua Monsuke.',
+
     toast_admin_added: 'Đã thêm quản trị viên',
     toast_admin_updated: 'Đã cập nhật quyền',
     toast_admin_deleted: 'Đã xóa quản trị viên',
     toast_csv_downloaded: 'Đã tải xuống CSV',
+    toast_file_downloaded: 'Đã tải xuống {file}',
+    toast_reg_added: 'Đã thêm hồ sơ nhân viên',
+    toast_reg_deleted: 'Đã xóa hồ sơ nhân viên',
+    toast_period_required: 'Vui lòng chỉ định khoảng thời gian',
+    toast_slip_opened: 'Đã mở phiếu khấu trừ thuế ở tab mới.',
+    toast_popup_blocked: 'Cửa sổ bật lên đã bị chặn. Vui lòng cho phép.',
+    toast_invoice_no_data: 'Không có dữ liệu hóa đơn',
+    toast_admin_required: 'Vui lòng nhập tên và email',
+    toast_xlsx_loading: 'Thư viện Excel đang tải. Vui lòng thử lại sau.',
+    toast_billing_cat_dl: 'Đã tải xuống báo cáo ({type})',
+    toast_facility_nav: 'Đang chuyển đến trang quản trị {fac}',
     toast_logout_confirm: 'Đăng xuất?',
 
-    ph_search_facility: 'Tìm theo tên cơ sở...',
-    ph_search_worker: 'Tìm theo tên nhân viên...',
+    csv_type_by_job: 'theo-công-việc',
+    csv_type_by_facility: 'theo-cơ-sở',
+    csv_type_transfer_fee: 'phí-chuyển-khoản',
+    csv_item_by_job: 'Báo cáo (theo công việc)',
+    csv_item_by_facility: 'Báo cáo (theo cơ sở)',
+    csv_item_transfer_fee: 'Báo cáo phí chuyển khoản',
+    dl_no_data: 'Không có dữ liệu',
+
+    month_1: 'T1', month_2: 'T2', month_3: 'T3', month_4: 'T4', month_5: 'T5', month_6: 'T6',
+    month_7: 'T7', month_8: 'T8', month_9: 'T9', month_10: 'T10', month_11: 'T11', month_12: 'T12',
+
+    time_30min: '30 phút trước',
+    time_2hr: '2 giờ trước',
+    time_3hr: '3 giờ trước',
+    time_yesterday: 'Hôm qua',
+    time_2d: '2 ngày trước',
+    time_3d: '3 ngày trước',
+    time_4d: '4 ngày trước',
+    time_5d: '5 ngày trước',
+    time_6d: '6 ngày trước',
+    time_7d: '7 ngày trước',
+    time_1d: '1 ngày trước',
   }
 };
 
@@ -428,21 +1056,24 @@ function setLang(lang){
   applyI18n();
   if(typeof onLangChange==='function') onLangChange(lang);
 }
-function t(key){
+/* 翻訳取得。第2引数にプレースホルダの置換オブジェクトを渡せる */
+function t(key, params){
   const lang=getLang();
-  return (I18N[lang]&&I18N[lang][key]) || (I18N.ja[key]) || key;
+  let v = (I18N[lang]&&I18N[lang][key]) || (I18N.ja[key]) || key;
+  if(params && typeof v==='string'){
+    Object.keys(params).forEach(k=>{v=v.replace(new RegExp('\\{'+k+'\\}','g'),params[k])});
+  }
+  return v;
 }
 
 /* data-i18n属性を持つ全要素に翻訳を適用 */
 function applyI18n(){
   const lang=getLang();
-  /* HTMLタグの言語属性更新 */
   document.documentElement.lang = lang;
 
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key=el.getAttribute('data-i18n');
-    const val=t(key);
-    el.textContent=val;
+    el.textContent=t(key);
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
     const key=el.getAttribute('data-i18n-ph');
@@ -452,16 +1083,20 @@ function applyI18n(){
     const key=el.getAttribute('data-i18n-html');
     el.innerHTML=t(key);
   });
-  /* ロール名を反映（ロール別バッジ・ドロップダウン） */
+  document.querySelectorAll('[data-i18n-title]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-title');
+    el.setAttribute('title',t(key));
+  });
+  /* ロールバッジ */
   const roleEl=document.getElementById('topbar-role');
   if(roleEl){
     const r=roleEl.getAttribute('data-role')||roleEl.textContent;
-    const map={'オーナー管理者':'role_owner','管理者':'role_admin','閲覧者':'role_viewer','Owner Admin':'role_owner','Admin':'role_admin','Viewer':'role_viewer'};
+    const map={'オーナー管理者':'role_owner','管理者':'role_admin','閲覧者':'role_viewer','Owner Admin':'role_owner','Admin':'role_admin','Viewer':'role_viewer','Quản trị viên chủ':'role_owner','Quản trị viên':'role_admin','Người xem':'role_viewer'};
     const key=map[r]||'role_admin';
     roleEl.textContent=t(key);
   }
 
-  /* 現在の言語ボタンをハイライト */
+  /* 言語スイッチャーのアクティブ表示 */
   document.querySelectorAll('.lang-opt').forEach(el=>{
     el.classList.toggle('on', el.getAttribute('data-lang')===lang);
   });
@@ -469,4 +1104,25 @@ function applyI18n(){
   if(current){
     current.textContent={ja:'日本語',en:'English',vi:'Tiếng Việt'}[lang];
   }
+
+  /* 各画面の再描画（言語変更時はデータも再描画） */
+  if(typeof rerenderAll==='function') rerenderAll();
 }
+
+/* ==== 共通: ステータス・資格・CSV種別を翻訳キーに変換するヘルパ ==== */
+function stKey(s){
+  return {
+    '求人掲載中':'status_published','未掲載':'status_unlisted','公開中':'status_open',
+    '締切':'status_closed','マッチ済':'status_matched','承認待ち':'status_pending',
+    '確定':'status_confirmed','未読':'status_unread','既読':'status_read',
+    '支払済':'status_paid','未払い':'status_unpaid'
+  }[s];
+}
+function qualKey(q){
+  return {
+    '介護福祉士':'qual_care_worker','初任者研修':'qual_initial','実務者研修':'qual_practical',
+    '看護師':'qual_nurse','無資格':'qual_no_qual'
+  }[q];
+}
+function stLabel(s){const k=stKey(s);return k?t(k):s}
+function qualLabel(q){const k=qualKey(q);return k?t(k):q}
