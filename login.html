@@ -271,6 +271,39 @@ body{
   color:var(--gray-400);
 }
 
+/* ===== Language switcher ===== */
+.lang-switch{
+  position:fixed;
+  top:24px;
+  right:24px;
+  background:var(--white);
+  border:1px solid var(--gray-200);
+  border-radius:10px;
+  padding:4px;
+  display:flex;
+  gap:2px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  z-index:100;
+}
+.lang-opt{
+  padding:6px 12px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--gray-500);
+  cursor:pointer;
+  border-radius:7px;
+  transition:all .15s;
+  user-select:none;
+  border:none;
+  background:none;
+  font-family:inherit;
+}
+.lang-opt:hover{color:var(--gray-900);background:var(--gray-100)}
+.lang-opt.on{
+  background:linear-gradient(135deg,#E97316,#F59E0B);
+  color:#fff;
+}
+
 /* ===== Responsive ===== */
 @media(max-width:480px){
   .login-card{
@@ -278,6 +311,15 @@ body{
     border-radius:12px;
   }
   .login-title{font-size:20px}
+  .lang-switch{
+    top:14px;
+    right:14px;
+    padding:3px;
+  }
+  .lang-opt{
+    padding:5px 8px;
+    font-size:11px;
+  }
 }
 </style>
 </head>
@@ -286,35 +328,42 @@ body{
 <!-- Orange gradient header bar -->
 <div class="header-bar"></div>
 
+<!-- Language switcher -->
+<div class="lang-switch">
+  <button class="lang-opt" data-lang="ja" onclick="setLang('ja')">日本語</button>
+  <button class="lang-opt" data-lang="en" onclick="setLang('en')">English</button>
+  <button class="lang-opt" data-lang="vi" onclick="setLang('vi')">Tiếng Việt</button>
+</div>
+
 <div class="login-wrapper">
   <div class="login-card">
     <!-- Corp badge -->
-    <div class="corp-badge">法人管理</div>
+    <div class="corp-badge" data-i18n="corp_admin">法人管理</div>
 
     <!-- Logo -->
     <div class="login-logo">
       <div class="logo-placeholder">も</div>
     </div>
 
-    <h1 class="login-title">ログイン</h1>
-    <p class="login-subtitle"><span class="highlight">法人管理画面</span>へのログイン</p>
+    <h1 class="login-title" data-i18n="login_title">ログイン</h1>
+    <p class="login-subtitle"><span data-i18n="login_subtitle_prefix"></span><span class="highlight" data-i18n="corp_admin_panel">法人管理画面</span><span data-i18n="login_subtitle_suffix">へのログイン</span></p>
 
     <!-- Form -->
     <form id="loginForm" onsubmit="handleLogin(event)">
       <div class="form-group">
-        <label class="form-label">メールアドレス</label>
+        <label class="form-label" data-i18n="login_email">メールアドレス</label>
         <div class="form-input-wrap">
-          <input type="email" class="form-input" id="email" placeholder="admin@example.com" autocomplete="email" required>
+          <input type="email" class="form-input" id="email" data-i18n-ph="login_email_ph" placeholder="admin@example.com" autocomplete="email" required>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">
-          パスワード
-          <a href="#">パスワードを忘れた</a>
+          <span data-i18n="login_password">パスワード</span>
+          <a href="#" data-i18n="login_forgot">パスワードを忘れた</a>
         </label>
         <div class="form-input-wrap">
-          <input type="password" class="form-input" id="password" placeholder="パスワードを入力" autocomplete="current-password" required>
+          <input type="password" class="form-input" id="password" data-i18n-ph="login_password_ph" placeholder="パスワードを入力" autocomplete="current-password" required>
           <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="パスワード表示切替">
             <svg id="eyeIcon" viewBox="0 0 24 24">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -326,19 +375,19 @@ body{
 
       <div class="form-check">
         <input type="checkbox" id="remember">
-        <label for="remember">ログイン状態を保持する</label>
+        <label for="remember" data-i18n="login_remember">ログイン状態を保持する</label>
       </div>
 
       <div id="login-error" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:#FEF2F2;border:1px solid rgba(220,38,38,.2);border-radius:8px;font-size:13px;color:#DC2626;margin-bottom:16px">
-        メールアドレスまたはパスワードが正しくありません。
+        <span data-i18n="login_error">メールアドレスまたはパスワードが正しくありません。</span>
       </div>
 
-      <button type="submit" class="btn-login">ログイン</button>
+      <button type="submit" class="btn-login" data-i18n="login_submit">ログイン</button>
     </form>
 
     <!-- Divider -->
     <div class="login-divider">
-      <span>事業所管理はこちら</span>
+      <span data-i18n="login_facility_divider">事業所管理はこちら</span>
     </div>
 
     <!-- Facility login link -->
@@ -348,14 +397,15 @@ body{
           <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
           <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
-        事業所管理画面へ
+        <span data-i18n="login_to_facility">事業所管理画面へ</span>
       </a>
     </div>
   </div>
 </div>
 
-<div class="login-footer">&copy; 2026 もん助 All rights reserved.</div>
+<div class="login-footer" data-i18n="footer_copyright">&copy; 2026 もん助 All rights reserved.</div>
 
+<script src="i18n.js"></script>
 <script>
 /* ===== アカウントDB ===== */
 const ACCOUNTS=[
@@ -368,6 +418,9 @@ const ACCOUNTS=[
 if(localStorage.getItem('monsuke_session')){
   window.location.href='index.html';
 }
+
+/* 初回ロードで翻訳を適用 */
+document.addEventListener('DOMContentLoaded',function(){applyI18n();});
 
 function togglePw(){
   const p=document.getElementById('password');
@@ -390,7 +443,7 @@ function handleLogin(e){
   const account=ACCOUNTS.find(a=>a.email===email && a.password===pw);
   if(!account){
     errEl.style.display='flex';
-    errEl.textContent='メールアドレスまたはパスワードが正しくありません。';
+    errEl.innerHTML='<span>'+t('login_error')+'</span>';
     document.getElementById('password').value='';
     return;
   }
@@ -411,7 +464,7 @@ function handleLogin(e){
 
   /* ログインボタンのアニメーション */
   const btn=document.querySelector('.btn-login');
-  btn.textContent='ログイン中...';
+  btn.textContent=t('login_loading');
   btn.disabled=true;
   setTimeout(()=>{window.location.href='index.html';},600);
 }
